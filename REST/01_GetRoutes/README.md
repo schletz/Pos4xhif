@@ -2,7 +2,7 @@
 
 Um ein einfaches Webservice mit ASP.NET Core zu erstellen, wird in Visual Studio 2019 mittels *Create a
 new project* die Vorlage *ASP.NET Core Web Application* gewählt. Nach der Vergabe eines Namens wird
-in den Projekteinstellungen der Punkt *API* gewählt. Die Checkbox bei *Configure für HTTPS* kann
+in den Projekteinstellungen der Punkt *API* gewählt. Die Checkbox bei *Configure for HTTPS* kann
 abgehakt werden:
 
 ![](create_api_project.png)
