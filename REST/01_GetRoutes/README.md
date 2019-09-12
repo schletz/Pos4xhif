@@ -79,3 +79,12 @@ public IActionResult GetPupilCount()
 {
 }
 ```
+
+## Übung
+
+| Method | URL     | Result |
+| ------ | ------- | -------- |
+| GET    | /api/klassen | Alle Klassennamen als JSON Array (["4AHIF", "4BHIF", ...]) |
+| GET    | /api/klassen/(klassenname)  | Details zur übergebenen Klasse als JSON Objekt. |
+| GET    | /api/abteilung/(abtname)    | Alle Klassen der übergebenen Abteilung als JSON Array. |
+| GET    | /api/classcount?abteilung=(Name) | Liefert die Anzahl der Klassen der übergebenen Abteilung, z. B. 14. |
