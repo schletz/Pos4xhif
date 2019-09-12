@@ -82,6 +82,9 @@ public IActionResult GetPupilCount()
 
 ## Übung
 
+Schreibe basierend auf diesem Musterprojekt ein Webservice, welches folgende
+URLs implementiert.
+
 | Method | URL     | Result |
 | ------ | ------- | -------- |
 | GET    | /api/klassen | Alle Klassennamen als JSON Array (["4AHIF", "4BHIF", ...]) |
