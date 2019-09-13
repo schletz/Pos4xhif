@@ -16,7 +16,7 @@
     (z. B. *C:\Schule\POS\Examples*) ausführst:
 ```bash {.line-numbers}
 git init
-git remote add origin https://github.com/schletz/Pos3xhif.git
+git remote add origin https://github.com/schletz/Pos4xhif.git
 ```
 
 4. Lege dir in diesem Ordner eine Datei *syncGit.cmd* mit folgenden Befehlen an. 
