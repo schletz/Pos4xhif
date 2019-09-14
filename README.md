@@ -10,7 +10,7 @@
     muss aber der mittlere Punkt (*Git from the command line [...]*) ausgewählt sein.
 2. Lege einen Ordner auf der Festplatte an, wo du die Daten speichern möchtest 
     (z. B. *C:\Schule\POS\Examples*). Das
-    Repository ist nur die lokale Version des Repositories auf https://github.com/schletz/Pos3xhif.git.
+    Repository ist nur die lokale Version des Repositories auf https://github.com/schletz/Pos4xhif.git.
     Hier werden keine Commits gemacht und alle lokalen Änderungen dort werden bei der 
     nächsten Synchronisation überschrieben.
 3. Initialisiere den Ordner mit folgenden Befehlen, die du in der Konsole in diesem Verzeichnis
