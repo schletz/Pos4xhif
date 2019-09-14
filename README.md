@@ -2,7 +2,7 @@
 
 ## Wichtiges zum Start:
 1. [Installation von Visual Studio 2019](VisualStudioInstallation.md)
-1. [Markdown Editing mit VS Code](/schletz/Pos3xhif/markdown.md)
+1. [Markdown Editing mit VS Code](/../Pos3xhif/master/markdown.md)
 
 ## Synchronisieren des Repositories in einen Ordner
 1. Lade von https://git-scm.com/downloads die Git Tools (Button *Download 2.xx for Windows*)
