@@ -81,7 +81,6 @@ public IActionResult GetPupilCount()
 ```
 
 ## Übung
-
 Schreibe basierend auf diesem Musterprojekt ein Webservice, welches folgende URLs implementiert.
 Hinweis: Leerstellen werden in der URL mit *%20* übertragen. So kann als Abteilungsname z. B. 
 *Biomedizin-%20und%20Gesundheitstechnik* in der URL übertagen werden.
