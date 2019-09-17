@@ -4,12 +4,8 @@ Bisher haben wir nur auf sogenannte GET Requests reagiert. GET Requests stellen 
 einfache Abfragen dar. Da über ein Webservice auch Daten eingefügt, geändert oder gelöscht werden
 sollen, müssen wir die HTTP Methoden POST, PUT und DELETE betrachten.
 
-| Method | Operation in der Datenbank |
-| ------ | -------------------------- |
-| GET    | SELECT                     |
-| POST   | INSERT                     |
-| PUT    | UPDATE                     |
-| DELETE | DELETE                     |
+![](crud_rest.png)
+<sup>Quelle: https://www.edureka.co/blog/what-is-rest-api/</sup>
 
 ## Arten der Datenübermittlung
 ### www-form-urlencoded
