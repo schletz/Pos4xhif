@@ -80,6 +80,52 @@ public IActionResult GetPupilCount()
 }
 ```
 
+## Konfugration des Webservers
+Wird die ASP.NET Core Applikation aus Visual Studio gestartet, wird der Webserver Kestrel geladen und
+das Programm ausgeführt. Dieser Server kann vom Programmierer konfiguriert werden. Die erste Konfiguration,
+die wir benötigen, ist die CORS Einstellung. Unsere REST Api soll auch funktionieren, wenn die aufrufende
+HTML Seite unter einer anderen Domäne gespeichert wird. Dafür wird der Header `Access-Control-Allow-Origin: *`
+gesetzt. Wir erledigen das zuerst über eine Extension Methode des Interfaces *IServiceCollection*.
+Der Name *CorsPolicy* ist frei zu vergeben. Er wird dann bei der Aktivierung der Konfiguration benutzt.
+```c#
+public static void ConfigureCors(this IServiceCollection services)
+{
+    services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy",
+            builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+        );
+    });
+}
+```
+
+Nun wird in der vorhandenen Methode *ConfigureServices()* in *Startup.cs* unsere Methode aufgerufen:
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.ConfigureCors();                              // Einzufügender Code
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+}
+```
+
+Zum Abschluss muss noch die angelegte Regel in der Methode *Configure()* der Datei *Startup.cs* aktiviert 
+werden.
+```c#
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    if (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+    app.UseCors("CorsPolicy");                     // Einzufügender Code
+    app.UseFileServer();                           // Einzufügender Code
+    app.UseMvc();
+}
+```
+
 ## Übung
 Schreibe basierend auf diesem Musterprojekt ein Webservice, welches folgende URLs implementiert.
 Hinweis: Leerstellen werden in der URL mit *%20* übertragen. So kann als Abteilungsname z. B. 
