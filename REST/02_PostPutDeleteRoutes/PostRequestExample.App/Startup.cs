@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PostRequestExample.App.Extensions;
 
 namespace PostRequestExample.App
 {
@@ -24,6 +25,7 @@ namespace PostRequestExample.App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -34,6 +36,7 @@ namespace PostRequestExample.App
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("CorsPolicy");
             app.UseFileServer(); // Liefert statische Files und legt index.html als Standarddokument fest.
             app.UseMvc();
         }
