@@ -138,8 +138,8 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
         app.UseDeveloperExceptionPage();
     }
-    // Liefert statische Files und legt index.html als Standarddokument fest.    
-    app.UseFileServer();
+    app.UseCors("CorsPolicy");
+    app.UseFileServer(); // Liefert statische Files und legt index.html als Standarddokument fest.
     app.UseMvc();
 }
 ```
