@@ -144,12 +144,12 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 Erweitere das Webservice, sodass Klassen angelegt, geändert oder gelöscht werden. Erstelle dafür einen
 eigenen Controller mit dem Namen *KlasseController*. Implementiere danach die folgenden Requests:
 
-| Method                   | URL               | Response   |
-| ---------------------    | ----------------- | ---------- |
-| POST (www-formencoded)   | /api/klasse       | Neu angelegte Klasse als JSON oder leeres JSON, wenn die Klasse schon vorhanden ist. |
-| POST (raw, JSON)         | /api/klasse/raw   | Neu angelegte Klasse als JSON oder leeres JSON, wenn die Klasse schon vorhanden ist. |
-| PUT                      | /api/klasse       | Aktualisierte Klasse als JSON oder leeres JSON, wenn die Klasse nicht gefunden wurde. |
-| DELETE                   | /api/klasse       | Gelöschte Klasse als JSON oder leeres JSON, wenn die Klasse nicht gefunden wurde. |
+| Method                   | URL                             | Response   |
+| ---------------------    | -----------------               | ---------- |
+| POST (www-formencoded)   | /api/klasse                     | Neu angelegte Klasse als JSON oder leeres JSON, wenn die Klasse schon vorhanden ist. |
+| POST (raw, JSON)         | /api/klasse/raw                 | Neu angelegte Klasse als JSON oder leeres JSON, wenn die Klasse schon vorhanden ist. |
+| PUT                      | /api/klasse/(klassenname)       | Aktualisierte Klasse als JSON oder leeres JSON, wenn die Klasse nicht gefunden wurde. |
+| DELETE                   | /api/klasse/(klassenname)       | Gelöschte Klasse als JSON oder leeres JSON, wenn die Klasse nicht gefunden wurde. |
 
 Nachdem die Routen in Postman getestet wurden, kopiere die Datei *index.html* in die Datei *klasse.html*.
 Ändere das HTML Formular so, dass ein POST Request auch von diesem HTML Formular aus erfolgreich verarbeitet
