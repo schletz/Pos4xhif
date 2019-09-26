@@ -1,0 +1,49 @@
+﻿<!-- In startup.cs ist app.UseStaticFiles(); in der Methode Configure() einzufügen. -->
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <title>POST Request Demo</title>
+</head>
+<body>
+    <div class="container">
+        <form action="api/pupil" method="post">
+            <div class="form-group row">
+                <label for="nr" class="col-sm-4 col-form-label">Schülernr</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="nr" id="nr" value="1">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="nr" class="col-sm-4 col-form-label">Zuname</label>
+                <div class="col-sm-8">
+
+                    <input type="text" class="form-control" name="zuname" id="zuname" value="Mustermann">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="nr" class="col-sm-4 col-form-label">Vorname</label>
+                <div class="col-sm-8">
+
+                    <input type="text" class="form-control" name="vorname" id="vorname" value="Max">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="nr" class="col-sm-4 col-form-label">Klasse</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="klasse" id="klasse" value="4AHIF">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="nr" class="col-sm-4 col-form-label">Geschlecht</label>
+                <div class="col-sm-8">
+
+                    <input type="text" class="form-control" name="geschl" id="geschl" value="m">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

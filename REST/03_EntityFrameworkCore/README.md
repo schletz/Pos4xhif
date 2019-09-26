@@ -15,27 +15,15 @@ besteht aus 2 Tabellen und einer Fremdschlüsselbeziehung:
 
 ![](class_diagram.png)
 
-## Upgrade des Projektes auf .NET Core 2.2
-Das Projekt in *02_PostPutDeleteRoutes* wurde mit .NET Core 2.1 erstellt. Wenn in diesem Projekt über NuGet
-das Entity Framework Core installiert wird, gibt es einen Versionskonflikt, da die neueste Version geladen wird
-und diese schon für .NET Core 2.2 geschrieben ist. Deswegen führen wir ein Upgrade auf .NET Core 2.2
-durch. Lade dafür von [Download .NET](https://dotnet.microsoft.com/download) unter dem Punkt *Download .NET Core SDK*
-die neueste SDK und installiere diese.
+## Upgrade auf Visual Studio 16.3 und .NET Core 3
+Um .NET Core zu nutzen, muss Visual Studio 2019 auf die Version 16.3 aktualisiert werden. Eine Anleitung
+ist auf [Visual Studio Docs](https://docs.microsoft.com/en-us/visualstudio/install/update-visual-studio?view=vs-2019)
+zu finden.
 
-Öffne danach das Projekt *02_PostPutDeleteRoutes* in Visual Studio 2019 und stelle in den Projekteigenschaften
-*.NET Core 2.2* als Zielplattform ein.
-
-![](upgrade_net_core.png)
-
-Wenn nun mit F6 ein Erstellen des Projektes durchgeführt wird, erscheint eine Fehlermeldung, dass das 
-Paket Microsoft.AspNetCore.Razor.Design nicht mit der Version 2.2 kompatibel ist. Um eine neuere Version 
-dieses Paketes einzutragen, klicke doppelt auf den Projektnamen (PostRequestExample.App) und ändere 
-in der XML Datei das Paket auf folgenden Eintrag:
-```xml
-<PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-```
-
-Nun muss das Projekt mit F6 erstellt werden.
+Das Ausgangsprojekt in diesem Ordner ist bereits für .NET Core 3 eingerichtet. Es ist daher nicht mehr
+möglich, ein Downgrade auf .NET Core 2.1 oder 2.2 durchzuführen, da sich die Konfigurationsoptionen von
+ASP.NET Core 3.0 geändert haben. Möchte man das Projekt händisch aktualisieren, so müssen die Dateien
+*Program.cs* und *Startup.cs* angepasst werden. Angepasste Versionen sind in diesem Ordner zu finden.
 
 ## Installation von EntityFramework.Core
 Wir benötigen 2 Pakete, um auf die SQLite Datenbank zugreifen zu können:
@@ -72,9 +60,9 @@ public IActionResult Get()
 ```
 
 ## Übung
-Öffne dein Projekt *02_PostPutDeleteRoutes* und verwende nun die Datenbank statt den Demodaten. Gehe dabei
+Öffne die Solution *PostRequestExample.sln* in diesem Ordner und verwende nun die Datenbank statt den Demodaten. Gehe dabei
 so vor:
-- Aktualisiere das Projekt auf .NET Core 2.2
+- Aktualisiere deinen Rechner auf VS 16.3 und .NET Core 3.
 - Installiere Microsoft.EntityFrameworkCore.Tools und Microsoft.EntityFrameworkCore.Sqlite
 - Generiere die Modelklassen zuerst in den Ordner *Model2*. Danach lösche den alten Ordner *Model* und
   benenne *Model2* auf *Model* um. Vergiss nicht, auch den Namespace umzubenennen.
