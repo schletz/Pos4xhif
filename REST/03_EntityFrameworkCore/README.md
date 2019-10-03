@@ -43,7 +43,7 @@ Ziehe die Datei Schüler.db in den Solution Explorer über den Projektnamen. Dad
 in das Projekt integriert. Mit folgendem Befehl in der Packet Manager Console kann ein Verzeichnis
 Model2 erstellt und die Klassen generiert werden:
 ```powershell
-Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model2 -UseDatabaseNames
+Scaffold-DbContext "DataSource=../Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model2 -UseDatabaseNames
 ```
 
 **Achtung: Für diesen Vorgang muss das Projekt erstellt werden können. Syntaxfehler, die z. B. durch
