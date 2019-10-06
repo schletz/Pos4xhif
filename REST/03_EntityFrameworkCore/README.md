@@ -39,11 +39,11 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
 ## Automatisches Erstellen der Modelklassen
-Ziehe die Datei Schüler.db in den Solution Explorer über den Projektnamen. Dadurch wird die Datenbank
+Ziehe die Datei *Schüler.db* in den Solution Explorer über den Projektnamen. Dadurch wird die Datenbank
 in das Projekt integriert. Mit folgendem Befehl in der Packet Manager Console kann ein Verzeichnis
 Model2 erstellt und die Klassen generiert werden:
 ```powershell
-Scaffold-DbContext "DataSource=../Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model2 -UseDatabaseNames
+Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model2 -UseDatabaseNames
 ```
 
 **Achtung: Für diesen Vorgang muss das Projekt erstellt werden können. Syntaxfehler, die z. B. durch
@@ -59,6 +59,69 @@ public IActionResult Get()
 }
 ```
 
+## CRUD Operationen mit Entity Framework Core
+Mit dem Entity Framework Core können natürlich auch INSERT, UPDATE und DELETE Anweisungen abgesetzt werden.
+Dafür wird der sogenannte EntityState eines Objektes in der DbSet Collection gesetzt.
+
+![](entity-states.png)
+<sup>Quelle: https://www.entityframeworktutorial.net/basics/entity-states.aspx</sup>
+
+Folgendes Codebeispiel generiert einen Schüler mit einer zufälligen Schülernummer und fügt ihn in die
+Datenbank ein. Die Klasse wird nur über die Navigation gesetzt, der Wert von *S_Klasse* wird nach dem 
+Setzen des *EntityState* auf *Added* automatisch gesetzt. Das anschließende *SaveChanges()* schickt
+das *INSERT* an die Datenbank.
+```c#
+Random rnd = new Random();
+Schueler s = new Schueler
+{
+    S_Nr = rnd.Next(),
+    S_Geschl = "m",
+    S_Zuname = "Mustermann",
+    S_Vorname = "Max",
+    S_KlasseNavigation = db.Klasse.Find("4AHIF")
+};
+
+db.Entry(s).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+try
+{
+    db.SaveChanges();
+}
+catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+{
+    return StatusCode(StatusCodes.Status500InternalServerError);
+}
+```
+
+Soll nun der Schüler aktualisiert werden, so wird das gewünschte Property geändert und der *EntityState*
+auf *Modified* gesetzt. Ein *SaveChanges()* schreibt die *UPDATE* Anweisung.
+
+```c#
+s.S_Zuname = "Mustermann2";
+db.Entry(s).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+try
+{
+    db.SaveChanges();
+}
+catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+{
+    return StatusCode(StatusCodes.Status500InternalServerError);
+}
+```
+
+Das Löschen eines Schülers wird durch das Setzen des *EntityState* auf *Deleted* gelöst:
+```c#
+db.Entry(s).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+try
+{
+    db.SaveChanges();
+}
+catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+{
+    return StatusCode(StatusCodes.Status500InternalServerError);
+}
+```
+ 
+
 ## Übung
 Öffne die Solution *PostRequestExample.sln* in diesem Ordner und verwende nun die Datenbank statt den Demodaten. Gehe dabei
 so vor:
@@ -67,3 +130,4 @@ so vor:
 - Generiere die Modelklassen zuerst in den Ordner *Model2*. Danach lösche den alten Ordner *Model* und
   benenne *Model2* auf *Model* um. Vergiss nicht, auch den Namespace umzubenennen.
 - Passe die Feldnamen an, so dass der Code korrekt ist.
+- Implementiere die CRUD Operationen in den einzelnen Routen des Controllers.
