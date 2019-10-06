@@ -64,11 +64,12 @@ Mit dem Entity Framework Core können natürlich auch INSERT, UPDATE und DELETE 
 Dafür wird der sogenannte EntityState eines Objektes in der DbSet Collection gesetzt.
 
 ![](entity-states.png)
+
 <sup>Quelle: https://www.entityframeworktutorial.net/basics/entity-states.aspx</sup>
 
 Folgendes Codebeispiel generiert einen Schüler mit einer zufälligen Schülernummer und fügt ihn in die
-Datenbank ein. Die Klasse wird nur über die Navigation gesetzt, der Wert von *S_Klasse* wird nach dem 
-Setzen des *EntityState* auf *Added* automatisch gesetzt. Das anschließende *SaveChanges()* schickt
+Datenbank ein. Die Klasse wird nur über die Navigation gesetzt, der Wert für *S_Klasse* wird nach dem 
+Setzen des *EntityState* auf *Added* automatisch gesucht. Das anschließende *SaveChanges()* schickt
 das *INSERT* an die Datenbank.
 ```c#
 Random rnd = new Random();
