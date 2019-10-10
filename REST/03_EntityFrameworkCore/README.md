@@ -129,6 +129,7 @@ so vor:
 - Aktualisiere deinen Rechner auf VS 16.3 und .NET Core 3.
 - Installiere Microsoft.EntityFrameworkCore.Tools und Microsoft.EntityFrameworkCore.Sqlite
 - Generiere die Modelklassen zuerst in den Ordner *Model2*. Danach lösche den alten Ordner *Model* und
-  benenne *Model2* auf *Model* um. Vergiss nicht, auch den Namespace umzubenennen.
+  benenne *Model2* auf *Model* um. Vergiss nicht, auch den Namespace umzubenennen. Achte auch auf die
+  *[JsonIgnore]* Properties über den Navigationsproperties.
 - Passe die Feldnamen an, so dass der Code korrekt ist.
 - Implementiere die CRUD Operationen in den einzelnen Routen des Controllers.
