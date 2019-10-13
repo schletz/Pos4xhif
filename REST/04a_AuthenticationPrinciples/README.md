@@ -106,7 +106,7 @@ namespace Crypt
 
             byte[] hashedData = myHash.ComputeHash(passwordBytes);
 
-            // Das Bytearray wird als Hexstring zurückgegeben.
+            // Das Bytearray wird Base64 codiert zurückgegeben.
             string hashedPassword = Convert.ToBase64String(hashedData);
             Console.WriteLine($"Salt:            {salt}");
             Console.WriteLine($"Password:        {password}");
