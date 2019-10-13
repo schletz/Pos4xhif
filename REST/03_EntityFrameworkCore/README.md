@@ -39,11 +39,10 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
 ## Automatisches Erstellen der Modelklassen
-Ziehe die Datei *Schüler.db* in den Solution Explorer über den Projektnamen. Dadurch wird die Datenbank
-in das Projekt integriert. Mit folgendem Befehl in der Packet Manager Console kann ein Verzeichnis
-Model2 erstellt und die Klassen generiert werden:
+Mit folgendem Befehl in der Packet Manager Console wird ein Verzeichnis *Model* erstellt und die 
+Modelklassen werden generiert. Die Option -Force erzwingt ein Überschreiben vorhandener Dateien.
 ```powershell
-Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model2 -UseDatabaseNames
+Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force
 ```
 
 **Achtung: Für diesen Vorgang muss das Projekt erstellt werden können. Syntaxfehler, die z. B. durch
@@ -122,14 +121,62 @@ catch (Microsoft.EntityFrameworkCore.DbUpdateException)
 }
 ```
  
+## Konfigurieren der Datenbank über ConfigureServices()
+Beim Kompilieren wird eine Warnung ausgegeben: *"To protect potentially sensitive information in your connection string, you should move it out of source code."* Diese entsteht dadurch, dass der
+Connection String in der Methode *SchuleContext.OnConfiguring()* im Quelltext enthalten ist. Um das
+zu beheben, entfernen wir die Methode *OnConfiguring()*, da wir über die Konfigurationsdatei
+den Connection String einlesen wollen.
+
+In ASP.NET gibt es mit der Methode *Startup.ConfigureServices()* eine zentrale Stelle, wo alle
+Konfigurationen - also auch die verwendete Datenbank - eingestellt werden können. Als ersten Schritt
+erweitern wir die Datei *appsettings.json* um einen Punkt *AppSettings*. Darin speichern wir unter 
+dem Eintrag Database den Namen unserer SQLite Datenbank. Die Datei *appsettings.json* sieht danach so aus:
+```js
+{
+  "AppSettings": {
+    "Database":  "Schule.db"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+```
+
+In *Startup.ConfigureServices()* rufen wir nun eine noch zu schreibende Extension Methode 
+*ConfigureDatabase()* auf. Über das *Configuration* Property der Klasse Startup können wir auf
+die gesetzte Konfiguration in *appsettings.json* bequem über den Index zugreifen:
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.ConfigureDatabase(Configuration["AppSettings:Database"]);
+    services.ConfigureCors();
+    services.AddControllers();
+}
+```
+
+In der Klasse *HostingExtensions* ergänzen wir nun diese Methode:
+```c#
+public static void ConfigureDatabase(this IServiceCollection services, string database)
+{
+    services.AddDbContext<SchuleContext>(options =>
+        options.UseSqlite($"DataSource={database}")
+    );
+}
+```
 
 ## Übung
 Öffne die Solution *PostRequestExample.sln* in diesem Ordner und verwende nun die Datenbank statt den Demodaten. Gehe dabei
 so vor:
 - Aktualisiere deinen Rechner auf VS 16.3 und .NET Core 3.
 - Installiere Microsoft.EntityFrameworkCore.Tools und Microsoft.EntityFrameworkCore.Sqlite
-- Generiere die Modelklassen zuerst in den Ordner *Model2*. Danach lösche den alten Ordner *Model* und
-  benenne *Model2* auf *Model* um. Vergiss nicht, auch den Namespace umzubenennen. Achte auch auf die
-  *[JsonIgnore]* Properties über den Navigationsproperties.
+- Generiere die Modelklassen in den Ordner *Model*. Dies ersetzt das "alte" Mockup Model.
 - Passe die Feldnamen an, so dass der Code korrekt ist.
 - Implementiere die CRUD Operationen in den einzelnen Routen des Controllers.
+- Um *self referencing Loops* zu vermeiden, dürfen die Entities (Schüler, Klasse, ...) nicht direkt
+  ausgegeben werden. Der Serializer würde dadurch von Schüler auf die Klasse und dann über die
+  Navigation zum Schüler zurück gehen. Erstelle daher beim Zurückgeben der Daten mit *new { }* eine 
+  anonyme Klasse mit den gewünschten Properties.
+
