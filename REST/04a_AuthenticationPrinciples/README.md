@@ -83,7 +83,7 @@ namespace Crypt
     {
         static void Main(string[] args)
         {
-            // 32stellige GUID als Hexstring als Salt generieren
+            // Salt generieren und als Base64 String speichern.
             string salt = GenerateSalt();
 
             // Nun wird das Passwort mit dem Salt versehen und der SHA256 Hashwert berechnet:
