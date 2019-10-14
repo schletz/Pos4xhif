@@ -51,7 +51,7 @@ namespace AuthExample.App.Services
             if (hash != dbUser.U_Hash) { return null; }
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.UTF8.GetBytes(configuration["AppSettings:Secret"]);
+            byte[] key = Convert.FromBase64String(configuration["AppSettings:Secret"]);
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 // Payload für den JWT.
@@ -106,6 +106,10 @@ namespace AuthExample.App.Services
         }
         private static string CalculateHash(string password, string salt)
         {
+            if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(salt))
+            {
+                throw new ArgumentException("Invalid Salt or Passwort.");
+            }
             byte[] saltBytes = Convert.FromBase64String(salt);
             byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
 

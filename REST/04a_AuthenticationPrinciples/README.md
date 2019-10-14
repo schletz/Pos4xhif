@@ -197,10 +197,10 @@ Die Tabelle würde dann - wenn sie jemand auslesen könnte - so aussehen:
 
 | U_ID	| U_Name   	| U_Salt                  	| U_Hash                                      	| U_Schueler_Nr	| U_Role 	| 
 | ----	| ---------	| ------------------------	| --------------------------------------------	| -------------	| -------	| 
-| 5   	| Schueler1	| 1bZuvLSqvRR2D50UjucQJA==	| Zb/bmd2KjqRJq6KCT4uxi34q2IA8H5xUsBF2lE2d9t8=	| 1001         	| Pupil  	| 
-| 6   	| Schueler2	| 0/Z0+kGGahMyXoL+4n5noQ==	| nq48F3/09sJzrMM03cKuTuJg8yCZfVDjxvuXaSb7FVU=	| 2001         	| Pupil  	| 
-| 7   	| Lehrer1  	| 54c6Y/9wclszvYTn6g6MLQ==	| JNLeUhBDuufmPZHBY75ZkBOAdEcCYUjp45mTt2tY8DY=	|              	| Teacher	| 
-| 8   	| Lehrer2  	| DyKi9Y90Hg8L4g2jv3vGnQ==	| IB8YC8okvFXOgP2Xd7c5GFyoScU/M8PyQe1O96MvTrk=	|              	| Teacher	| 
+| 9   	| Lehrer1  	| noqXFYS7VL5wqxmbOv41OQ==	| C4Tt67lyuAWSVNPFZwtDCuBsXFGB4RR7f7qszW1PJl0=	|              	| Teacher	| 
+| 10  	| Lehrer2  	| FglPztqTfpjd73CpXPA6Og==	| itabYOk1pZkJMCGmnlA4wH9NSvX4RUidW3t0ONiyZjM=	|              	| Teacher	| 
+| 11  	| Schueler1	| s0dhx6/xuNC74HCX5q4rRA==	| hllpA1FpezGSQoZ6Wpnv14tccH2RB15yfsY3H9B1m3A=	| 1001         	| Pupil  	| 
+| 12  	| Schueler2	| mkDTubveMcrkEZBcN6nMag==	| hkV69pMysXr6YkTW8M/YXnGWBrijGfbxvTPcEyS7UQ8=	| 2001         	| Pupil  	| 
 
 
 ## JSON Web Token

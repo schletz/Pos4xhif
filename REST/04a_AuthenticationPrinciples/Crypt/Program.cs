@@ -8,12 +8,15 @@ namespace Crypt
     {
         static void Main(string[] args)
         {
-            // Salt generieren und als Base64 String speichern.
-            string salt = GenerateSalt();
+            //        Salt: 1IL3xJaVSj72xAI+T5etQg==
+            //      Hashed Password: zujBw+E5qb5GlQnKmyXh0TtBzmEFOX3cwNRK8sf2yoU=
 
-            // Nun wird das Passwort mit dem Salt versehen und der SHA256 Hashwert berechnet:
-            string myPassword = "1234";
-            string saltedPassword = CalculateHash(myPassword, salt);
+            if (CalculateHash("schueler", "1bZuvLSqvRR2D50UjucQJA==") == "Zb/bmd2KjqRJq6KCT4uxi34q2IA8H5xUsBF2lE2d9t8=")
+            {
+                Console.WriteLine("RICHTIG!!");
+            }
+
+
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace Crypt
             string hashedPassword = Convert.ToBase64String(hashedData);
             Console.WriteLine($"Salt:            {salt}");
             Console.WriteLine($"Password:        {password}");
-            Console.WriteLine($"Hashed Password: {hashedPassword}");              
+            Console.WriteLine($"Hashed Password: {hashedPassword}");
             return hashedPassword;
         }
         /// <summary>
