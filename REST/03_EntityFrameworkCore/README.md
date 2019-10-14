@@ -58,6 +58,17 @@ public IActionResult Get()
 }
 ```
 
+### Problem mit Autoincrement
+Wird eine Spalte aus *AUTOINCREMENT* Wert deklariert, wird dies unter Umständen nicht korrekt erkannt.
+Um das zu beheben, ist in der Conextklasse die Methode *OnModelCreating()* anzupassen. Dafür wird beim
+entsprechenden Entity statt der Methode *ValueGeneratedNever()* die Methode *ValueGeneratedOnAdd()* 
+verwendet:
+```c#
+entity.Property(e => e.U_ID)
+    .IsRequired()
+    .ValueGeneratedOnAdd();
+```
+
 ## CRUD Operationen mit Entity Framework Core
 Mit dem Entity Framework Core können natürlich auch INSERT, UPDATE und DELETE Anweisungen abgesetzt werden.
 Dafür wird der sogenannte EntityState eines Objektes in der DbSet Collection gesetzt.
