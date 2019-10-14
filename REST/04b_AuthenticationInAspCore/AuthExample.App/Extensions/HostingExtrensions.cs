@@ -56,7 +56,7 @@ namespace AuthExample.App.Extensions
         {
             // Vgl. https://jasonwatmore.com/post/2019/10/11/aspnet-core-3-jwt-authentication-tutorial-with-example-api
 
-            byte[] key = Encoding.UTF8.GetBytes(secret);
+            byte[] key = Convert.FromBase64String(secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
