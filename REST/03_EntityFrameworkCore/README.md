@@ -59,7 +59,7 @@ public IActionResult Get()
 ```
 
 ### Problem mit Autoincrement
-Wird eine Spalte aus *AUTOINCREMENT* Wert deklariert, wird dies unter Umständen nicht korrekt erkannt.
+Wird eine Spalte aul *AUTOINCREMENT* Wert deklariert, wird dies unter Umständen nicht korrekt erkannt.
 Um das zu beheben, ist in der Conextklasse die Methode *OnModelCreating()* anzupassen. Dafür wird beim
 entsprechenden Entity statt der Methode *ValueGeneratedNever()* die Methode *ValueGeneratedOnAdd()* 
 verwendet:
