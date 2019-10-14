@@ -133,7 +133,7 @@ namespace Crypt
         /// <summary>
         /// Prüft, ob das übergebene Passwort mit dem gespeicherten Hashwert und dem Salt übereinstimmt.
         /// </summary>     
-        static bool CheckPasswort(string password, string salt, string hashedPassword) =>
+        static bool CheckPassword(string password, string salt, string hashedPassword) =>
             hashedPassword == CalculateHash(password, salt);
 
     }
