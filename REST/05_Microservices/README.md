@@ -17,6 +17,6 @@ Unter https://dotnet.microsoft.com/learn/aspnet/microservice-tutorial/intro find
 Anleitung zum Erstellen von Microservices in Docker Containern. Diese Anleitung basiert noch auf .NET
 Core 2.2, es können aber die *FROM* Anweisungen im Dockerfile problemlos auf 3.0 aktualisiert werden:
 ```
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2  
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0  
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
 ```
