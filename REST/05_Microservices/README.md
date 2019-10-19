@@ -38,6 +38,7 @@ bcdedit /set hypervisorlaunchtype auto
 ```
 
 Wenn nicht automatisch Dockercontainer beim Systemstart ausgeführt werden sollen, kann der Autostart
-von Docker auch deaktiviert werden:
+von Docker auch deaktiviert werden. Zum Ausführen oder Erstellen von Containern muss Docker Desktop
+natürlich wieder über das Startmenü gestartet werden.
 
 ![](disableDockerAutostart.png)
