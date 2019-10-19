@@ -20,3 +20,24 @@ Core 2.2, es können aber die *FROM* Anweisungen im Dockerfile problemlos auf 3.
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0  
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
 ```
+
+## Docker und Virtual Box
+Docker aktiviert den Windows eigenen Virtualisierungsdienst Hyper-V. Dadurch können Virtuelle Maschinen
+mit Oracle Virtual Box nicht mehr gestartet werden. Falls so eine Maschine gestartet werden soll,
+muss die Eingabeaufforderung als Administrator ausgeführt werden. Der Befehl
+```
+bcdedit /set hypervisorlaunchtype off
+```
+deaktiviert den HV-Hostdienst. Nach einem Neustart kann die VM gestartet werden. Nur ein deaktivieren
+des Dienstes ohne Neustart funktioniert nicht.
+
+Um wieder Docker nutzen zu können, muss der Dienst wieder als Administrator in der Konsole auf 
+automatisch starten gesetzt werden. Nach einem Neustart kann mit Docker gearbeitet werden.
+```
+bcdedit /set hypervisorlaunchtype auto
+```
+
+Wenn nicht automatisch Dockercontainer beim Systemstart ausgeführt werden sollen, kann der Autostart
+von Docker auch deaktiviert werden:
+
+![](disableDockerAutostart.png)
