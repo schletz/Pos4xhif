@@ -68,6 +68,9 @@ der folgenden Optionen der Port geändert werden:
 
 Eine Auflistung aller Konfigurationsmöglichkeiten ist in der [MSDN](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-3.0) verfügbar.
 
+Natürlich müssen die verwendeten Datenbanken und externe Ressourcen auch am Zielrechner zur Verfügung
+stehen. Dafür ist ggf. die Datei *appsettings.json* an die veränderten Connection Strings, etc. anzupassen.
+
 ## Weitere Informationen
 - Setting up ApiKey-based Authentication: https://www.youtube.com/watch?v=Zo3T_See7iI
 - Nick Chapsas: ASP.NET Core 3 & 2.2: https://www.youtube.com/playlist?list=PLUOequmGnXxOgmSDWU7Tl6iQTsOtyjtwU
