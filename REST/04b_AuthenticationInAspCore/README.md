@@ -1,6 +1,8 @@
 # Praktische Umsetzung: Authorization in ASP.NET Core
 
-Siehe Kommentare im Projekt *AuthExample.sln*.
+Siehe Kommentare im Projekt *AuthExample.sln*. Du kannst due Authentifizierung mit Postman testen:
+
+![](PostmanToken.png)
 
 ## Weitere Informationen
 - Setting up ApiKey-based Authentication: https://www.youtube.com/watch?v=Zo3T_See7iI
