@@ -45,7 +45,7 @@ Der Buildprozess ist natürlich komplexer und daher auch fehleranfälliger. Bei 
 Vorgehensweise:
 1. Schließe Visual Studio.
 1. Trenne das Telefon vom Rechner.
-1. Lösche die bin und obj Ordner in allen Projekten (Gemeinsames, UWP und Android Projekt). Falls die
+1. Lösche die *bin* und *obj* Ordner in allen Projekten (Gemeinsames, UWP und Android Projekt). Falls die
    Ordner wegen Zugriffsproblemen nicht gelöscht werden können, starte den Rechner neu und lösche danach
    diese Ordner.
 
