@@ -35,7 +35,7 @@ Ist das Android Smartphone im Debugging Modus verbinden, bietet Visual Studio au
 zum Android Gerät an.
 
 > **Achtung:** Der Buildprozess dauert im Gegensatz zu Konsolen- oder Windowsapplikationen länger. Führe
-> vor dem übertragen mit Build - Build Solution einen vollständigen Build durch. In der Statusleiste unten
+> vor dem übertragen mit *Build* - *Build Solution* einen vollständigen Build durch. In der Statusleiste unten
 > wird der Fortschritt sichtbar. Erst nach erfolgreichem Build ist ein Starten möglich.
 
 ![](run_project.png)
