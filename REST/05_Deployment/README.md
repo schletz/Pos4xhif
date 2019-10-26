@@ -29,10 +29,49 @@ Dependency Injection mit dem IHostingEnvironment Interface abgefragt werden. Ein
 [MSDN](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-3.0)
 verfügbar.
 
-!!! note
-    Test
+## SSL verwenden
+Gerade bei der Übertragung von Passwörtern muss unser Server die Daten über das https Protokoll
+verschlüsseln. Dabei gibt es 2 Möglichkeiten:
+- Verwenden eines vertrauenswürdigen SSL Zertifikates.
+- Generieren eines selbst signierten SSL Zertifikates.
 
-    
+Die Verschlüsselungsalgorithmen und somit die Sicherheit der Verschlüsselung selbst sind bei beiden 
+Varianten gleich, bei selbst signierten Zertifikaten erscheint im Browser jedoch eine Warnmeldung und 
+ist somit nur für Testzwecke geeignet.
+
+### Anpassen der Datei *launchSettings.json*
+Wir ergänzen bei *applicationUrl* in der Datei *Properties/launchSettings.json* einfach eine HTTPS Adresse,
+die auf einem anderen Port als die HTTP Adresse hört:
+```js
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "PostRequestExample.App": {
+      "commandName": "Project",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+```
+
+Falls ein Benutzer die http Adresse ohne SSL aufrufen möchte, können wir ihn über die Methode
+*UseHttpsRedirection()* in der Datei *Startup.cs* auf die https Seite umleiten. Diese Methode muss
+gleich am Anfang aufgerufen werden:
+```c#
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseHttpsRedirection();
+    // Other Code...
+}
+```
+
+> *Achtung*: Dieses Zertifikat ist - wie oben erwähnt - selbst signiert und daher nicht vertrauenswürdig.
+> Für Produktionsanwendungen muss ein vertrauenswürdiges Zertifikat vom Hoster oder einem unabhängigem
+> Anbieter erworben werden.
+
 ## Erstellen des Release Builds
 Der folgende Befehl erzeugt einen Releasebuild mit folgenden Optionen:
 - publish: Fügt alle Abhängigkeiten hinzu.
