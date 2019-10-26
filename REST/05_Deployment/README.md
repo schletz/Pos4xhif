@@ -69,7 +69,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 ```
 
 > **Achtung**: Dieses Zertifikat ist - wie oben erwähnt - selbst signiert und daher nicht vertrauenswürdig.
-> Für Produktionsanwendungen muss ein vertrauenswürdiges Zertifikat vom Hoster oder einem unabhängigem
+> Für Produktionsanwendungen muss ein vertrauenswürdiges Zertifikat vom Hoster oder einem unabhängigen
 > Anbieter erworben werden.
 
 ## Erstellen des Release Builds
