@@ -1,0 +1,14 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "MasterDetailDemo.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/pupils",
+      "applicationUrl": "https://0.0.0.0:8080",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
