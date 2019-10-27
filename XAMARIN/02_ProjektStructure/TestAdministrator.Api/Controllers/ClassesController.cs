@@ -10,26 +10,34 @@ using TestAdministrator.Dto;
 
 namespace TestAdministrator.Api.Controllers
 {
+    /// <summary>
+    /// Liefert Daten zu den Schulklassen.
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassesController : ControllerBase
     {
         private readonly TestsContext _context;
+        /// <summary>
+        /// Konstruktor. Setzt den DB Context.
+        /// </summary>
+        /// <param name="context">Der über services.AddDbContext() gesetzte Context.</param>
         public ClassesController(TestsContext context)
         {
             this._context = context;
         }
 
         /// <summary>
-        /// GET api/classes: Liefert alle Klassen als JSON Array. 
-        /// Braucht ein Login, außer [AllowAnonymous]
-        /// wird gesetzt.
+        /// GET api/classes
+        /// Liefert alle Klassen als JSON Array. Braucht ein Login, außer 
+        /// [AllowAnonymous] wird gesetzt.
         /// </summary>
         /// <returns>
         /// HTTP 200: JSON Array mit allen Klassen der Datenbank.
         /// HTTP 401: Nicht authentifiziert.
-        /// HTTP 500: Datenbank- oder Serverfehler.        /// </returns>
+        /// HTTP 500: Datenbank- oder Serverfehler.        
+        /// </returns>
         //[AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
@@ -56,13 +64,14 @@ namespace TestAdministrator.Api.Controllers
         }
 
         /// <summary>
-        /// GET /api/classes/(klassenname): Liefert Details zu einer Klasse als JSON Object.
+        /// GET /api/classes/(klassenname): 
+        /// Liefert Details zu einer Klasse als JSON Object.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Eindeutiger Name, nach dem in der Datenbank gesucht wird.</param>
         /// <returns>
         /// HTTP 200: JSON Object mit den Klassendetails oder leer be nicht gefundener Klasse.
         /// HTTP 401: Nicht authentifiziert.
-        /// HTTP 403: Der User hat nicht die Rolle Teacher.
+        /// HTTP 403: Nicht autorisiert, der User hat nicht die Rolle Teacher.
         /// HTTP 500: Datenbank- oder Serverfehler.
         /// </returns>
         [HttpGet("{id}")]

@@ -25,11 +25,15 @@ namespace TestAdministrator.App.Services
     class RestService
     {
         private readonly HttpClientHandler _handler;           // Genauere Steuerung des HttpClient
-        private readonly HttpClient _client;
-        private UserDto _currentUser;
+        private readonly HttpClient _client;                   // Einzige Instanz des HttpClient
+        private UserDto _currentUser;                          // Aktuell angemeldeter Benutzer.
+        // Properties werden von System.Text.Json in camelCase umgewandelt. Daher muss bei der
+        // Deserialisierung Case Sensitive deaktiviert werden.
+        private readonly JsonSerializerOptions _jsonOptions =
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         /// <summary>
-        /// Erstellt das Objekt und legt die Http Einstellungen fest.
+        /// Konstruktor. Legt die Http Einstellungen fest.
         /// </summary>
         public RestService()
         {
@@ -48,79 +52,56 @@ namespace TestAdministrator.App.Services
         }
         // Hier werden die angeboteten Serviceses der REST Schnittstelle auf die C# Methoden
         // abgebildet.
-        public Task<IEnumerable<SchoolclassDto>> GetClassesAsync() => GetAsync<IEnumerable<SchoolclassDto>>("classes");
+        public Task<IEnumerable<SchoolclassDto>> GetClassesAsync() => SendAsync<IEnumerable<SchoolclassDto>>(HttpMethod.Get, "classes");
 
         /// <summary>
-        /// Meldet den User an der Adresse (baseUrl)/user/login an.
+        /// Meldet den User an der Adresse (baseUrl)/user/login an und setzt den Token als
+        /// Default Request Header für zukünftige Anfragen.
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="user">Benutzer, der angemeldet werden soll.</param>
         /// <returns>Userobjekt mit Token wenn erfolgreich, null bei ungültigen Daten.</returns>
         public async Task<bool> TryLoginAsync(UserDto user)
         {
-            if (_currentUser != null) { return true; }
-            if (user == null) { throw new ServiceException("User to log in is null."); }
-
-            string baseUrl = DependencyService.Get<AppSettingsService>().Get("ServiceUrl");
-            string url = $"{baseUrl}/user/login";
-
-            // Wurde der Zugriff auf das Internet im Manifest erlaubt? Es muss
-            // <uses-permission android:name="android.permission.INTERNET" />
-            // in Androidprojekt/Properties/AndroidManifest.xml gesetzt werden.
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                throw new ServiceException("No permission for Internet connecions.") { Url = url };
-            }
-
             try
             {
-                string jsonContent = JsonSerializer.Serialize(user);
-                StringContent request = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _client.PostAsync(url, request);
-                if (response.StatusCode == HttpStatusCode.Unauthorized) { return false; }
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new ServiceException("Login Request not successful.")
-                    {
-                        Url = url,
-                        HttpStatusCode = (int)response.StatusCode
-                    };
-                }
-                string token = await response.Content.ReadAsStringAsync();
-                // Setzt den Token in den Authorizationheader des Clients. Somit wird er
-                // bei allen Anfragen mitgesendet.
+                UserDto sentUser = await SendAsync<UserDto>(HttpMethod.Post, "user/login", user);
                 _client.DefaultRequestHeaders.Authorization =
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-                user.Password = "";
-                user.Token = token;
-                _currentUser = user;
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", sentUser.Token);
+                _currentUser = sentUser;
                 return true;
             }
-            catch (ServiceException) { throw; }
-            catch (Exception e)
+            catch (ServiceException e) when (e.HttpStatusCode == (int)HttpStatusCode.Unauthorized)
             {
-                throw new ServiceException("Login Request not successful.")
-                {
-                    Url = url,
-                };
+                return false;
             }
         }
 
         /// <summary>
-        /// Sendet einen Request mit der URL {actionUrl}/{param} an die unter ServiceUrl in der
-        /// Datei appsettings.json angegebene Adresse und gibt die Antwort deserialisiert
-        /// zurück.
+        /// Löscht den Token aus den HTTP Headern. Ein Logout Request in der API ist nicht nötig.
         /// </summary>
-        /// <typeparam name="T">
-        /// Typ für die Deserialisierung. Collections können mit IEnumerable<...> angegeben werden.
-        /// </typeparam>
-        /// <param name="actionUrl"></param>
-        /// <param name="param">Optional. Leerstring wenn nicht angegeben.</param>
         /// <returns></returns>
-        private async Task<T> GetAsync<T>(string actionUrl, string param = "")
+        public void Logout()
         {
-            // Den  Eintrag ServiceUrl aus der Datei appsettings.json holen.
+            _currentUser = null;
+            _client.DefaultRequestHeaders.Authorization = null;
+        }
+
+        Task<T> SendAsync<T>(HttpMethod method, string actionUrl) => SendAsync<T>(method, actionUrl, "", null);
+        Task<T> SendAsync<T>(HttpMethod method, string actionUrl, object requestData) => SendAsync<T>(method, actionUrl, "", requestData);
+        Task<T> SendAsync<T>(HttpMethod method, string actionUrl, string idParam) => SendAsync<T>(method, actionUrl, idParam, null);
+        /// <summary>
+        /// Sendet einen Request an die REST API und gibt das Ergebnis zurück.
+        /// </summary>
+        /// <typeparam name="T">Typ, in den die JSON Antwort des Servers umgewandelt wird.</typeparam>
+        /// <param name="method">HTTP Methode, die zum Senden des Requests verwendet wird.</param>
+        /// <param name="actionUrl">Adresse, die in {baseUrl}/{actionUrl}/{idParam} ersetzt wird.</param>
+        /// <param name="idParam">Adresse, die in {baseUrl}/{actionUrl}/{idParam} ersetzt wird.</param>
+        /// <param name="requestData">Daten, die als JSON Request Body bzw. als Parameter bei GET Requests gesendet werden.</param>
+        /// <returns></returns>
+        public async Task<T> SendAsync<T>(HttpMethod method, string actionUrl, string idParam, object requestData)
+        {
             string baseUrl = DependencyService.Get<AppSettingsService>().Get("ServiceUrl");
-            string url = $"{baseUrl}/{actionUrl}/{param}";
+            string url = $"{baseUrl}/{actionUrl}/{idParam}";
 
             // Wurde der Zugriff auf das Internet im Manifest erlaubt? Es muss
             // <uses-permission android:name="android.permission.INTERNET" />
@@ -132,7 +113,31 @@ namespace TestAdministrator.App.Services
 
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(url);
+                // Die Daten für den Request Body als JSON serialisieren und mitsenden.
+                string jsonContent = JsonSerializer.Serialize(requestData);
+                StringContent request = new StringContent(
+                    jsonContent, Encoding.UTF8, "application/json"
+                );
+
+                HttpResponseMessage response;
+                if (method == HttpMethod.Get)
+                {
+                    string parameters = requestData as string;
+                    if (!string.IsNullOrEmpty(parameters))
+                        url = $"{url}?{parameters}";
+                    response = await _client.GetAsync(url);
+                }
+                else if (method == HttpMethod.Post)
+                { response = await _client.PostAsync(url, request); }
+                else if (method == HttpMethod.Put)
+                { response = await _client.PutAsync(url, request); }
+                else if (method == HttpMethod.Delete)
+                { response = await _client.DeleteAsync(url); }
+                else
+                {
+                    throw new ServiceException("Unsupported Request Method") { Url = url };
+                }
+
                 if (!response.IsSuccessStatusCode)
                 {
                     throw new ServiceException("Request not successful.")
@@ -144,7 +149,7 @@ namespace TestAdministrator.App.Services
                 string result = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    return JsonSerializer.Deserialize<T>(result);
+                    return JsonSerializer.Deserialize<T>(result, _jsonOptions);
                 }
                 catch (Exception e)
                 {
@@ -159,11 +164,9 @@ namespace TestAdministrator.App.Services
             {
                 throw new ServiceException("Request not successful.", e)
                 {
-                    Url = url
+                    Url = url,
                 };
             }
         }
-
-
     }
 }

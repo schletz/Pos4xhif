@@ -13,7 +13,7 @@ using Xamarin.Forms;
 namespace TestAdministrator.App.Services
 {
     /// <summary>
-    /// Liest Konfigurationseinstellungen aus der Datei appsettings.json. Diese datei muss als
+    /// Liest Konfigurationseinstellungen aus der Datei appsettings.json. Diese Datei muss als
     /// eingebettete Resource in Visual Studio deklariert werden.
     /// https://www.andrewhoefling.com/Blog/Post/xamarin-app-configuration-control-your-app-settings
     /// </summary>
@@ -23,6 +23,9 @@ namespace TestAdministrator.App.Services
         // von der Datei gelesen.
         private Lazy<JsonElement> _settings;
         public string ConfigFile => "appsettings.json";
+        /// <summary>
+        /// Konstruktor. Setzt das Lazyproperty zum Lesen der Datei, führt es aber nicht aus.
+        /// </summary>
         public AppSettingsService()
         {
             // Wird erstmalig eine Einstellung angefragt, wird die Datei ausgelesen.
@@ -32,7 +35,7 @@ namespace TestAdministrator.App.Services
         /// <summary>
         /// Liefert den Wert eines Properties in der appsettings.json.
         /// </summary>
-        /// <param name="propertyName"></param>
+        /// <param name="propertyName">Propertyname, nachdem gesucht wird.</param>
         /// <exception cref="ServiceException">Propertyname wurde nicht gefunden.</exception>
         /// <exception cref="ServiceException">Zugriff aud appsettings.json nicht möglich.</exception>
         /// <returns>Wert des Properties.</returns>
@@ -52,8 +55,8 @@ namespace TestAdministrator.App.Services
         /// Liefert den Wert eines Properties in der appsettings.json oder den angegebenen 
         /// Defaultwert, falls das Property nicht gefunden wird oder gelesen werden kann.
         /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="defaultValue"></param>
+        /// <param name="propertyName">Propertyname, nach dem gesucht wird.</param>
+        /// <param name="defaultValue">Standardwert, der im Fehlerfall geliefert wird.</param>
         /// <exception cref="ServiceException">Zugriff aud appsettings.json nicht möglich.</exception>
         /// <returns>Wert des Properties oder defaultValue, wenn nicht ermittelbar.</returns>
         public string GetOrDefault(string propertyName, string defaultValue)
@@ -69,7 +72,7 @@ namespace TestAdministrator.App.Services
         }
 
         /// <summary>
-        /// Liest die Datei appsettings.json und gibt das JSON Dokument geparst zurück.
+        /// Liest die Datei appsettings.json und parst sie.
         /// </summary>
         /// <returns>JsonElement mit dem Inhalt von appsettings.json</returns>
         private JsonElement ReadAppSettings()

@@ -38,15 +38,17 @@ namespace TestAdministrator.Api
             // den Server dafür konfigurieren.
             services.ConfigureJwt(Configuration["AppSettings:Secret"]);
 
-            // Die Propertynamen nicht in camelCase umwandeln. Falls das gewollt ist, kann 
-            // AddJsonOptions() natürlich entfernt werden.
-            services.AddControllers()
-                .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+            // Sollen die Propertynamen nicht in camelCase umgewandelt werden, kann
+            //.AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+            // angehängt werden.
+            services.AddControllers();
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Wird ASPNETCORE_ENVIRONMENT: Development bei environmentVariables gesetzt, wird
+            // bei einer Fehlermeldung ein Stacktrace ausgegeben.
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -32,6 +32,9 @@ namespace TestAdministrator.App.ViewModels
             set { _classes = value; OnPropertyChanged(); }
         }
 
+        /// <summary>
+        /// Flag, ob gerade ein Request läuft oder ob Controls gedrückt werden können.
+        /// </summary>
         private bool _acceptInput = true;
         public bool AcceptInput
         {
@@ -46,17 +49,23 @@ namespace TestAdministrator.App.ViewModels
         {
             _restService = DependencyService.Get<RestService>();
         }
+        /// <summary>
+        /// Lädt eine Liste der Klassen von der REST API.
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadClasses()
         {
             try
             {
                 AcceptInput = false;
+                // Zum Testen melden wir uns an.
                 if (await _restService.TryLoginAsync(
                     new UserDto { Username = "schueler", Password = "pass" }
                 ))
                 {
                     Classes = await _restService.GetClassesAsync();
-
+                    // Und zum Testen melden wir uns wieder ab.
+                    _restService.Logout();
                 }
             }
             catch (Exception e)
