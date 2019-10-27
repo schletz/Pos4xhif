@@ -8,6 +8,9 @@ namespace Crypt
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(GenerateSalt(1024));
+            
+            // Passwortüberprüfung: Stimmt das Kennwort "schueler" bei folgenden Daten in der db:
             //        Salt: 1IL3xJaVSj72xAI+T5etQg==
             //      Hashed Password: zujBw+E5qb5GlQnKmyXh0TtBzmEFOX3cwNRK8sf2yoU=
 
