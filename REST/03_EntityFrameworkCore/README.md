@@ -59,7 +59,7 @@ public IActionResult Get()
 ```
 
 ### Problem mit Autoincrement
-Wird eine Spalte aul *AUTOINCREMENT* Wert deklariert, wird dies unter Umständen nicht korrekt erkannt.
+Wird eine Spalte als *AUTOINCREMENT* Wert deklariert, wird dies unter Umständen nicht korrekt erkannt.
 Um das zu beheben, ist in der Conextklasse die Methode *OnModelCreating()* anzupassen. Dafür wird beim
 entsprechenden Entity statt der Methode *ValueGeneratedNever()* die Methode *ValueGeneratedOnAdd()* 
 verwendet:
@@ -68,6 +68,8 @@ entity.Property(e => e.U_ID)
     .IsRequired()
     .ValueGeneratedOnAdd();
 ```
+Außerdem werden Datumswerte in den einzelnen Modelklassen als Bytearray generiert. Hier muss *byte[]* 
+durch *DateTime* ersetzt werden.
 
 ## CRUD Operationen mit Entity Framework Core
 Mit dem Entity Framework Core können natürlich auch INSERT, UPDATE und DELETE Anweisungen abgesetzt werden.

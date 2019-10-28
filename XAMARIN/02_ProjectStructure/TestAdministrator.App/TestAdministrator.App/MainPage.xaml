@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- xmlns:local="clr-namespace:TestAdministrator.App.ViewModels" erstellt einen local Namespace,
+     in dem sich das Viewmodel befindet. -->
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -11,8 +13,9 @@
         <ResourceDictionary>
             <local:HasValueConverter x:Key="hasValueConverter" />
         </ResourceDictionary>
-    </ContentPage.Resources>    
+    </ContentPage.Resources>
     <ContentPage.BindingContext>
+        <!-- Instanzieren des Viewmodels -->
         <local:MainViewModel />
     </ContentPage.BindingContext>
     <StackLayout>

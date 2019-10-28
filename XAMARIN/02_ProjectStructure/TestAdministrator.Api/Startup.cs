@@ -28,19 +28,19 @@ namespace TestAdministrator.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // SQLite Datenbank mit dem Namen aus appsettings.json konfigurieren. Wird
-            // automatisch bei den Controllern im Konstruktor übergeben, wenn sie den Parameter TestsContext
+            // automatisch bei den Controllern im Konstruktor Ã¼bergeben, wenn sie den Parameter TestsContext
             // erwarten.
             services.AddDbContext<TestsContext>(options =>
                 options.UseSqlite($"DataSource={Configuration["AppSettings:Database"]}")
             );
 
-            // Das Secret für den JSON Web Token aus appsettings.json lesen und 
-            // den Server dafür konfigurieren.
+            // Das Secret fÃ¼r den JSON Web Token aus appsettings.json lesen und 
+            // den Server dafÃ¼r konfigurieren.
             services.ConfigureJwt(Configuration["AppSettings:Secret"]);
 
             // Sollen die Propertynamen nicht in camelCase umgewandelt werden, kann
             //.AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
-            // angehängt werden.
+            // angehÃ¤ngt werden.
             services.AddControllers();
 
         }

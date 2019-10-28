@@ -38,7 +38,7 @@ namespace TestAdministrator.Api.Controllers
         /// HTTP 401: Nicht authentifiziert.
         /// HTTP 500: Datenbank- oder Serverfehler.        
         /// </returns>
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
         {
@@ -49,7 +49,8 @@ namespace TestAdministrator.Api.Controllers
                                  {
                                      Id = c.C_ID,
                                      Department = c.C_Department,
-                                     ClassTeacher = c.C_ClassTeacher
+                                     ClassTeacher = c.C_ClassTeacher,
+                                     StudentCount = c.Pupil.Count()
                                  };
                 return Ok(allClasses);
             }

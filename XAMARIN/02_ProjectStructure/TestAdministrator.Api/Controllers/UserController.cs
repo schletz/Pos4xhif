@@ -14,6 +14,7 @@ namespace TestAdministrator.Api.Controllers
     /// <summary>
     /// Bearbeitet Loginrequests.
     /// </summary>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
