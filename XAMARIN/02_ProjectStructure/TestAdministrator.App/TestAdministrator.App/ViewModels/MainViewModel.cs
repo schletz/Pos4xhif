@@ -71,7 +71,7 @@ namespace TestAdministrator.App.ViewModels
             catch (Exception e)
             {
 #if DEBUG
-                await Application.Current.MainPage.DisplayAlert("Fehler", e.ToString(), "OK");
+                await App.Current.MainPage.DisplayAlert("Fehler", e.ToString(), "OK");
 #endif
             }
             AcceptInput = true;

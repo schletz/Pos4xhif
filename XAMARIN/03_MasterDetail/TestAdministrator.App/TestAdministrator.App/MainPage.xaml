@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- MainPage: Lädt die Seite mit dem Namen MasterPage als Materpage und DashboardPage als DetailPage -->
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TestAdministrator.App.MainPage"
+             xmlns:local="clr-namespace:TestAdministrator.App"
+             Title="MyTests">
+    <MasterDetailPage.Master>
+        <!-- Verweis auf die Masterpage mit dem Menü im Namespace local, siehe oben -->
+        <local:MasterPage x:Name="MasterPage" />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <!-- Verweis auf die zuerst angezeigte Detail Page im Namespace pages, siehe oben -->
+                <local:DashboardPage />
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
