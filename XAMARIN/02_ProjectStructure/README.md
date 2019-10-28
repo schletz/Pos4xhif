@@ -1,4 +1,4 @@
-# Erstellen einer Solution für eine App mit REST API.
+# Erstellen einer Solution für eine App mit REST API
 Am Anfang jedes Projektes steht der Aufbau der Visual Studio Solution. Anhand eines Beispiels, der
 App *TestAdministrator*, soll das Erstellen der Solution von Grund auf gezeigt werden.
 
