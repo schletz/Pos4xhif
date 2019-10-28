@@ -46,10 +46,10 @@ entity.Property(e => e.U_ID)
 Außerdem werden Datumswerte in den einzelnen Modelklassen als Bytearray generiert. Hier muss *byte[]* 
 durch *DateTime* ersetzt werden.
 
-### Auslagern der Datenbankkonfiguration: Anpassen von *appsettings.json*
+### Anpassen von *appsettings.json*: Datenbankpfad und JWT Secret
 In der Contextklasse im Model entfernen wir die Methode *OnConfiguring()*. Danach öffnen wir *appsettings.json*
 und fügen ein Property AppSettings hinzu. Unter *Database* geben wir den Namen der Datenbank an. Bei der
-gelegenheit generieren wir gleich einen Base64 String als Secret für den JSON Web Token, welches mit 
+Gelegenheit generieren wir gleich einen Base64 String als Secret für den JSON Web Token, welches mit 
 dem Demoprogramm im Kapitel 
 [04a_AuthenticationPrinciples](https://github.com/schletz/Pos4xhif/tree/master/REST/04a_AuthenticationPrinciples)
 generiert werden kann.
