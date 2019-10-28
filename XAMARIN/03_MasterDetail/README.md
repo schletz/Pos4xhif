@@ -1,5 +1,6 @@
 # Master Detail View
 Eine Xamarin App besteht aus mehreren Elementen:
+
 | Element | Bedeutung   |
 | ------- | ----------- |
 | Page    | Am Gerät angezeigte Seite. Entspricht dem Fenster in WPF bzw. der Activity in Android. Sie beinhaltet ein Layout, welches vie Viewelemente anordnet. |
