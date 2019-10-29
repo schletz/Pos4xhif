@@ -274,3 +274,11 @@ In diesem Projekt befinden sich 2 hilfreiche BAT-Dateien:
 - *Api/run.cmd*: Startet die REST API von der Kommandozeile aus, wenn z. B. die App auf das Smartphone
   übertragen und getestet werden soll.
 
+## Übung
+Falls du in PRE ein eigenes Projekt hast, wo eine App benötigt wird, kannst du diese Struktur passend
+für dein Projekt erstellen. Verwende zum Testen eine SQLite Datenbank.
+
+Falls dein Projekt keine App beinhaltet, überlege dir eine kleines Thema für eine neue App. Die Datenbank
+muss eine Usertabelle und Daten, die an spezifische Rechte gebunden sind, beinhalten (z. B. Termine,
+die einen Eigentümer haben, etc.). Die Datenbank muss nicht groß sein, eine abgebildete 1:n Beziehung
+ist ausreichend.
