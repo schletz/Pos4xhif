@@ -37,7 +37,7 @@ namespace TestAdministrator.App
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void ViewCell_Tapped(object sender, EventArgs e)
+        private async void ClassList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ClassViewModel vm = BindingContext as ClassViewModel;
             await Navigation.PushAsync(new ClassDetailPage(vm.SelectedClass.Id));

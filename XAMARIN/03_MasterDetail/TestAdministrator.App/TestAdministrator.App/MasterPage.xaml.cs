@@ -30,8 +30,8 @@ namespace TestAdministrator.App
 
         private void NavigationList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var mainPage = App.Current.MainPage as MasterDetailPage;
-            var item = e.SelectedItem as NavigationItem;
+            MasterDetailPage mainPage = App.Current.MainPage as MasterDetailPage;
+            NavigationItem item = e.SelectedItem as NavigationItem;
             if (mainPage != null && item != null)
             {
                 // Wir brauchen eine Navigation, sonst kommen wir in Android nicht mehr zurück wenn

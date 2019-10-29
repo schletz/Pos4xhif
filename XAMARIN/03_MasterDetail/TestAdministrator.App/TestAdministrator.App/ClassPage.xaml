@@ -17,10 +17,10 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <ListView x:Name="ClassList" ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}">
+            <ListView x:Name="ClassList" ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}" ItemSelected="ClassList_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Tapped="ViewCell_Tapped">
+                        <ViewCell>
                             <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
                                 <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" 
                                    Text="{Binding Id}" FontSize="24"/>

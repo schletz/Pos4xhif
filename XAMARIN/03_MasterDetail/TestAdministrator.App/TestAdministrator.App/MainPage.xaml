@@ -10,7 +10,7 @@
              Title="MyTests">
     <MasterDetailPage.Master>
         <!-- Verweis auf die Masterpage mit dem Menü im Namespace local, siehe oben -->
-        <local:MasterPage x:Name="MasterPage" />
+        <local:MasterPage />
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <NavigationPage>
