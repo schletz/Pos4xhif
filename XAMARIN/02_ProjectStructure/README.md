@@ -278,7 +278,22 @@ In diesem Projekt befinden sich 2 hilfreiche BAT-Dateien:
 Falls du in PRE ein eigenes Projekt hast, wo eine App benötigt wird, kannst du diese Struktur passend
 für dein Projekt erstellen. Verwende zum Testen eine SQLite Datenbank.
 
-Falls dein Projekt keine App beinhaltet, überlege dir eine kleines Thema für eine neue App. Die Datenbank
-muss eine Usertabelle und Daten, die an spezifische Rechte gebunden sind, beinhalten (z. B. Termine,
+Falls dein Projekt keine App beinhaltet, kannst du dir eine kleines Thema für eine neue App überlegen. 
+Die Datenbank muss eine Usertabelle und Daten, die an spezifische Rechte gebunden sind, beinhalten (z. B. Termine,
 die einen Eigentümer haben, etc.). Die Datenbank muss nicht groß sein, eine abgebildete 1:n Beziehung
-ist ausreichend.
+ist ausreichend. Es müssen folgende Punkte vorhanden sein:
+- Implementierte Usertabelle in der Datenbank mit Salt, Hash und Rolle.
+- Authentifizierung und Autorisierung mit ASP.NET
+- Routen, die je nach Benutzerrolle zugänglich sind oder nicht.
+- Routen, die je nach Benutzer zugänglich sind oder nicht.
+- Eine Loginseite in der App.
+- Eine MasterDetailPage in der App für den angemeldeten Benutzer.
+- Mindestens 2 Detailseiten, wobei eine auch weitere Detailseiten aufruft 
+  (z. B. Druck auf den Termin führt zu Termindetails).
+- Eine Eingabemaske für neue Elemente.
+- Fehlerbehandlung, falls der Server nicht erreichbar ist.
+
+Falls die ersten beiden Punkte nicht ansprechend sind, können die Übungen in den zukünftigen Themen
+abgearbeitet werden. Die Grundstruktur wird immer in der Angabe mitgegeben, es handelt sich dann um
+Erweiterungen dieser Struktur. Ein "Sehr gut" oder "Gut" ist allerdings nur mit den ersten beiden
+Punkten erreichbar, da sonst die Selbstständigkeit nicht ausreichend gegeben ist.
