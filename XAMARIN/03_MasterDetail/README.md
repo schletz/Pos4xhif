@@ -123,7 +123,7 @@ Um diese Aufgabe zu lösen, bearbeite folgende Punkte:
    aufgerufen wird.
 
 1. Ändere dem XAML Code von [DashboardPage.xaml](TestAdministrator.App/TestAdministrator.App/DashboardPage.xaml),
-   dass ein neu erstelltes Viewmodel eingebunden wird. Die Darstellung der Tests erfolgt als *ListView*,
+   sodass ein neu erstelltes Viewmodel eingebunden wird. Die Darstellung der Tests erfolgt als *ListView*,
    das Layout kann beliebig gewählt werden.
 
 ## Datenbankschema
