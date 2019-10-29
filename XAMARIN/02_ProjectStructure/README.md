@@ -293,7 +293,8 @@ ist ausreichend. Es müssen folgende Punkte vorhanden sein:
 - Eine Eingabemaske für neue Elemente.
 - Fehlerbehandlung, falls der Server nicht erreichbar ist.
 
-Falls die ersten beiden Punkte nicht ansprechend sind, können die Übungen in den zukünftigen Themen
-abgearbeitet werden. Die Grundstruktur wird immer in der Angabe mitgegeben, es handelt sich dann um
-Erweiterungen dieser Struktur. Ein "Sehr gut" oder "Gut" ist allerdings nur mit den ersten beiden
-Punkten erreichbar, da sonst die Selbstständigkeit nicht ausreichend gegeben ist.
+Falls keine eigene Aufgabenstellung gewollt wird oder der Fortschritt bem eigenen Projekt nicht ausreichend ist, 
+können auch die Übungen in den zukünftigen Themen abgearbeitet werden. Die Grundstruktur wird immer 
+in der Angabe mitgegeben, es handelt sich dann um Erweiterungen dieser Struktur. Ein "Sehr gut" oder 
+"Gut" ist allerdings nur mit den ersten beiden Punkten erreichbar, da die Selbstständigkeit 
+nicht ausreichend gegeben ist.
