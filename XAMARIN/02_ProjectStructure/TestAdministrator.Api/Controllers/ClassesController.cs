@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -81,20 +82,30 @@ namespace TestAdministrator.Api.Controllers
         {
             try
             {
-                // Wir verbinden select und where, damit die Navigation Properties geladen werden.
-                // Würden wir zuerst mit _context.Schoolclass.Find() suchen, ist die Liste der
-                // Schüler leer, da nur die Tabelle SchoolClass gelesen wird.
-                SchoolclassDto found = (from c in _context.Schoolclass
-                                        where c.C_ID == id
-                                        select new SchoolclassDto
-                                        {
-                                            Id = c.C_ID,
-                                            Department = c.C_Department,
-                                            ClassTeacher = c.C_ClassTeacher,
-                                            StudentCount = c.Pupil.Count()
-                                        }).FirstOrDefault();
-                if (found == null) return Ok();
-                return Ok(found);
+                // Mit Find() bekommen wir keine Navigation Properties. Daher filtern wir mit Where.
+                // Durch FirstOrDefault wird ein JSON Object und kein Array geliefert.
+                var result = (from s in _context.Schoolclass
+                              where s.C_ID.ToUpper() == id.ToUpper()
+                              select new SchoolclassDto
+                              {
+                                  Id = s.C_ID,
+                                  Department = s.C_Department,
+                                  ClassTeacher = s.C_ClassTeacher,
+                                  StudentCount = s.Pupil.Count(),
+                                  // Alle Lehrer, die diese Klasse unterrichten, liefern.
+                                  // Da LINQ to SQL bei Unterabfragen nicht alles generieren kann,
+                                  // laden wir die Zwischenergebnisse mit ToList() in den Speicher.
+                                  // Das letzte ToList() ist für den Scope wichtig.
+                                  Teachers = (from t in _context.GetClassTeachers(id).ToList()
+                                              select new TeacherDto
+                                              {
+                                                  Id = t.T_ID,
+                                                  Firstname = t.T_Firstname,
+                                                  Lastname = t.T_Lastname,
+                                                  Email = t.T_Email
+                                              }).ToList()
+                              }).FirstOrDefault();
+                return Ok(result);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException)
             {

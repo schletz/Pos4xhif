@@ -9,5 +9,6 @@ namespace TestAdministrator.Dto
         public string Department { get; set; }
         public string ClassTeacher { get; set; }
         public int StudentCount { get; set; }
+        public IEnumerable<TeacherDto> Teachers { get; set; }
     }
 }
