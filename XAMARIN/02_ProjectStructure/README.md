@@ -161,6 +161,8 @@ Diese Klasse weist Properties auf, die wir nicht in einer DTO Klasse brauchen:
 
 Andererseits möchten wir auch Daten übermitteln, die erst in der Businesslogik des Servers ermittelt
 werden und die für die Anzeige am Client hilfreich sind. In diesem Beispiel ist dies die Schüleranzahl.
+Das bedeutet, dass DTO Klassen nicht 1:1 Abbildungen von Datenbanktabellen sind, sondern sich an den
+Bedürfnissen des Clients orientieren.
 
 Unsere DTO Klasse ist eine reine Datenhaltende Klasse ohne Logik, deswegen kann sie schlank gehalten
 werden.

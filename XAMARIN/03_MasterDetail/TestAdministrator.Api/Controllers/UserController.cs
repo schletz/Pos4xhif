@@ -47,16 +47,26 @@ namespace TestAdministrator.Api.Controllers
         /// </returns>
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody]UserDto user)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<UserDto> Login([FromBody]UserDto user)
         {
-            string token = userService.GenerateToken(user);
+            try
+            {
+                string token = userService.GenerateToken(user);
 
-            // HTTP 401 liefern, wenn der User nicht authentifiziert werden kann.
-            if (token == null)
-                return Unauthorized();
-            user.Token = token;
-            user.Password = "";
-            return Ok(user);
+                // HTTP 401 liefern, wenn der User nicht authentifiziert werden kann.
+                if (token == null)
+                    return Unauthorized();
+                user.Token = token;
+                user.Password = "";
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = e.Message, Details = e.InnerException?.Message });
+            }
         }
 
         /// <summary>
@@ -67,12 +77,22 @@ namespace TestAdministrator.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("logout")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Logout()
         {
-            string username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-            // TODO: Ressourcen bereinigen.
-            return Ok();
+            try
+            {
+                string username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                // TODO: Ressourcen bereinigen.
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = e.Message, Details = e.InnerException?.Message });
+            }
         }
     }
 }

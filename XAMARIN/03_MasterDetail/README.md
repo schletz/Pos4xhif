@@ -96,4 +96,32 @@ Argumente im Konstruktor haben. Bei Argumenten wird im CodeBehind der *BindingCo
 wie in [ClassDetailPage.xaml.cs](TestAdministrator.App/TestAdministrator.App/ClassDetailPage.xaml.cs).
 
 
+## Übung
+Das Dashboard soll alle in der Datenbank eingetragenen Tests des angemeldeten Lehrers anzeigen. Da
+wir noch keine Loginseite haben, können wir das Login im Code wie in 
+[ClassDetailViewModel.cs](TestAdministrator.App/TestAdministrator.App/ViewModels/ClassDetailViewModel.cs)
+einfach vor dem Request senden.
 
+Um diese Aufgabe zu lösen, bearbeite folgende Punkte:
+1. Erstelle eine DTO Klasse *TestDto*, die alle relevanten Daten über den Test liefert. Dies sind alle
+   Einträge in der Tabelle Tests und zudem noch der Klassenvorstand der betroffenen Klasse.
+
+1. Erstelle einen Controller Tests, der auf den Request *GET /api/tests/teacher/(accountname)* reagiert. Diese Route
+   soll *IEnumerable&lt;TestDto&gt;* liefern, allerdings nur wenn der angemeldete User auch den selben Accountnamen hat wie 
+   in der URL angegeben. Andernfall soll HTTP 403 geliefert werden. In der Datenbank befindet sich 
+   der Accountname der Lehrer in der Spalte *T_Account* der Tabelle *Teacher*. Benutzername und Rolle 
+   können in der Methode *Logout()* von
+   [UserController.cs](TestAdministrator.Api/Controllers/UserController.cs) ermittelt werden.
+
+1. Teste in Postman, indem du dich mittels *POST /api/user/login* mit einem gültigen Accountnamen (z. B. *schletz*) 
+   anmeldest. Da das Userservice das Passwort (noch) nicht prüft, wird bei jedem Passwort ein Token 
+   geliefert. Danach solltest du mit *GET api/tests/teacher/SZ* 6 Tests als JSON Array sehen.
+
+1. Füge in [RestService.cs](TestAdministrator.App/TestAdministrator.App/Services/RestService.cs) der
+   App eine Methode *GetTestsByTeacherAsync(string teacherId)* ein, die *Task&lt;IEnumerable&lt;TestDto&gt;&gt;* 
+   liefert. Verwende dabei die Methode *SendAsync()* des Rest Services, wie sie von *GetClassDetailsAsync()* 
+   aufgerufen wird.
+
+1. Ändere dem XAML Code von [DashboardPage.xaml](TestAdministrator.App/TestAdministrator.App/DashboardPage.xaml),
+   dass ein neu erstelltes Viewmodel eingebunden wird. Die Darstellung der Tests erfolgt als *ListView*,
+   das Layout kann beliebig gewählt werden.
