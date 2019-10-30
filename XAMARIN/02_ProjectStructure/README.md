@@ -27,7 +27,7 @@ Install-Package Microsoft.EntityFrameworkCore.Tools   # EF Tools installieren
 Install-Package Microsoft.EntityFrameworkCore.Sqlite  # SQLite Treiber installieren
 # Modelklassen aus der Datenbank MyDb, die im selben Verzeichnis wie die Solution liegt, 
 # in den Ordner Model generieren. Dabei werden bestehende Dateien überschrieben.
-Scaffold-DbContext "DataSource=../MyDb.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force
+Scaffold-DbContext "DataSource=../MyDb.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force -DataAnnotations
 ```
 
 ### Anpassen der Modelklassen bei SQLite

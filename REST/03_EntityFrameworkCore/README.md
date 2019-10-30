@@ -42,7 +42,7 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite
 Mit folgendem Befehl in der Packet Manager Console wird ein Verzeichnis *Model* erstellt und die 
 Modelklassen werden generiert. Die Option -Force erzwingt ein Überschreiben vorhandener Dateien.
 ```powershell
-Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force
+Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force -DataAnnotations
 ```
 
 **Achtung: Für diesen Vorgang muss das Projekt erstellt werden können. Syntaxfehler, die z. B. durch

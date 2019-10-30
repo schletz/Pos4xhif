@@ -26,8 +26,6 @@ namespace TestAdministrator.Api.Model
         {
             modelBuilder.Entity<Lesson>(entity =>
             {
-                entity.HasKey(e => e.L_ID);
-
                 entity.HasIndex(e => e.L_Class)
                     .HasName("SchoolclassLesson");
 
@@ -42,23 +40,9 @@ namespace TestAdministrator.Api.Model
 
                 entity.Property(e => e.L_ID).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.L_Class)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
-
                 entity.Property(e => e.L_Day).HasDefaultValueSql("0");
 
                 entity.Property(e => e.L_Hour).HasDefaultValueSql("0");
-
-                entity.Property(e => e.L_Room).HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.L_Subject)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.L_Teacher)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
 
                 entity.Property(e => e.L_Untis_ID).HasDefaultValueSql("0");
 
@@ -66,10 +50,6 @@ namespace TestAdministrator.Api.Model
                     .WithMany(p => p.Lesson)
                     .HasForeignKey(d => d.L_Class)
                     .OnDelete(DeleteBehavior.ClientSetNull);
-
-                entity.HasOne(d => d.L_HourNavigation)
-                    .WithMany(p => p.Lesson)
-                    .HasForeignKey(d => d.L_Hour);
 
                 entity.HasOne(d => d.L_TeacherNavigation)
                     .WithMany(p => p.Lesson)
@@ -79,19 +59,11 @@ namespace TestAdministrator.Api.Model
 
             modelBuilder.Entity<Period>(entity =>
             {
-                entity.HasKey(e => e.P_Nr);
-
-                entity.Property(e => e.P_Nr).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.P_From).HasColumnType("TIMESTAMP");
-
-                entity.Property(e => e.P_To).HasColumnType("TIMESTAMP");
+                entity.Property(e => e.P_Nr).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Pupil>(entity =>
             {
-                entity.HasKey(e => e.P_ID);
-
                 entity.HasIndex(e => e.P_Account)
                     .HasName("idx_P_Account")
                     .IsUnique();
@@ -99,23 +71,7 @@ namespace TestAdministrator.Api.Model
                 entity.HasIndex(e => e.P_Class)
                     .HasName("SchoolclassPupil");
 
-                entity.Property(e => e.P_ID).ValueGeneratedNever();
-
-                entity.Property(e => e.P_Account)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(16)");
-
-                entity.Property(e => e.P_Class)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.P_Firstname)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(100)");
-
-                entity.Property(e => e.P_Lastname)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(100)");
+                entity.Property(e => e.P_ID).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.P_ClassNavigation)
                     .WithMany(p => p.Pupil)
@@ -125,53 +81,19 @@ namespace TestAdministrator.Api.Model
 
             modelBuilder.Entity<Schoolclass>(entity =>
             {
-                entity.HasKey(e => e.C_ID);
-
                 entity.HasIndex(e => e.C_ClassTeacher)
                     .HasName("TeacherSchoolclass");
-
-                entity.Property(e => e.C_ID).HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.C_ClassTeacher).HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.C_Department)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
-
-                entity.HasOne(d => d.C_ClassTeacherNavigation)
-                    .WithMany(p => p.Schoolclass)
-                    .HasForeignKey(d => d.C_ClassTeacher);
             });
 
             modelBuilder.Entity<Teacher>(entity =>
             {
-                entity.HasKey(e => e.T_ID);
-
                 entity.HasIndex(e => e.T_Account)
                     .HasName("idx_T_Account")
                     .IsUnique();
-
-                entity.Property(e => e.T_ID).HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.T_Account)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(100)");
-
-                entity.Property(e => e.T_Email).HasColumnType("VARCHAR(255)");
-
-                entity.Property(e => e.T_Firstname)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(100)");
-
-                entity.Property(e => e.T_Lastname)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(100)");
             });
 
             modelBuilder.Entity<Test>(entity =>
             {
-                entity.HasKey(e => e.TE_ID);
-
                 entity.HasIndex(e => e.TE_Class)
                     .HasName("SchoolclassTest");
 
@@ -182,22 +104,6 @@ namespace TestAdministrator.Api.Model
                     .HasName("TeacherTest");
 
                 entity.Property(e => e.TE_ID).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.TE_Class)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.TE_Date)
-                    .IsRequired()
-                    .HasColumnType("TIMESTAMP");
-
-                entity.Property(e => e.TE_Subject)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
-
-                entity.Property(e => e.TE_Teacher)
-                    .IsRequired()
-                    .HasColumnType("VARCHAR(8)");
 
                 entity.HasOne(d => d.TE_ClassNavigation)
                     .WithMany(p => p.Test)

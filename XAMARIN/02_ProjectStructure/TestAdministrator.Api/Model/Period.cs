@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestAdministrator.Api.Model
 {
@@ -11,11 +13,16 @@ namespace TestAdministrator.Api.Model
             Test = new HashSet<Test>();
         }
 
+        [Key]
         public long P_Nr { get; set; }
+        [Column(TypeName = "TIMESTAMP")]
         public DateTime P_From { get; set; }
+        [Column(TypeName = "TIMESTAMP")]
         public DateTime P_To { get; set; }
 
+        [InverseProperty("L_HourNavigation")]
         public virtual ICollection<Lesson> Lesson { get; set; }
+        [InverseProperty("TE_LessonNavigation")]
         public virtual ICollection<Test> Test { get; set; }
     }
 }
