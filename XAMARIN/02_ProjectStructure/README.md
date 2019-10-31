@@ -252,7 +252,7 @@ In diesem Musterprojekt ist eine View (*MainPage*) und ein Viewmodel (*Viewmodel
 Demonstration definiert. Im eigenen Projekt entstehen natürlich eigene Views und Viewmodels, sodass 
 eine Übernahme dieses Codes wenig sinnvoll ist.
 
-### Verweis auf die DTP Klassen
+### Verweis auf die DTO Klassen
 Wie in der REST API muss im App Projekt durch Rechtsklick auf *Dependencies* im Solution Explorer ein 
 Verweis auf das erstellte DTO Projekt hinzugefügt werden.
 
