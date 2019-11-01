@@ -28,17 +28,22 @@ Wurde die Visual Studio Solution erstellt, können 2 Projekte gestartet werden. 
 auf dem lokalen PC ausgeführt und ist die schnellste Möglichkeit für Tests. Beim ersten Start muss
 noch der Entwicklermodus in den Windows Einstellungen, die automatisch geöffnet werden, aktiviert werden.
 
-Beim ersten Erstellen von Android Apps lädt der SDK Manager die entsprechende SDK mit der Version, die
-am Telefon vorhanden ist, aus dem Netz.
+![](run_project.png)
 
-Ist das Android Smartphone im Debugging Modus verbinden, bietet Visual Studio auch das direkte Übertragen
-zum Android Gerät an.
+Beim ersten Erstellen von Android Apps erscheint eine Fehlermeldung, dass keine Android SDK installiert
+wurde. Beim Klicken auf diese Meldung öffnet sich der SDK Manager, und man kann eine SDK für den Emulator
+(z. B. für Android 8) installieren.
+
+![](install_sdk.png)
+
+Nachdem die SDK installiert ist, muss Visual Studio neu gestartet werden. Wird nach dem Neustart
+das Smartphone angeschlossen erscheint am Display eine Meldung, ob USB Debugging von diesem PC aus
+zugelassen werden soll. Hier kann man gleich den Haken setzen, dass der aktuelle PC gespeichert wird.
+Nach Zulassen des USB Debugging bietet Visual Studio auch das direkte Übertragen zum Android Gerät an.
 
 > **Achtung:** Der Buildprozess dauert im Gegensatz zu Konsolen- oder Windowsapplikationen länger. Führe
 > vor dem übertragen mit *Build* - *Build Solution* einen vollständigen Build durch. In der Statusleiste unten
 > wird der Fortschritt sichtbar. Erst nach erfolgreichem Build ist ein Starten möglich.
-
-![](run_project.png)
 
 ## Erste Hilfe bei Build-Problemen
 Der Buildprozess ist natürlich komplexer und daher auch fehleranfälliger. Bei Problemem hilft oft folgende
