@@ -12,16 +12,11 @@ namespace TestAdministrator.App.ViewModels
     /// </summary>
     public class ClassDetailViewModel : BaseViewModel
     {
-        private SchoolclassDto _currentClassDetails;
         public string CurrentId { get; }
         /// <summary>
         /// Details zur geladenen Klasse.
         /// </summary>
-        public SchoolclassDto CurrentClassDetails
-        {
-            get => _currentClassDetails;
-            set { _currentClassDetails = value; OnPropertyChanged(); }
-        }
+        public SchoolclassDto CurrentClassDetails { get; set; }
         /// <summary>
         /// Konstruktor.
         /// </summary>
@@ -39,7 +34,10 @@ namespace TestAdministrator.App.ViewModels
             // Für die Klassendetails müssen wir uns anmelden.
             if (await RestService.TryLoginAsync(
                 new UserDto { Username = "schueler", Password = "pass" }))
-                CurrentClassDetails = await RestService.GetClassDetailsAsync(CurrentId);
+            {
+                SchoolclassDto classDetails = await RestService.GetClassDetailsAsync(CurrentId);
+                SetProperty(nameof(CurrentClassDetails), classDetails);
+            }
             else
             {
                 await App.Current.MainPage.DisplayAlert("Fehler", "Login nicht erfolgreich", "OK");

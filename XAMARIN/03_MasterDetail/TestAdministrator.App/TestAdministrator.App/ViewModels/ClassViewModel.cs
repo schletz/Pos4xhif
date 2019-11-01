@@ -10,21 +10,14 @@ using Xamarin.Forms;
 
 namespace TestAdministrator.App.ViewModels
 {
-    public class ClassViewModel : INotifyPropertyChanged
+    public class ClassViewModel : BaseViewModel
     {
         private readonly RestService _restService;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Liste der gelesenen Klassen.
         /// </summary>
-        private IEnumerable<SchoolclassDto> _classes;
-        public IEnumerable<SchoolclassDto> Classes
-        {
-            get => _classes;
-            set { _classes = value; OnPropertyChanged(); }
-        }
+        public IEnumerable<SchoolclassDto> Classes { get; set; }
         /// <summary>
         /// Die in der ListView ausgewählte Klasse. Wird über Binding geschrieben.
         /// </summary>
@@ -44,7 +37,7 @@ namespace TestAdministrator.App.ViewModels
         {
             try
             {
-                Classes = await _restService.GetClassesAsync();
+                SetProperty(nameof(Classes), await _restService.GetClassesAsync());
             }
             catch (Exception e)
             {
@@ -52,11 +45,6 @@ namespace TestAdministrator.App.ViewModels
                 await App.Current.MainPage.DisplayAlert("Fehler", e.ToString(), "OK");
 #endif
             }
-        }
-
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

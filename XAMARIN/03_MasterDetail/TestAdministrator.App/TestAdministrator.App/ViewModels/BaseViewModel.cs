@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using TestAdministrator.App.Services;
@@ -21,13 +22,18 @@ namespace TestAdministrator.App.ViewModels
         {
             RestService = DependencyService.Get<RestService>();
         }
+
         /// <summary>
-        /// Ruft den PropertyChanged Event auf. Der Propertyname wird vom Compiler bestimmt, daher
-        /// muss OnPropertyChanged() direkt im set des Properties aufgerufen werden.
+        /// Setzt den Wert eines Properties und ruft das PropertyChanged Event auf, um die Bindings
+        /// zu aktualisieren.
         /// </summary>
-        /// <param name="propertyName">Vom Compiler ermittelter Propertyname.</param>
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        /// <typeparam name="T">Typ des Properties.</typeparam>
+        /// <param name="propertyName">Name des Properties. Wird mit nameof(Property) im Aufruf ermittelt.</param>
+        /// <param name="value">Wert, auf den das Property gesetzt wird.</param>
+        protected void SetProperty<T>(string propertyName, T value)
         {
+            PropertyInfo prop = GetType().GetProperty(propertyName);
+            prop.SetValue(this, value);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
