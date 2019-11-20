@@ -115,7 +115,7 @@ namespace Plf4ahif20191118.Testapp
                         HttpMethod.Post,
                         $"{baseUrl}/schoolrating", new RatingDto
                         {
-                            School = 9998,
+                            School = 9999,
                             PhoneNr = "09991",
                             Value = 1
                         });
