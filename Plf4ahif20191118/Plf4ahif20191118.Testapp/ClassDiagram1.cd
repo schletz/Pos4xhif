@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Plf4ahif20191118.Testapp.Model.School">
+    <Position X="4.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAQAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Model\School.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="User" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Plf4ahif20191118.Testapp.Model.School_Rating">
+    <Position X="11.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAEACAAAAEA=</HashCode>
+      <FileName>Model\School_Rating.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SR_User_Navigation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Plf4ahif20191118.Testapp.Model.User">
+    <Position X="8.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAIAAAAAAAAAAAAAAAAAAAAAEAAAAgA=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="U_SchoolNavigation" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="School_Rating" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
