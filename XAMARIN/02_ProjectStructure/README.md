@@ -30,6 +30,13 @@ Install-Package Microsoft.EntityFrameworkCore.Sqlite  # SQLite Treiber installie
 Scaffold-DbContext "DataSource=../MyDb.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force -DataAnnotations
 ```
 
+Für *MySql* sind folgende Befehle notwendig:
+```powershell
+Install-Package Microsoft.EntityFrameworkCore.Tools   # EF Tools installieren
+Install-Package Pomelo.EntityFrameworkCore.MySql      # MySQL Treiber installieren
+Scaffold-DbContext "Server=localhost;Database=(dbname);User=(username);Password=(password);TreatTinyAsBoolean=true;" "Pomelo.EntityFrameworkCore.MySql" -OutputDir Model -UseDatabaseNames -Force -DataAnnotations
+```
+
 ### Anpassen der Modelklassen bei SQLite
 Die mit *Scaffold-DbContext* erstellten Modelklassen müssen bei der Verwendung von SQLite noch 
 nachbearbeitet werden.
