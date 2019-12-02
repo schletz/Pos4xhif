@@ -44,6 +44,7 @@ Modelklassen werden generiert. Die Option -Force erzwingt ein Überschreiben vor
 ```powershell
 Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force -DataAnnotations
 ```
+**ACHTUNG:** sollte bei diesem Schritt ein Fehler auftreten, dass EntityFrameworkCore 3.0.1 nicht kompatibel mit dotnet SDK 3.0 ist und für dotnet SDK 2.1 kompiliert wurde, ist das kein Fehler deinerseits. Microsoft hat hierbei einen Fehler gemacht. Bitte nutze stattdessen die Version 3.0.0 von EntityFrameworkCore. ([Referenz](https://github.com/aspnet/EntityFrameworkCore/issues/18977))
 
 **Achtung: Für diesen Vorgang muss das Projekt erstellt werden können. Syntaxfehler, die z. B. durch
 das Löschen des Model Ordners entstehen, führen zu einem Fehler!**
