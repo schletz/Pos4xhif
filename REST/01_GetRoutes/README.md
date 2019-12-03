@@ -18,7 +18,9 @@ Sollen weitere Controller angelegt werden, so kann dies in Visual Studio unter *
 ![](add_controller.png)
 
 **Unter Linux:**
-``user@hostname:~$ dotnet new webapi``
+```
+user@hostname:~$ dotnet new webapi
+```
 
 ## Der Pupil Controller und seine Funktionen
 Wird ein leerer Controller angelegt, so werden 2 Annotations über die Klassendefinition 
