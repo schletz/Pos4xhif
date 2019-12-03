@@ -14,7 +14,7 @@ Wie im Database First Ansatz (den wir schon kennen gelernt haben), benötigen wi
 + Microsoft.EntityFrameworkCore.Sqlite
 + __Microsoft.EntityFrameworkCore.Design__
 
-Wir müssen die NuGat-Package wie folgt installieren:
+Wir müssen die NuGet-Package wie folgt installieren:
 
 ```Powershell
 Install-Package Microsoft.EntityFrameworkCore.Tools
@@ -24,6 +24,13 @@ Install-Package Microsoft.EntityFrameworkCore.Design
 Entweder direkt über die Packet Manager Console, oder etwas konfortabler über den NuGet Packet Manager.
 
 Das Package <code>Designer</code> ermöglicht uns die Erstellung von Migrations. Diese Package muss immer im ausführbaren Projket installiert werden. Dazu später mehr.
+
+**Unter Linux:**
+```
+user@hostname:~$ dotnet add package Microsoft.EntityFrameworkCore.Tools
+user@hostname:~$ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+user@hostname:~$ dotnet add package Microsoft.EntityFrameworkCore.Design
+```
 
 ## Generieren (coden) der Model-Klassen
 Als nächstes können wir die Models erstellen. Sie dienen dabei als Vorlage für die zu erstellende Datenbank, In der Applikation haben sie aber die gewohnte Funktion als Datenhalter. Es besteht also kein Unterschied.
