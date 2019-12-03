@@ -84,9 +84,9 @@ Der folgende Befehl erzeugt einen Releasebuild mit folgenden Optionen:
 ...\AuthExample.App>dotnet publish -c Release -o ../Production --self-contained -r win-x64
 ```
 **Unter Linux:**
-``
+```
 user@hostname:.../AuthExample.App$ dotnet publish -c release -o ../Production --self-contained -r linux-x64
-``
+```
 
 ## Ausführen der Datei
 Der oben erzeugte Ordner Production wird auf das Zielsystem kopiert. Dort kann mit folgendem Befehl
@@ -95,9 +95,9 @@ der Server gestartet werden:
 .../Production>dotnet AuthExample.App.dll
 ```
 **Unter Linux:**
-``
+```
 user@hostname:.../Production$ ./AuthExample.App
-``
+```
 
 Soll der Port nachträglich geändert werden, so kann in der Datei *appsettings.json* durch Hinzufügen
 der folgenden Optionen der Port geändert werden:
