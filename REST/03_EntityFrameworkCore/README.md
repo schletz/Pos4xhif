@@ -37,12 +37,26 @@ geöffnet werden. Für die Installation sind 2 Befehle einzugeben:
 Install-Package Microsoft.EntityFrameworkCore.Tools 
 Install-Package Microsoft.EntityFrameworkCore.Sqlite
 ```
+**Unter Linux:**
+```
+user@hostname:~$ dotnet add package Microsoft.EntityFrameworkCore.Tools
+user@hostname:~$ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+```
 
 ## Automatisches Erstellen der Modelklassen
 Mit folgendem Befehl in der Packet Manager Console wird ein Verzeichnis *Model* erstellt und die 
 Modelklassen werden generiert. Die Option -Force erzwingt ein Überschreiben vorhandener Dateien.
 ```powershell
 Scaffold-DbContext "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -OutputDir Model -UseDatabaseNames -Force -DataAnnotations
+```
+**Unter Linux:**
+Dafür müssen erst die EF Tools installiert werden.
+```
+user@hostname:~$ sudo dotnet tools install --global dotnet-ef
+```
+Nun generiert man den DbContext mit folgendem Kommando:
+```
+user@hostname:~$ dotnet ef dbcontext scaffold "DataSource=Schule.db" Microsoft.EntityFrameworkCore.Sqlite -o Model -d --use-database-names --force
 ```
 **ACHTUNG:** sollte bei diesem Schritt ein Fehler auftreten, dass EntityFrameworkCore 3.0.1 nicht kompatibel mit dotnet SDK 3.0 ist und für dotnet SDK 2.1 kompiliert wurde, ist das kein Fehler deinerseits. Microsoft hat hierbei einen Fehler gemacht. Bitte nutze stattdessen die Version 3.0.0 von EntityFrameworkCore. ([Referenz](https://github.com/aspnet/EntityFrameworkCore/issues/18977))
 
