@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Plf4chif.Api.Model.SchuleContext">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAQAQAAQAIAAAAAAAEAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\SchuleContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plf4chif.Api.Model.Fach">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAIAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Model\Fach.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Pruefung" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Plf4chif.Api.Model.Klasse">
+    <Position X="3" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Model\Klasse.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Schueler" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Plf4chif.Api.Model.Pruefung">
+    <Position X="7" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAACAAAAAAAAAACAAAAgAAEAAAAAAQAAgAAAAAA=</HashCode>
+      <FileName>Model\Pruefung.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="P_SchuelerNavigation" />
+      <Property Name="P_FachNavigation" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Plf4chif.Api.Model.Schueler">
+    <Position X="7" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAgAAAAAAAAAAAAAAAAQAEAAAABAAIAAAAIA=</HashCode>
+      <FileName>Model\Schueler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="S_KlasseNavigation" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

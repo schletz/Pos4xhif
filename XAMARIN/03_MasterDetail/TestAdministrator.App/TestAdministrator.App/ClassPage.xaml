@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Stellt die Liste der Klassennamen dar. Das Viewmodel wird hier im XAML Code instanziert,
+    deswegen wird xmlns:vm="clr-namespace:TestAdministrator.App.ViewModels" eingebunden.
+    Im Event ContentPage_Appearing werden die Daten vom Server geladen. -->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TestAdministrator.App.ClassPage"
+             xmlns:vm="clr-namespace:TestAdministrator.App.ViewModels"
+             Title="Klassenübersicht"
+             Appearing="ContentPage_Appearing">
+    <!-- Das Viewmodel instanzieren -->
+    <ContentPage.BindingContext>
+        <vm:ClassViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <ListView x:Name="ClassList" ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}" ItemSelected="ClassList_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                                <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" 
+                                   Text="{Binding Id}" FontSize="24"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

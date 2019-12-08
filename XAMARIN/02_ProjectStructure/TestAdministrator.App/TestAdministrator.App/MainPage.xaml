@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- xmlns:local="clr-namespace:TestAdministrator.App.ViewModels" erstellt einen local Namespace,
+     in dem sich das Viewmodel befindet. -->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:TestAdministrator.App.ViewModels"
+             mc:Ignorable="d"
+             x:Class="TestAdministrator.App.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:HasValueConverter x:Key="hasValueConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <!-- Instanzieren des Viewmodels -->
+        <local:MainViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <Button x:Name="Load" Text="Lade Klassen vom Server." Clicked="Load_Clicked" IsEnabled="{Binding AcceptInput}"/>
+        <Label Text="Gefundene Klassen:" IsVisible="{Binding Classes, Converter={StaticResource hasValueConverter}}" />
+        <!-- https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/listview/data-and-databinding -->
+        <ListView ItemsSource="{Binding Classes}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Id}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label TextColor="Red" Text="{Binding ErrorMessage}"/>
+    </StackLayout>
+
+</ContentPage>
