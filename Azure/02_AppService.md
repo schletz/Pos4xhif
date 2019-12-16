@@ -72,7 +72,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-## Publishing
+### Publishing
 
 Mit der rechten Maustaste kann in Visual Studio beim Projekt der Punkt *Publish* gewählt werden.
 Auch hier ist darauf zu achten, dass das niedrigste Paket gewählt wird.
@@ -87,7 +87,6 @@ unter *App Services* auf deine App. Unter den Einstellungen kann nun die Umgebun
 *ASPNETCORE_ENVIRONMENT* auf *Development* gesetzt werden.
 
 ![](azure_settings.png)
-
 
 ## Aktivieren von MySQL in App
 
