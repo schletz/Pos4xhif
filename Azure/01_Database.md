@@ -16,7 +16,7 @@ Als Resource gruop wählen wir *AzureDemoApp*. Zu dieser Gruppe werden wir dann 
 hinzufügen.
 
 > **Achtung**: Wähle bei *Compute + storage* den billigsten Plan (Basic). Beim voreingestellten Plan
-> würde das Guthaben wenigen aufgebraucht sein!
+> würde das Guthaben nach wenigen Tagen aufgebraucht sein!
 
 ![](configure_sql_server.png)
 
