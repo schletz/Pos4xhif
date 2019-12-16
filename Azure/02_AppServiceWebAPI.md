@@ -154,3 +154,7 @@ Database=localdb;Data Source=127.0.0.1:50513;User Id=azure;Password=xxxxxx
 
 Natürlich sind auch andere Varianten dieses Codes möglich. So kann z. B. wenn *GetEnvironmentVariable()*
 null liefert, nicht der Leerstring sondern der String aus der Datei *appsettings.json* geladen werden.
+
+![](https://docs.microsoft.com/en-us/azure/architecture/guide/images/compute-decision-tree.svg)
+
+<sup>Quelle: https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/compute-decision-tree</sup>
