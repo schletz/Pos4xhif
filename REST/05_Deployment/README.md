@@ -127,7 +127,10 @@ string connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_local
 
 In Windows kann diese Variable zum Testen angelegt werden (*Start* - *Environment Variables*). Diese
 muss einen Connectionstring liefern, wie er auch für den Zugriff mittels EF Core verwendet wird:
-*Server=localhost;Database=(dbname);User=(username);Password=(password);TreatTinyAsBoolean=true;*
+
+```text
+Server=localhost;Database=(dbname);User=(username);Password=(password);TreatTinyAsBoolean=true;
+```
 
 ## Erstellen des Release Builds
 
