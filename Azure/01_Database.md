@@ -15,7 +15,7 @@ Beim Anlegen muss die richtige Subscription gewählt werden (*Azure für Bildung
 Als Resource gruop wählen wir *AzureDemoApp*. Zu dieser Gruppe werden wir dann auch das App Service
 hinzufügen.
 
-> **Achtung**: Wähle bei Compute + storage den billigsten Plan (Basic). Beim voreingestellten Plan
+> **Achtung**: Wähle bei *Compute + storage* den billigsten Plan (Basic). Beim voreingestellten Plan
 > würde das Guthaben wenigen aufgebraucht sein!
 
 ![](configure_sql_server.png)
