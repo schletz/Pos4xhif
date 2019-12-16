@@ -33,7 +33,7 @@ ist, dass hier keine Kosten für die Datenbank anfallen.
 dotnet new webapi
 dotnet tool update --global dotnet-ef
 dotnet add package Microsoft.EntityFrameworkCore.Tools
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet ef dbcontext scaffold "DataSource=aaaa.db" Microsoft.EntityFrameworkCore.Sqlite --output-dir Model --use-database-names --force --data-annotations
 ```
 
