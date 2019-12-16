@@ -39,11 +39,19 @@ In unserem Programm verwenden wir natürlich nicht den Admin, um sich zur Datenb
 Deswegen legen wir einen weiteren Benutzer an, der in der Datenbank lediglich lesen und schreiben,
 jedoch keine Änderungen am Schema vornehmen kann.
 
-Dafür selektieren wir die Datenbank *AzureDemo* im SQL Server Management Studio und führen die
+Dafür selektieren wir die Datenbank *master* bzw. *AzureDemo* im SQL Server Management Studio und führen die
 folgenden Befehle aus. Das Passwort muss Groß- und Kleinbuchstaben sowie Ziffern oder Sonderzeichen
 enthalten.
 
 ![](ssms_add_user.png)
+
+In der Datenbank *master* wird folgender Befehl ausgeführt:
+
+```sql
+CREATE USER Demouser WITH PASSWORD = '?????';   -- Statt Demouser kommt der Username
+```
+
+In der Datenbank *AzureDemo* werden folgende Befehle ausgeführt:
 
 ```sql
 CREATE USER Demouser WITH PASSWORD = '?????';   -- Statt Demouser kommt der Username
