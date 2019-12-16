@@ -33,6 +33,22 @@ Studio (SSMS) verbinden.
 Beim ersten Verbinden fragt das Management Studio, ob die lokale IP Adresse zur Firewall hinzugefügt
 werden soll. Dies muss natürlich gemacht werden, denn sonst ist keine Verbindung möglich.
 
+### Erstellen einer Testtabelle
+
+Um sicher zu stellen, ob alles funktioniert, legen wir eien Tabelle *Person* mit 3 Einträgen an:
+
+```sql
+CREATE TABLE Person (
+    ID        INT PRIMARY KEY IDENTITY(1,1),
+    Lastname  VARCHAR(200) NOT NULL,
+    Firstname VARCHAR(200) NOT NULL
+);
+
+INSERT INTO Person (Lastname, Firstname) VALUES ('Lastname1', 'Firstname1');
+INSERT INTO Person (Lastname, Firstname) VALUES ('Lastname2', 'Firstname2');
+INSERT INTO Person (Lastname, Firstname) VALUES ('Lastname3', 'Firstname3');
+```
+
 ### Anlegen eines weiteren Users für die Datenbank AzureDemo
 
 In unserem Programm verwenden wir natürlich nicht den Admin, um sich zur Datenbank zu verbinden.

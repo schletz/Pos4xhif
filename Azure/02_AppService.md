@@ -1,6 +1,6 @@
 # Erstellen einer ASP.NET WebAPI als App Servic
 
-In diesem Kapitel erstellen wir eine ASP.NET Code WebAPI, um unsere SQL Server Datenbank über eine 
+In diesem Kapitel erstellen wir eine ASP.NET Core WebAPI, um unsere SQL Server Datenbank über eine 
 REST Schnittstelle ansprechen zu können.
 
 ## Erstellen einer leeren WebAPI von der Konsole aus
@@ -54,6 +54,42 @@ Beim Verbindungsstring von scaffold sind folgende Dinge anzupassen:
 </ItemGroup>
 ```
 
+## Hinzufügen eines Controllers
+
+### ConfigureServices
+
+Der DbContext wird mit *AddDbContext()* hinzugefügt. Über Dependency Injection wird dann eine Instanz
+des Contextes im Konstruktor des Controllers von ASP.NET Core übergeben.
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllers();
+    services.AddDbContext<AzureDemoDatabaseContext>();  // Entsprechendes using eintragen!
+}
+```
+
+### Erstellen der Datei Person.cs in Controller
+
+```c#
+[Route("api/[controller]")]
+[ApiController]
+public class PersonController : ControllerBase
+{
+    private readonly AzureDemoDatabaseContext _context;
+    public PersonController(AzureDemoDatabaseContext context)
+    {
+        _context = context;
+    }
+
+    [HttpGet]
+    public ActionResult<Person> Get()
+    {
+        return Ok(_context.Person.AsEnumerable());
+    }
+}
+```
+
 ## Publishing mit Visual Studio
 
 ### launchSettings.json
@@ -75,19 +111,6 @@ Dadurch hört der Server auf den Standardports für HTTP und HTTPS.
   }
 }
 
-```
-
-### ConfigureServices
-
-Der DbContext wird mit *AddDbContext()* hinzugefügt. Über Dependency Injection wird dann eine Instanz
-des Contextes im Konstruktor des Controllers von ASP.NET Core übergeben.
-
-```c#
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddControllers();
-    services.AddDbContext<AzureDemoDatabaseContext>();
-}
 ```
 
 ### Publishing
