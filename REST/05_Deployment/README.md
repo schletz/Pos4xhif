@@ -112,6 +112,19 @@ unter *App Services* auf deine App. Unter den Einstellungen kann nun die Umgebun
 
 ![](azure_settings.png)
 
+### Aktivieren von MySQL in App
+
+In Azure kann - ebenfalls unter *Settings* des App Serivc - der Punkt *MySQL in App* aktiviert
+werden. Dabei wird ein Connectionstring angeboten, der in der Datei *Startup.cs* der ASP.NET
+Core Applikation verwendet werden kann:
+
+```c#
+string connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
+        services.AddDbContext<ApplicationDbContext>(options =>  
+            options.UseMySql(AzureMySQL.ToMySQLStandard(connectionString))
+        );
+```
+
 ## Erstellen des Release Builds
 
 Der folgende Befehl erzeugt einen Releasebuild mit folgenden Optionen:
