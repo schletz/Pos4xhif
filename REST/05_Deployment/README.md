@@ -121,7 +121,7 @@ Core Applikation verwendet werden kann:
 ```c#
 string connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb")
     ?.Replace("Data Source", "Server")
-    ?.Replace("User Id", "User") ?? "";
+    ?.Replace("User Id", "User") ?? "";             // Schöner: String aus appsettings.json statt ""
 services.AddDbContext<ApplicationDbContext>(options =>  
     options.UseMySql(connectionString)
 );
@@ -134,6 +134,9 @@ Die einzelnen Werte können natürlich an das lokale System angepasst werden.
 ```text
 Database=localdb;Data Source=127.0.0.1:50513;User Id=azure;Password=xxxxxx
 ```
+
+Natürlich sind auch andere Varianten dieses Codes möglich. So kann z. B. wenn *GetEnvironmentVariable()*
+null liefert, nicht der Leerstring sondern der String aus der Datei *appsettings.json* geladen werden.
 
 ## Erstellen des Release Builds
 
