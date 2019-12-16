@@ -35,7 +35,7 @@ werden soll. Dies muss natürlich gemacht werden, denn sonst ist keine Verbindun
 
 ### Erstellen einer Testtabelle
 
-Um sicher zu stellen, ob alles funktioniert, legen wir eien Tabelle *Person* mit 3 Einträgen an:
+Um sicher zu stellen, ob alles funktioniert, legen wir eine Tabelle *Person* mit 3 Einträgen an:
 
 ```sql
 CREATE TABLE Person (
