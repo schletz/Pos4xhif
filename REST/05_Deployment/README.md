@@ -119,17 +119,20 @@ werden. Dabei wird ein Connectionstring angeboten, der in der Datei *Startup.cs*
 Core Applikation verwendet werden kann:
 
 ```c#
-string connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
-        services.AddDbContext<ApplicationDbContext>(options =>  
-            options.UseMySql(AzureMySQL.ToMySQLStandard(connectionString))
-        );
+string connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb")
+    ?.Replace("Data Source", "Server")
+    ?.Replace("User Id", "User") ?? "";
+services.AddDbContext<ApplicationDbContext>(options =>  
+    options.UseMySql(connectionString)
+);
 ```
 
-In Windows kann diese Variable zum Testen angelegt werden (*Start* - *Environment Variables*). Diese
-muss einen Connectionstring liefern, wie er auch für den Zugriff mittels EF Core verwendet wird:
+In Windows kann diese Variable *MYSQLCONNSTR_localdb* zum Testen angelegt werden (*Start* -
+*Environment Variables*). Diese muss einen Connectionstring liefern, wie ihn auch Azure liefern würde.
+Die einzelnen Werte können natürlich an das lokale System angepasst werden.
 
 ```text
-Server=localhost;Database=(dbname);User=(username);Password=(password);TreatTinyAsBoolean=true;
+Database=localdb;Data Source=127.0.0.1:50513;User Id=azure;Password=xxxxxx
 ```
 
 ## Erstellen des Release Builds
