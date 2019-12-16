@@ -3,7 +3,7 @@
 ## Erklärungen
 
 - Thema SQL Server: [01_Database.md](01_Database.md)
-- Thema App Service (.NET Core): [02_AppService.md](02_AppService.md)
+- Thema App Service (WebAPI): [02_AppServiceWebAPI.md](02_AppServiceWebAPI.md)
 
 ## Wichtige Links
 

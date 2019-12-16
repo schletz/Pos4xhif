@@ -1,4 +1,4 @@
-# Erstellen einer ASP.NET WebAPI als App Servic
+# Erstellen einer ASP.NET WebAPI als App Service
 
 In diesem Kapitel erstellen wir eine ASP.NET Core WebAPI, um unsere SQL Server Datenbank über eine 
 REST Schnittstelle ansprechen zu können.
