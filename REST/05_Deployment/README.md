@@ -82,62 +82,6 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 > Für Produktionsanwendungen muss ein vertrauenswürdiges Zertifikat vom Hoster oder einem unabhängigen
 > Anbieter erworben werden.
 
-## Veröffentlichen in Azure App Services
-
-> **Hinweis:** Eine App in Azure ist öffentlich (das ist ja auch der Sinn der Veröffentlichung).
-> Falls noch kein Login verwendet wird, kann jeder die
-> Daten abrufen. Verwende zumindest als Name für die App eine GUID (https://www.guidgenerator.com/),
-> damit zumindest der Name nicht einfach zu erraten ist.
-
-Um die Applikation in Azure veröffentlichen zu können, prüfe folgende Schritte:
-
-- Ist auf https://sic.spengergasse.at die Zustimmung für die Übertragung des Accounts an Microsoft aktiviert (Punkt Office 365)?
-- Funktioniert der Schul Login auf https://portal.azure.com?
-- Wenn eine SQLite Datenbank verwendet wird: Ist im Solution Explorer bei dieser Datei die Option "Copy always" gesetzt?
-
-Starte nun mit *dotnet run* in der Konsole den Server und prüfe, ob die Seite unter http://localhost 
-und https://localhost unter dem Standardport (80 und 443) erreichbar ist.
-
-Nun klicke mit der rechten Maustaste auf das Projekt im Visual Studio Solution Explorer und wähle
-*Publish*. Mit *Create New* kann eine neue Applikation in Azure erstellt werden. Die weiteren
-Dialoge sind selbsterklärend und das Veröffentlichen ist mit wenigen Klicks erledigt. Nun ist die
-App unter https://(name).azurewebsites.net abrufbar.
-
-### Aktivieren des Development Profiles
-
-Falls Fehler auftreten, werden keine Beschreibungen dazu in Azure angezeigt. Das liegt daran, dass diese
-nur im Profil *Development* sichtbar sind. Um das zu aktivieren, klicke in https://portal.azure.com
-unter *App Services* auf deine App. Unter den Einstellungen kann nun die Umgebungsvariable
-*ASPNETCORE_ENVIRONMENT* auf *Development* gesetzt werden.
-
-![](azure_settings.png)
-
-### Aktivieren von MySQL in App
-
-In Azure kann - ebenfalls unter *Settings* des App Serivce - der Punkt *MySQL in App* aktiviert
-werden. Dabei wird ein Connectionstring angeboten, der in der Datei *Startup.cs* der ASP.NET
-Core Applikation verwendet werden kann:
-
-```c#
-string connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb")
-    ?.Replace("Data Source", "Server")
-    ?.Replace("User Id", "User") ?? "";             // Schöner: String aus appsettings.json statt ""
-services.AddDbContext<ApplicationDbContext>(options =>  
-    options.UseMySql(connectionString)
-);
-```
-
-In Windows kann diese Variable *MYSQLCONNSTR_localdb* zum Testen angelegt werden (*Start* -
-*Environment Variables*). Diese muss einen Connectionstring liefern, wie ihn auch Azure liefern würde.
-Die einzelnen Werte können natürlich an das lokale System angepasst werden.
-
-```text
-Database=localdb;Data Source=127.0.0.1:50513;User Id=azure;Password=xxxxxx
-```
-
-Natürlich sind auch andere Varianten dieses Codes möglich. So kann z. B. wenn *GetEnvironmentVariable()*
-null liefert, nicht der Leerstring sondern der String aus der Datei *appsettings.json* geladen werden.
-
 ## Erstellen des Release Builds
 
 Der folgende Befehl erzeugt einen Releasebuild mit folgenden Optionen:
