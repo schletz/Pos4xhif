@@ -47,3 +47,9 @@ abrufbar.
 > Beende die Services immer, wenn sie nicht benötigt werden. Alleine das Laufen
 > eines Services kann Kosten verursachen. Manche Services können nicht gestoppt werden (z. B.
 > Datenbanken). Diese sollten daher mit der niedrigsten Leistung angelegt werden.
+
+Nach der Gutschrift muss im Filter auch die Subscription *Azure für Bildungseinrichtungen* (ohne
+Starter) aktiviert werden. Sonst sind manche Services nicht verfügbar, es kommt dann die Meldung
+dass ein Upgrade durchgeführt werden muss. Am Besten wähle hier *Select all*.
+
+![](azure_subscription.png)
