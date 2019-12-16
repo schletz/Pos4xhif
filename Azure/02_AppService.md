@@ -1,12 +1,13 @@
-# Erstellen eines App Service
+# Erstellen einer ASP.NET WebAPI als App Servic
 
-## Erstellen einer webapi von der Konsole aus
+In diesem Kapitel erstellen wir eine ASP.NET Code WebAPI, um unsere SQL Server Datenbank über eine 
+REST Schnittstelle ansprechen zu können.
+
+## Erstellen einer leeren WebAPI von der Konsole aus
 
 Neue WebAPI Projekte können auch von der Konsole aus erstellt werden, indem ein neuer Ordner (z. B. *AzureDemo*)
 erstellt wird. In diesem Ordner werden dann folgende Befehle ausgeführt. Der Connection String muss
 allerdings noch an die eigenen Einstellungen angepasst werden.
-
-### Erstellen einer WebAPI mit SQL Server in Azure
 
 ```text
 dotnet new webapi
@@ -25,6 +26,9 @@ Beim Verbindungsstring von scaffold sind folgende Dinge anzupassen:
 
 ### Erstellen einer WebAPI mit SQLite
 
+Es ist auch möglich, eine SQLite Datenbank mit dem Projekt nach Azure zu übertragen. Der Vorteil dabei
+ist, dass hier keine Kosten für die Datenbank anfallen.
+
 ```text
 dotnet new webapi
 dotnet tool update --global dotnet-ef
@@ -37,11 +41,25 @@ Beim Verbindungsstring von scaffold sind folgende Dinge anzupassen:
 
 - *DataSource=aaaa.db:* Durch den Datenbanknamen der SQLite Datei zu ersetzen.
 
+> **Achtung:** Die Datenbank muss in beim Kompilieren ins Ausgabeverzeichnis kopiert werden, da sie
+> sonst nicht übertragen wird. Dafür klickt man in Visual Studio auf die Datei im Solution Explorer
+> und wählt statt *Do not copy* die Option *Copy always*. Dies kann auch händisch in der *.csproj*
+> Datei eingetragen werden:
+
+```xml
+<ItemGroup>
+  <None Update="xxx.db">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
+```
+
 ## Publishing mit Visual Studio
 
 ### launchSettings.json
 
-Folgende Einstellungen hören auf den Standardports für HTTP und HTTPS
+Die Datei *launchSettings.json* im Ordner Properties kann auf den folgenden Inhalt geändert werden.
+Dadurch hört der Server auf den Standardports für HTTP und HTTPS.
 
 ```js
 {
@@ -49,7 +67,6 @@ Folgende Einstellungen hören auf den Standardports für HTTP und HTTPS
   "profiles": {
     "AzureDemoApp": {
       "commandName": "Project",
-      "launchBrowser": true,
       "applicationUrl": "https://0.0.0.0:443;http://0.0.0.0:80",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -62,7 +79,8 @@ Folgende Einstellungen hören auf den Standardports für HTTP und HTTPS
 
 ### ConfigureServices
 
-Der DbContext wird mit *AddDbContext()* hinzugefügt.
+Der DbContext wird mit *AddDbContext()* hinzugefügt. Über Dependency Injection wird dann eine Instanz
+des Contextes im Konstruktor des Controllers von ASP.NET Core übergeben.
 
 ```c#
 public void ConfigureServices(IServiceCollection services)

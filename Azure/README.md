@@ -1,5 +1,10 @@
 # Microsoft Azure
 
+## Erklärungen
+
+- Thema SQL Server: [01_Database.md](01_Database.md)
+- Thema App Service (.NET Core): [02_AppService.md](02_AppService.md)
+
 ## Wichtige Links
 
 | Seite        | Beschreibung | URL  |
