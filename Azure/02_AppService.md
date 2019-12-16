@@ -37,3 +37,44 @@ Beim Verbindungsstring von scaffold sind folgende Dinge anzupassen:
 
 - *DataSource=aaaa.db:* Durch den Datenbanknamen der SQLite Datei zu ersetzen.
 
+## Publishing mit Visual Studio
+
+### launchSettings.json
+
+Folgende Einstellungen hören auf den Standardports für HTTP und HTTPS
+
+```js
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "AzureDemoApp": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://0.0.0.0:443;http://0.0.0.0:80",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+```
+
+### ConfigureServices
+
+Der DbContext wird mit *AddDbContext()* hinzugefügt.
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllers();
+    services.AddDbContext<AzureDemoDatabaseContext>();
+}
+```
+
+### Publishing
+
+Mit der rechten Maustaste kann in Visual Studio beim Projekt der Punkt *Publish* gewählt werden.
+Auch hier ist darauf zu achten, dass das niedrigste Paket gewählt wird.
+
+![](vs_publish_settings.png)
