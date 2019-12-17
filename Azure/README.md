@@ -9,11 +9,12 @@
 
 | Seite        | Beschreibung | URL  |
 | ------------ | ------------ | ---- |
-| School Info Center        | Zur Freischaltung des Accounts für Office365  | https://sic.spengergasse.at (aus dem Schulnetz)
-| Azure Portal              | Die Zentrale für das Einrichten von Diensten  | https://portal.azure.com 
-| Azure Education Hub       | Beantragung des Startguthabens                | https://portal.azure.com/#blade/Microsoft_Azure_Education/EducationMenuBlade
-| Online GUID Generator     | Für Namen von Services                        | https://www.guidgenerator.com/online-guid-generator.aspx
-| Secure Password Generator | Zum Generieren von Passwörtern für Applikationen | https://passwordsgenerator.net
+| School Info Center        | Zur Freischaltung des Accounts für Office365.  | https://sic.spengergasse.at (aus dem Schulnetz)                                |
+| Azure Portal              | Die Zentrale für das Einrichten von Diensten.  | https://portal.azure.com                                                       |
+| Azure Education Hub       | Beantragung des Startguthabens.                | https://portal.azure.com/#blade/Microsoft_Azure_Education/EducationMenuBlade   |
+| Azure Sponsorship         | Zur Anzeige des verfügbaren Guthabens.         | https://www.microsoftazuresponsorships.com/Balance                             |
+| Online GUID Generator     | Zum Generieren von Servernamen, ...           | https://www.guidgenerator.com/online-guid-generator.aspx                       |
+| Secure Password Generator | Zum Generieren von Passwörtern für Applikationen. | https://passwordsgenerator.net                                              |
 
 ## Wichtige Services
 
@@ -33,8 +34,9 @@ Dadurch darf die Schule die Accountdaten an Microsoft zur Authentifizierung frei
 
 Gehe nach der Freischaltung auf https://portal.azure.com und melde dich mit deinem Schulaccount an.
 Nach dem Login muss noch das Startguthaben beantragt werden. Dafür suche nach dem Service *Education*
-im Suchfeld ganz oben im Portal. Hier kann ein kostenloses Guthaben von 100 USD beantragt werden,
-um auch Services wie SQL Server nutzen zu können.
+im Suchfeld ganz oben im Portal. Hier erscheint ein Button, über den ein kostenloses Guthaben von
+100 USD beantragt werden kann. FÜr die Registrierung ist nur eine Telefonnummer zum Empfangen der
+Bestätigungs-SMS nötig.
 
 Das Guthaben verfällt nach 1 Jahr, es kann nächstes Jahr aber erneut beantragt werden. Eine Mitnahme
 von Guthaben ist nicht möglich. Details sind auf [Azure for Students – FAQs](https://azure.microsoft.com/de-de/free/free-account-students-faq/)
