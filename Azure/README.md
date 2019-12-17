@@ -52,6 +52,7 @@ abrufbar.
 
 Nach der Gutschrift muss im Filter auch die Subscription *Azure für Bildungseinrichtungen* (ohne
 Starter) aktiviert werden. Sonst sind manche Services nicht verfügbar, es kommt dann die Meldung
-dass ein Upgrade durchgeführt werden muss. Am Besten wähle hier *Select all*.
+dass ein Upgrade durchgeführt werden muss. Am Besten wähle hier *Select all*. Falls keine Subscriptions
+zur Auswahl stehen ist auch alles in Ordnung, dann wurde die Starter Subscription nie angelegt.
 
 ![](azure_subscription.png)
