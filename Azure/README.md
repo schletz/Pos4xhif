@@ -35,7 +35,7 @@ Dadurch darf die Schule die Accountdaten an Microsoft zur Authentifizierung frei
 Gehe nach der Freischaltung auf https://portal.azure.com und melde dich mit deinem Schulaccount an.
 Nach dem Login muss noch das Startguthaben beantragt werden. Dafür suche nach dem Service *Education*
 im Suchfeld ganz oben im Portal. Hier erscheint ein Button, über den ein kostenloses Guthaben von
-100 USD beantragt werden kann. FÜr die Registrierung ist nur eine Telefonnummer zum Empfangen der
+100 USD beantragt werden kann. Für die Registrierung ist nur eine Telefonnummer zum Empfangen der
 Bestätigungs-SMS nötig.
 
 Das Guthaben verfällt nach 1 Jahr, es kann nächstes Jahr aber erneut beantragt werden. Eine Mitnahme
