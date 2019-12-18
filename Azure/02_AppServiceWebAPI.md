@@ -3,6 +3,18 @@
 In diesem Kapitel erstellen wir eine ASP.NET Core WebAPI, um unsere SQL Server Datenbank über eine 
 REST Schnittstelle ansprechen zu können.
 
+Dieses Beispiel benötigt .NET Core 3.1. Prüfe vorher in der Eingabeaufforderung, ob diese Version
+auch installiert ist:
+
+```text
+...>dotnet --version
+3.1.100
+```
+
+Falls nicht, führe ein Visual Studio Update aus. Die Version 16.4 aktualisiert auf .NET Core 3.1.
+Wenn du kein Visual Studio verwendest (und nur dann), lade die neueste Version der .NET Core SDK
+von https://dotnet.microsoft.com/download.
+
 ## Erstellen einer leeren WebAPI von der Konsole aus
 
 Neue WebAPI Projekte können auch von der Konsole aus erstellt werden, indem ein neuer Ordner (z. B. *AzureDemo*)

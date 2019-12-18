@@ -4,6 +4,18 @@
 
 ## Erstellen der Applikation
 
+Dieses Beispiel benötigt .NET Core 3.1. Prüfe vorher in der Eingabeaufforderung, ob diese Version
+auch installiert ist:
+
+```text
+...>dotnet --version
+3.1.100
+```
+
+Falls nicht, führe ein Visual Studio Update aus. Die Version 16.4 aktualisiert auf .NET Core 3.1.
+Wenn du kein Visual Studio verwendest (und nur dann), lade die neueste Version der .NET Core SDK
+von https://dotnet.microsoft.com/download.
+
 Wir erstellen wieder wie bei der WebAPI einen neuer Ordner (z. B. *AzureDemoApp*). In diesem Ordner
 werden dann folgende Befehle ausgeführt. Der Connection String muss allerdings noch an die eigenen 
 Einstellungen angepasst werden.
