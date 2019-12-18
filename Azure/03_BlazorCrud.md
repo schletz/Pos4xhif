@@ -1,5 +1,7 @@
 # Erstellen einer CRUD Applikation in Blazor für die Personentabelle
 
+![](blazor_crud.png)
+
 ## Erstellen der Applikation
 
 Wir erstellen wieder wie bei der WebAPI einen neuer Ordner (z. B. *AzureDemoApp*). In diesem Ordner
