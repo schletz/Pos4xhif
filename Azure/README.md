@@ -2,8 +2,9 @@
 
 ## Erklärungen
 
-- Thema SQL Server: [01_Database.md](01_Database.md)
-- Thema App Service (WebAPI): [02_AppServiceWebAPI.md](02_AppServiceWebAPI.md)
+- Einrichten einer SQL Server Datenbank: [01_Database.md](01_Database.md)
+- REST API als App Service (mit ASP.NET Core WebAPI): [02_AppServiceWebAPI.md](02_AppServiceWebAPI.md)
+- CRUD Applikation als App Service mit ASP.NET Core und Blazor: [03_BlazorCrud.md](03_BlazorCrud.md)
 
 ## Wichtige Links
 
