@@ -14,15 +14,18 @@ dotnet new webapi
 dotnet tool update --global dotnet-ef
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-dotnet ef dbcontext scaffold "Server=aaaaa.database.windows.net;Database=bbbbb;User id=ccccc;Password=ddddd" Microsoft.EntityFrameworkCore.SqlServer --output-dir Model --use-database-names --force --data-annotations
+dotnet ef dbcontext scaffold "Server=tcp:AAAA,1433;Initial Catalog=bbbb;Persist Security Info=False;User ID=cccc;Password=dddd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer --output-dir Model --use-database-names --force --data-annotations
 ```
 
 Beim Verbindungsstring von scaffold sind folgende Dinge anzupassen:
 
-- *aaaaa.database.windows.net*: Durch den Servernamen des SQL Servers auf Azure zu ersetzen
-- *Database=bbbbb*: Durch den Datenbanknamen auf Azure zu ersetzen
-- *User id=ccccc*:  Benutzername unseres App Users, der im vorigen Kapitel erstellt wurde.
-- *Password=ddddd*: Passwort des App Users, der im vorigen Kapitel erstellt wurde.
+- *Server=tcp:AAAA,1433*: Durch den Servernamen des SQL Servers zu ersetzen
+- *Initial Catalog=bbbb*: Durch den Datenbanknamen  zu ersetzen
+- *User ID=cccc*:  Benutzername des Datenbankusers.
+- *Password=dddd*: Passwort des Datenbankusers.
+
+Alternativ kann natürlich auch der von der SQL Datenbank kopierte Verbindungsstring (*Settings* >
+*Connection string*) mit dem eingesetzten Passwort eingefügt werden.
 
 ### Erstellen einer WebAPI mit SQLite
 

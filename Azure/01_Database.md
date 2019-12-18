@@ -5,6 +5,9 @@
 Lade das [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)
 für den Zugriff auf den SQL Server in Azure herunter.
 
+Für Linux oder macOS kann [DBeaver](https://dbeaver.io/) verwendet werden. Er basiert auf der JDBC
+Treiberarchitektur und kann auch auf die Azure SQL Datenbank zugreifen.
+
 ## Anlegen der SQL Server Datenbank in Azure
 
 Suche im Portal nach den Service *SQL Databases*. Im nachfolgenden Dialog kann mit *Add* eine
@@ -20,6 +23,21 @@ hinzufügen.
 
 ![](configure_sql_server.png)
 
+## Setzen der Firewallregeln
+
+Damit wir uns von überall aus mit dem SQL Server verbinden können, erlauben wir den Zugriff für
+alle IP Adressen. Gehe dafür über die Resource Group auf den SQL Server (nicht die SQL Database)
+und aktiviere unter *Firewalls and virtual Networks* die Regeln:
+
+![](sql_server_firewall.png)
+
+## Verwenden des Query editor
+
+In den Einstellungen der Datenbank (nicht des SQL Servers) gibt es auch einen Query editor, indem
+auch ohne Management Studio Abfragen ausgeführt werden können.
+
+![](sql_server_query_editor.png)
+
 ## Verbinden mit dem SQL Server Management Studio
 
 Mit den bei *Create new server* eingegebenen Daten kannst du dich nun aus dem SQL Server Management
@@ -29,9 +47,6 @@ Studio (SSMS) verbinden.
 - Authentication: SQL Server Authentication
 - Login:    ?????
 - Passwort: ?????
-
-Beim ersten Verbinden fragt das Management Studio, ob die lokale IP Adresse zur Firewall hinzugefügt
-werden soll. Dies muss natürlich gemacht werden, denn sonst ist keine Verbindung möglich.
 
 ### Erstellen einer Testtabelle
 
@@ -74,3 +89,8 @@ CREATE USER Demouser WITH PASSWORD = '?????';   -- Statt Demouser kommt der User
 ALTER ROLE db_datareader ADD MEMBER Demouser;   -- Statt Demouser kommt der Username
 ALTER ROLE db_datawriter ADD MEMBER Demouser;   -- Statt Demouser kommt der Username
 ```
+
+## Anzeigen des Verbindungsstrings
+
+In den Einstellungen der SQL Datenbank (nicht des SQL Servers) kann unter *Settings* > *Connection Strings*
+auch der Verbindungsstring angezeigt werden, der in den Programmen dann verwendet werden kann.
