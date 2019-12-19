@@ -82,6 +82,23 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 > Für Produktionsanwendungen muss ein vertrauenswürdiges Zertifikat vom Hoster oder einem unabhängigen
 > Anbieter erworben werden.
 
+## Setzen der Ports
+
+Der Server hört standardmäßig nur auf das Loopback Interface. Wir haben zwar *launchSettings.json*
+geändert, dies greift jedoch nur bei *dotnet run*. Um diese Konfiguration auch beim Publishing
+zu ändern, fügt man in der Datei *Program.cs* in die Methode *CreateHostBuilder()* die Anweisung
+*UseUrls()* ein. Der Stern bedeutet, dass jede Netzwerkschnittstelle abgehört wird.
+
+```c#
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseUrls("http://*:80;https://*.443")
+                      .UseStartup<Startup>();
+        });
+```
+
 ## Erstellen des Release Builds
 
 Der folgende Befehl erzeugt einen Releasebuild mit folgenden Optionen:
@@ -104,19 +121,6 @@ der Server gestartet werden:
 
 ```text
 .../Production>dotnet AuthExample.App.dll
-```
-
-Soll der Port nachträglich geändert werden, so kann in der Datei *appsettings.json* durch Hinzufügen
-der folgenden Optionen der Port geändert werden:
-
-```js
-  "Kestrel": {
-    "EndPoints": {
-      "Http": {
-        "Url": "http://0.0.0.0:80;https://0.0.0.0:443"
-      }
-    }
-  }
 ```
 
 Eine Auflistung aller Konfigurationsmöglichkeiten ist in der [MSDN](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-3.0) verfügbar.
