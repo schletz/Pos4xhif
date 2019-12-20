@@ -237,12 +237,13 @@ durch unsere Persons Seite:
 
 ## Erstellen eines Services: CounterService
 
-Nun wollen wir, dass im Menüpunkt Counter der Zählerstand auch in der Navigation angezeigt wird.
-Dafür müssen wir eine Klasse erstellen, auf dessen Instanz alle Pages des Users zugreifen können:
-Das *ScopedService*.
+Nun wollen wir, dass im Menüpunkt *Counter* der Zählerstand auch in der Navigation angezeigt wird.
+Dafür müssen wir eine Klasse erstellen, auf dessen Instanz alle Pages des Users zugreifen können.
+Diese Klassen nennt man in ASP.NET *ScopedService*. Es gibt auch ein Service als *Singleton*. Die
+Instanz eines Singleton lebt so lange wie die Applikation und es gibt nur 1 Instanz für alle User.
 
-Dafür erstellen wir einen Ordner Services, und darin eine neue Datei *CounterService.cs*. Die Klasse
-sieht so aus:
+Für den *CounterService* erstellen wir einen Ordner Services, und darin eine neue Datei
+*CounterService.cs*. Die Klasse sieht so aus:
 
 ```c#
 public class CounterService
@@ -257,18 +258,20 @@ public class CounterService
 }
 ```
 
-Das Wichtige an dieser Klasse ist das Event: Es wird geworfen, wenn der Zählerstand mit *Increment()*
-erhöht wird. Dafür muss die Component Counter allerdings dieses Service verwenden. Dazu editieren wir
-*Pages/Counter.razor* und adaptieren den Code:
+Das Wichtige an dieser Klasse ist das Event *OnCounterIncrement*: Es wird geworfen, wenn der
+Zählerstand mit *Increment()* erhöht wird. Dafür muss die Component Counter allerdings dieses
+Service verwenden. Dazu editieren wir *Pages/Counter.razor* und ergänzen im *@code* Bereich:
 
 ```c#
 @code {
+    // ...
     private int currentCount => MyCounter.Current;          // Ist jetzt ein Property.
 
     private void IncrementCount()
     {
         MyCounter.Increment();   // Aufruf der Methode, damit das Event geworfen wird.
     }
+    // ...
 }
 ```
 
