@@ -338,16 +338,6 @@ das Event reagieren.
 }
 ```
 
-Bei genauer Betrachtung wird die ID beim neu Laden der Seite 2x erstellt. Die Begründung ist folgende:
-
-> The problem is that the service provider is a temporary "root" service provider. It creates the
-> services and injects them into Startup. The remainder of the dependency injection container
-> configuration then runs as part of ConfigureServices, and the temporary service provider is thrown
-> away. A new service provider is then created which now contains the "full" configuration for the
-> application.
->
-> Vgl. https://andrewlock.net/avoiding-startup-service-injection-in-asp-net-core-3/
-
 Deswegen sollten Konstruktoren stets "lazy" sein, sprich nur das
 Notwendigste wie Initialisierungen vornehmen. Halten wir das ein, ist uns diese zweimalige
 Instanzierung egal.
