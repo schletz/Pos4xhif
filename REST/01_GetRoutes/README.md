@@ -138,6 +138,8 @@ public ActionResult<string[]> GetMethod3()
     return new string[] { "value1", "value2" };
 }
 
+// *************************************************************************************************
+
 [HttpGet]                     // Darf nur 1x ohne Angabe von Parametern vorkommen!
 public async Task<IEnumerable<string>> GetMethod1Async()
 {
@@ -145,18 +147,17 @@ public async Task<IEnumerable<string>> GetMethod1Async()
 }
 
 [HttpGet]                     // Darf nur 1x ohne Angabe von Parametern vorkommen!
-public async Task<ActionResult<string[]>> GetMethod2Async()
+public async Task<IActionResult> GetMethod2Async()
 {
-    return await Task.FromResult(Ok(new string[] { "value1", "value2" }));
+    // await something
+    return CreatedAtAction(nameof(GetMethod2Async), new string[] { "value1", "value2" });
 }
 
 [HttpGet]                     // Darf nur 1x ohne Angabe von Parametern vorkommen!
-public async Task<IActionResult> GetMethod3Async()
+public async Task<ActionResult<string[]>> GetMethod3Async()
 {
-    // await something
-    return CreatedAtAction(nameof(GetMethod4), new string[] { "value1", "value2" });
+    return await Task.FromResult(Ok(new string[] { "value1", "value2" }));
 }
-
 ```
 
 *GetMethod1()* liefert einfach eine Collection zurück. Es wird automatisch HTTP 200 gesetzt und
