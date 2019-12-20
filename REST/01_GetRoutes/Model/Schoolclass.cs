@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GetRoutes.Model
 {
-    public class Klasse
+    public class Schoolclass
     {
         public string Name { get; set; }
         public string Abteilung { get; set; }
