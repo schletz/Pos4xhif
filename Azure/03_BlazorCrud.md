@@ -242,36 +242,56 @@ Dafür müssen wir eine Klasse erstellen, auf dessen Instanz alle Pages des User
 Diese Klassen nennt man in ASP.NET *ScopedService*. Es gibt auch ein Service als *Singleton*. Die
 Instanz eines Singleton lebt so lange wie die Applikation und es gibt nur 1 Instanz für alle User.
 
+Um den Lebenszyklus beobachten zu können, wird in *CounterService* eine eindeutige ID im Konstruktor
+generiert. Das ist nur zur Veranschaulichung und wird natürlich in "richtigen" Programmen nicht
+gemacht.
+
 Für den *CounterService* erstellen wir einen Ordner Services, und darin eine neue Datei
 *CounterService.cs*. Die Klasse sieht so aus:
 
 ```c#
 public class CounterService
 {
-    public event Action OnCounterIncrement;
-    public int Current { get; private set; } = 0;
-    public void Increment()
+    public class CounterService
     {
-        Current++;
-        OnCounterIncrement?.Invoke();
+        public event Action OnCounterIncrement;
+        public string Id { get; }
+        public int Current { get; private set; } = 0;
+        public CounterService()
+        {
+            // Hier sehen wir, ob eine neue Instanz erstellt wurde. Dafür nehmen wir die
+            // letzten 4 Stellen einer 128bit GUID (32bit) als "eindeutige" ID.
+            Id = Guid.NewGuid().ToString("N").Substring(28, 4).ToUpper();
+        }
+        public void Increment()
+        {
+            Current++;
+            OnCounterIncrement?.Invoke();
+        }
     }
 }
 ```
 
 Das Wichtige an dieser Klasse ist das Event *OnCounterIncrement*: Es wird geworfen, wenn der
 Zählerstand mit *Increment()* erhöht wird. Dafür muss die Component Counter allerdings dieses
-Service verwenden. Dazu editieren wir *Pages/Counter.razor* und ergänzen im *@code* Bereich:
+Service verwenden. Dazu editieren wir *Pages/Counter.razor* und ersetzen den Inhalt:
 
 ```c#
-@code {
-    // ...
-    private int currentCount => MyCounter.Current;          // Ist jetzt ein Property.
+@page "/counter"
+@using AzureDemoApp.Services;
+@inject CounterService MyCounter
+<h1>Counter</h1>
 
+<p>Service ID: @MyCounter.Id</p>
+<p>Current count: @MyCounter.Current</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
     private void IncrementCount()
     {
-        MyCounter.Increment();   // Aufruf der Methode, damit das Event geworfen wird.
+        MyCounter.Increment();
     }
-    // ...
 }
 ```
 
@@ -301,7 +321,7 @@ das Event reagieren.
 
 <!-- Andere Navigation -->
 <NavLink class="nav-link" href="counter">
-    <span class="oi oi-plus" aria-hidden="true"></span> Counter (@MyCounter.Current)
+    <span class="oi oi-plus" aria-hidden="true"></span> Counter (@MyCounter.Current, @MyCounter.Id)
 </NavLink>
 <!-- Andere Navigation -->
 
@@ -317,6 +337,20 @@ das Event reagieren.
     }
 }
 ```
+
+Bei genauer Betrachtung wird die ID beim neu Laden der Seite 2x erstellt. Die Begründung ist folgende:
+
+> The problem is that the service provider is a temporary "root" service provider. It creates the
+> services and injects them into Startup. The remainder of the dependency injection container
+> configuration then runs as part of ConfigureServices, and the temporary service provider is thrown
+> away. A new service provider is then created which now contains the "full" configuration for the
+> application.
+>
+> Vgl. https://andrewlock.net/avoiding-startup-service-injection-in-asp-net-core-3/
+
+Deswegen sollten Konstruktoren stets "lazy" sein, sprich nur das
+Notwendigste wie Initialisierungen vornehmen. Halten wir das ein, ist uns diese zweimalige
+Instanzierung egal.
 
 ## Weitere Informationen
 
