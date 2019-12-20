@@ -234,3 +234,87 @@ durch unsere Persons Seite:
 
 <!-- ... -->
 ```
+
+## Erstellen eines Services: CounterService
+
+Nun wollen wir, dass im Menüpunkt Counter der Zählerstand auch in der Navigation angezeigt wird.
+Dafür müssen wir eine Klasse erstellen, auf dessen Instanz alle Pages des Users zugreifen können:
+Das *ScopedService*.
+
+Dafür erstellen wir einen Ordner Services, und darin eine neue Datei *CounterService.cs*. Die Klasse
+sieht so aus:
+
+```c#
+public class CounterService
+{
+    public event Action OnCounterIncrement;
+    public int Current { get; private set; } = 0;
+    public void Increment()
+    {
+        Current++;
+        OnCounterIncrement?.Invoke();
+    }
+}
+```
+
+Das Wichtige an dieser Klasse ist das Event: Es wird geworfen, wenn der Zählerstand mit *Increment()*
+erhöht wird. Dafür muss die Component Counter allerdings dieses Service verwenden. Dazu editieren wir
+*Pages/Counter.razor* und adaptieren den Code:
+
+```c#
+@code {
+    private int currentCount => MyCounter.Current;          // Ist jetzt ein Property.
+
+    private void IncrementCount()
+    {
+        MyCounter.Increment();   // Aufruf der Methode, damit das Event geworfen wird.
+    }
+}
+```
+
+In *Startup.cs* wird nun das Service in *ConfigureServices()* registriert:
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    // ...
+    services.AddScoped<CounterService>();
+}
+```
+
+### Aktualisieren der Navigation mit *StateHasChanged()*
+
+Un nun wird auch *Shared/NavMenu.razor* angepasst, da wir auf den Event reagieren müssen. Dafür wird
+mit *@using* und *@inject* das *CounterService* eingebunden. Danach wird im Navigationslink des Counters
+das Property *Current* des *CounterService* ausgegeben. Damit das Event abonniert wird, erstellen wir
+eine Methode *OnInitialized()*. Da das Event vom Typ *Action* ist, können wir direkt die Methode
+*StateHasChanged()* daran binden. Diese Methode gibt an, dass der Inhalt neu gerendert werden muss.
+Ansonsten kann natürlich eine beliebige *void* Funktion bzw. Lambda Expression ohne Parameter auf 
+das Event reagieren.
+
+```html
+@using AzureDemoApp.Services
+@inject CounterService MyCounter
+
+<!-- Andere Navigation -->
+<NavLink class="nav-link" href="counter">
+    <span class="oi oi-plus" aria-hidden="true"></span> Counter (@MyCounter.Current)
+</NavLink>
+<!-- Andere Navigation -->
+
+@code {
+    // ...
+    protected override void OnInitialized()
+    {
+        MyCounter.OnCounterIncrement += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        MyCounter.OnCounterIncrement -= StateHasChanged;
+    }
+}
+```
+
+## Weitere Informationen
+
+- Create and use ASP.NET Core Razor components: https://docs.microsoft.com/en-us/aspnet/core/blazor/components?view=aspnetcore-3.0
