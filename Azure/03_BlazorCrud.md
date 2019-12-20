@@ -338,10 +338,6 @@ das Event reagieren.
 }
 ```
 
-Deswegen sollten Konstruktoren stets "lazy" sein, sprich nur das
-Notwendigste wie Initialisierungen vornehmen. Halten wir das ein, ist uns diese zweimalige
-Instanzierung egal.
-
 ## Weitere Informationen
 
 - Create and use ASP.NET Core Razor components: https://docs.microsoft.com/en-us/aspnet/core/blazor/components?view=aspnetcore-3.0
