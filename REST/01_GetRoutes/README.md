@@ -163,7 +163,7 @@ public async Task<ActionResult<string[]>> GetMethod3Async()
 *GetMethod1()* liefert einfach eine Collection zurück. Es wird automatisch HTTP 200 gesetzt und
 die Collection wird als JSON serialisiert ausgegeben.
 
-*GetMethod2()* liefert ein IActionResult zurück. Es erlaubt uns, HTTP Statuscodes selbst zu setzen.
+*GetMethod2()* liefert ein *IActionResult* zurück. Es erlaubt uns, HTTP Statuscodes selbst zu setzen.
 Die *Ok()* Funktion sieht hier vielleicht seltsam aus, ist aber eine normale Methode, die ein *object*
 bekommt und ein Ergebnis mit dem HTTP Status 200 liefert.
 
@@ -221,7 +221,7 @@ public ActionResult<Pupil> GetPupilById(int id)
 }
 ```
 
-Hier sind mehrereDinge zu beachten:
+Hier sind mehrere Dinge zu beachten:
 
 - Achte auf die Form der *HttpGet* Annotation *HttpGet("{id}")* mit den geschweiften Klammern.
 - Der Parameter der Methode (*id*) muss genau so heißen wie der in *HttpGet* angegebene Parameter.
