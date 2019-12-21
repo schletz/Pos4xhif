@@ -19,7 +19,7 @@ new project* die Vorlage *ASP.NET Core Web Application* gewählt. Nach der Verga
 in den Projekteinstellungen der Punkt *API* gewählt. Die Checkbox bei *Configure for HTTPS* kann
 auch angehakt bleiben. Es wird dann beim ersten Start ein Zertifikat generiert und eingetragen:
 
-![](create_api_project2.png)
+![](create_api_project.png)
 
 
 ## Anlegen des Projektes von der Kommandozeile (Linux, macOS, Windows)
