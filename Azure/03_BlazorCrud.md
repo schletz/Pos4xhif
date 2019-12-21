@@ -341,3 +341,12 @@ das Event reagieren.
 ## Weitere Informationen
 
 - Create and use ASP.NET Core Razor components: https://docs.microsoft.com/en-us/aspnet/core/blazor/components?view=aspnetcore-3.0
+
+![](blazor_vs_mvc.jpg)
+
+<sup>Quelle: https://www.heise.de/developer/meldung/Microsoft-will-Framework-Blazor-nun-zur-Produktreife-bringen-4409015.html</sup>
+
+![](blazor_spectrum2.JPG)
+
+<sup>Quelle: https://visualstudiomagazine.com/articles/2019/09/26/blazor-future.aspx</sup>
+
