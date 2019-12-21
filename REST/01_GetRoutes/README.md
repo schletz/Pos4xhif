@@ -273,9 +273,9 @@ Verwende wenn möglich ein *ActionResult* mit dem Datentyp der zurückgegebenen 
 *IActionResult*, wenn ein anonymer Typ erstellt wird. Achte auch auf die Annotations mit den HTTP
 Statuscodes.
 
-| Method | URL                              | Result |
-| ------ | -------------------------------- | -------- |
-| GET    | /api/klassen                     | Alle Klassennamen als JSON Array (["4AHIF", "4BHIF", ...]) |
-| GET    | /api/klassen/(klassenname)       | Details zur übergebenen Klasse als JSON Objekt oder HTTP 400, wenn die Klasse nicht gefunden wurde. |
-| GET    | /api/abteilung/(abtname)         | Alle Klassen der übergebenen Abteilung als JSON Array oder HTTP 400, wenn die Abteilung nicht gefunden wurde. |
-| GET    | /api/classcount?abteilung=(Name) | Liefert die Anzahl der Klassen der übergebenen Abteilung, z. B. 14 oder HTTP 400, wenn die Abteilung nicht gefunden wurde. |
+| Method | URL                               | Result |
+| ------ | --------------------------------  | -------- |
+| GET    | /api/class                        | Alle Klassennamen als JSON Array (["4AHIF", "4BHIF", ...]) |
+| GET    | /api/class/(klassenname)          | Details zur übergebenen Klasse als JSON Objekt oder HTTP 400, wenn die Klasse nicht gefunden wurde. |
+| GET    | /api/department/(abtname)         | Alle Klassen der übergebenen Abteilung als JSON Array oder HTTP 400, wenn die Abteilung nicht gefunden wurde. |
+| GET    | /api/classcount?abteilung=(Name)  |  Liefert die Anzahl der Klassen der übergebenen Abteilung, z. B. 14 oder HTTP 400, wenn die Abteilung nicht gefunden wurde. |
