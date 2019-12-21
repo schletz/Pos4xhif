@@ -13,15 +13,15 @@ sollen, müssen wir die HTTP Methoden POST, PUT und DELETE betrachten.
 ### Im Request Body als JSON
 
 Bei der Kommunikation zwischen 2 Programmen über eine REST Schnittstelle werden die Daten oft direkt
-als JSON in den Request Body geschrieben. Bei der Schülerklasse würden folgende Daten übertragen
+als JSON in den Request Body geschrieben. Bei einem Schüler würden folgende Daten übertragen
 werden:
 
 ```javascript
 {
     "id":2553,
     "class":"4AHIF",
-    "lastname":"Max32443",
-    "firstname":"Mustermann",
+    "lastname":"Mustermann",
+    "firstname":"Max",
     "gender":"m"
 }
 ```
@@ -52,11 +52,11 @@ firstname=ABC&lastname=DEF
 ### POST Requests
 
 Soll ein POST Request verarbeitet werden, dessen Daten als als JSON im Request Body gesendet
-werden, so muss nichts weiter gemacht werden. Dies ist nämlich der Standardfall. Der Formatter
-erstellt automatisch ein Objekt vom Typ *Pupil* und schreibt die Daten in die entsprechenden Properties.
-Die Namen der Parameter müssen natürlich mit den Namen der Properties übereinstimmen, die
-Großschreibung wird allerdings nicht beachtet. Durch die Annotation *[HttpPost]* reagiert die Methode
-auf POST Requests mit der URL des Controllers.
+werden, so muss nichts weiter gemacht werden. Dies ist nämlich der Standardfall. Der Serializer
+von *System.Text.Json* deserialisiert die Daten automatisch ein Objekt vom Typ *Pupil* und schreibt
+die Daten in die entsprechenden Properties. Die Namen der Parameter müssen natürlich mit den Namen
+der Properties übereinstimmen, die Großschreibung wird allerdings nicht beachtet. Durch die
+Annotation *[HttpPost]* reagiert die Methode auf POST Requests mit der URL des Controllers.
 
 Können Properties nicht zugeordnet werden, wird es auf den Standardwert (0 oder null) gesetzt. Meist
 sind falsche Namen im JSON die Ursache dafür.
