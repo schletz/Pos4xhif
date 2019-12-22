@@ -62,24 +62,24 @@ Können Properties nicht zugeordnet werden, wird es auf den Standardwert (0 oder
 sind falsche Namen im JSON die Ursache dafür.
 
 ```c#
+/// <summary>
+/// Reagiert auf POST /api/pupil
+/// Fügt den übergebenen Schüler in die Liste ein und weist eine neue ID zu.
+/// </summary>
 [HttpPost]
-[ProducesResponseType(StatusCodes.Status200OK)]
-[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status201Created)]
 public ActionResult<Pupil> Post(Pupil pupil)
 {
-    try
-    {
-        int newId = db.Pupil.Max(p => p.Id) + 1;          // Simuliert eine Autoincrement Id.
-        pupil.Id = newId;
-        db.Pupil.Add(pupil);
-        return Ok(pupil);                 // Den Schüler mit der generierten Id zurückgeben.
-    }
-    // Kann der Schüler nicht angelegt werden (z. B. Verletzung von Contraints in der Db),
-    // wird 400 geliefert.
-    catch
-    {
-        return BadRequest();
-    }
+    // Falls Fehler passieren, kann dies in diesem Code nur Serverseitige Ursachen haben. Daher
+    // wird kein try und catch verwendet.
+    // Wenn PK Konflikte auftreten, würden wir Conflict() senden. Verletzt der Datensatz
+    // Constraints, senden wir BadRequest().
+    int newId = db.Pupil.Max(p => p.Id) + 1;          // Simuliert eine Autoincrement Id.
+    pupil.Id = newId;
+    db.Pupil.Add(pupil);
+
+    // Liefert den Inhalt des Requests GET /api/pupil/{id} und sendet 201Created.
+    return CreatedAtAction(nameof(GetPupilById), new { id = pupil.Id }, pupil);
 }
 ```
 
@@ -91,8 +91,7 @@ als Lambda weitergeleitet.
 
 ```c#
 [HttpPost("fromForm")]
-[ProducesResponseType(StatusCodes.Status200OK)]
-[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status201Created)]
 public ActionResult<Pupil> PostFromForm([FromForm] Pupil pupil) => Post(pupil);
 ```
 
@@ -106,13 +105,16 @@ der Code in folgenden Beispielen die entsprechenden Operationen aus.
 
 ```c#
 [HttpPut("{id}")]
-[ProducesResponseType(StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status204NoContent)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 [ProducesResponseType(StatusCodes.Status404NotFound)]
 public ActionResult<Pupil> Put(int id, Pupil pupil)
 {
     try
     {
+        // Wenn der PK des Pupil Objektes vom Parameter der Anfrage abweicht,
+        // senden wir HTTP 409 (Conflict).
+        if (id != pupil.Id) { return BadRequest(); }
         Pupil found = db.Pupil.SingleOrDefault(p => p.Id == id);
         if (found == null) { return NotFound(); }
         // Simuliert das Aktualisieren des Datensatzes in der Db. Dabei darf der Primärschlüssel
@@ -122,19 +124,21 @@ public ActionResult<Pupil> Put(int id, Pupil pupil)
         found.Lastname = pupil.Lastname;
         found.Firstname = pupil.Firstname;
         found.Gender = pupil.Gender;
-        return Ok(found);
+        // Der PUT Request sendet keinen Inhalt, nur HTTP 204
+        return NoContent();
     }
-    // Kann der Schüler nicht aktualisiert werden (z. B. Verletzung von Contraints in der Db),
-    // wird 400 geliefert.
     catch
     {
-        return BadRequest();
+        // Bei einer PK Kollision würden wir Conflict() senden. Da wir Autowerte haben,
+        // kommt das aber nicht vor.
+        // Wenn hier ein Fehler auftritt, muss das also serverseitige Ursachen haben. Daher
+        // geben wir den Fehler weiter, der dann als HTTP 500 gesendet wird.
+        throw;
     }
 }
 
 [HttpDelete("{id}")]
-[ProducesResponseType(StatusCodes.Status200OK)]
-[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status204NoContent)]
 [ProducesResponseType(StatusCodes.Status404NotFound)]
 public StatusCodeResult Delete(int id)
 {
@@ -143,13 +147,17 @@ public StatusCodeResult Delete(int id)
         Pupil found = db.Pupil.SingleOrDefault(p => p.Id == id);
         if (found == null) { return NotFound(); }
         db.Pupil.Remove(found);
-        return Ok();
+        return NoContent();
     }
     // Wenn der Schüler als Fremdschlüssel verwendet wird, kann er z. B. in einer Db nicht
     // gelöscht werden.
     catch
     {
-        return BadRequest();
+        // Kann der Schüler nicht gelöscht werden, weil z. B. Datensätze mit ihm in
+        // Beziehung stehen, senden wir Conflict().
+        // Wenn hier ein Fehler auftritt, muss das also serverseitige Ursachen haben. Daher
+        // geben wir den Fehler weiter, der dann als HTTP 500 gesendet wird.
+        throw;
     }
 }
 ```
@@ -188,16 +196,16 @@ gesetzt ist, sonst antwortet der Server mit der Fehlermeldung *unsupported media
 
 ## Übung
 
-Erstelle einen *ClassController*, sodass Klassen angelegt, geändert oder gelöscht werden. 
+Erstelle einen *ClassController*, sodass Klassen angelegt, geändert oder gelöscht werden.
 Implementiere die folgenden Requests:
 
 | Method                   | URL                             | Response   |
 | ---------------------    | -----------------               | ---------- |
-| POST (raw, JSON)         | /api/class                      | Neu angelegte Klasse als JSON oder HTTP 400 wenn die Klasse schon vorhanden ist. |
-| POST (www-formencoded)   | /api/class/fromForm             | Neu angelegte Klasse als JSON oder HTTP 400 wenn die Klasse schon vorhanden ist. |
-| PUT                      | /api/class/(klassenname)        | Aktualisierte Klasse als JSON. Dabei darf der Name allerdings nicht geändert werden. HTTP 404 wenn die Klasse nicht gefunden wurde. |
-| DELETE                   | /api/class/(klassenname)        | Leere Antwort mit HTTP 200 wenn die Klasse gelöscht wurde,  HTTP 404 wenn die Klasse nicht gefunden wurde, HTTP 400 wenn die Klasse Schüler hat. |
+| POST (raw, JSON)         | /api/class                      | Neu angelegte Klasse als JSON; HTTP 409 wenn die Klasse schon vorhanden ist; HTTP 400 wenn die Klasse nicht mit einer Ziffer beginnt. |
+| POST (www-formencoded)   | /api/class/fromForm             | Neu angelegte Klasse als JSON; HTTP 409 wenn die Klasse schon vorhanden ist; HTTP 400 wenn die Klasse nicht mit einer Ziffer beginnt. |
+| PUT                      | /api/class/(klassenname)        | HTTP 204 (No Content); HTTP 400 wenn sich der Name der Klasse ändern soll; HTTP 404 wenn die Klasse nicht gefunden wurde. |
+| DELETE                   | /api/class/(klassenname)        | HTTP 204 (No Content); HTTP 404 wenn die Klasse nicht gefunden wurde; HTTP 409 wenn die Klasse noch Schüler hat. |
 
 Nachdem die Routen in Postman getestet wurden, kopiere die Datei *index.html* in die Datei *klasse.html*.
-Ändere das HTML Formular so, dass ein POST Request an */api/class/fromForm* auch von diesem HTML 
+Ändere das HTML Formular so, dass ein POST Request an */api/class/fromForm* auch von diesem HTML
 Formular aus erfolgreich verarbeitet werden kann.

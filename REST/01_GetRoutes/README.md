@@ -72,7 +72,8 @@ public async Task<IEnumerable<string>> GetMethod1Async()
 public async Task<IActionResult> GetMethod2Async()
 {
     // await something
-    return CreatedAtAction(nameof(GetMethod2Async), new string[] { "value1", "value2" });
+    var result = await ....
+    return Ok(result);
 }
 
 [HttpGet]                     // Darf nur 1x ohne Angabe von Parametern vorkommen!
@@ -110,13 +111,22 @@ Verfügung:
 
 ```c#
 return Ok();              // HTTP 200: Alles OK
-return BadRequest();      // HTTP 400: BadRequest. Die Eingabedaten konnten nicht verarbeitet werden.
+return CreatedAtAction(...);   // HTTP 201: Datensatz wurde mit POST erstellt.
+return NoContent();       // HTTP 204: OK, es ist kein Inhalt zu senden.
+
+return BadRequest();      // HTTP 400: BadRequest. Die Eingabedaten konnten nicht verarbeitet werden. Der Client soll den Request nicht wiederholen.
 return NotFound();        // HTTP 404: Die Resource wurde nicht gefunden.
+return Conflict();        // HTTP 409: Es entsteht ein Konflikt (PK Kollisionen, ...). Der Client kann den Konflikt möglicherweise lösen.
 return Unauthorized();    // HTTP 401: User hat sich nicht angemeldet.
 return Forbid();          // HTTP 403: User hat sich angemeldet, darf die Resource aber nicht haben.
+
+throw;                    // Ein Weitergeben des Fehlers aktiviert die serverseitige Fehlerverarbeitung und sendet HTTP 500.
 return StatusCode(500);   // HTTP 500 (oder definierter Code)
 return StatusCode(StatusCodes.Status500InternalServerError);
 ```
+
+Details zu den Status Codes können auf [httpstatuses.com](https://httpstatuses.com) nachgelesen 
+werden.
 
 Liefern wir mehrere Status Codes zurück, so sollte dies in einer Annotation über die Methode
 geschrieben werden. So können Dokumentationstools wie Swagger automatisch eine Dokumentation

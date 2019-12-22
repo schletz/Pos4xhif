@@ -52,23 +52,19 @@ namespace PostRoutesDemo.Controller
         /// Fügt den übergebenen Schüler in die Liste ein und weist eine neue ID zu.
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<Pupil> Post(Pupil pupil)
         {
-            try
-            {
-                int newId = db.Pupil.Max(p => p.Id) + 1;          // Simuliert eine Autoincrement Id.
-                pupil.Id = newId;
-                db.Pupil.Add(pupil);
-                return Ok(pupil);                 // Den Schüler mit der generierten Id zurückgeben.
-            }
-            // Kann der Schüler nicht angelegt werden (z. B. Verletzung von Contraints in der Db),
-            // wird 400 geliefert.
-            catch
-            {
-                return BadRequest();
-            }
+            // Falls Fehler passieren, kann dies in diesem Code nur Serverseitige Ursachen haben. Daher
+            // wird kein try und catch verwendet.
+            // Wenn PK Konflikte auftreten, würden wir Conflict() senden. Verletzt der Datensatz
+            // Constraints, senden wir BadRequest().
+            int newId = db.Pupil.Max(p => p.Id) + 1;          // Simuliert eine Autoincrement Id.
+            pupil.Id = newId;
+            db.Pupil.Add(pupil);
+
+            // Liefert den Inhalt des Requests GET /api/pupil/{id} und sendet 201Created.
+            return CreatedAtAction(nameof(GetPupilById), new { id = pupil.Id }, pupil);
         }
 
         /// <summary>
@@ -78,8 +74,7 @@ namespace PostRoutesDemo.Controller
         /// Daher ist in Postman unter Body "form-data" oder x-www-form-urlencoded einzustellen. 
         /// </summary>
         [HttpPost("fromForm")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<Pupil> PostFromForm([FromForm] Pupil pupil) => Post(pupil);
 
 
@@ -88,13 +83,16 @@ namespace PostRoutesDemo.Controller
         /// Aktualisiert die Properties eines existierenden Schülers auf die übergebenen Werte.
         /// </summary>
         [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Pupil> Put(int id, Pupil pupil)
         {
             try
             {
+                // Wenn der PK des Pupil Objektes vom Parameter der Anfrage abweicht, 
+                // senden wir HTTP 409 (Conflict).
+                if (id != pupil.Id) { return BadRequest(); }
                 Pupil found = db.Pupil.SingleOrDefault(p => p.Id == id);
                 if (found == null) { return NotFound(); }
                 // Simuliert das Aktualisieren des Datensatzes in der Db. Dabei darf der Primärschlüssel
@@ -104,13 +102,16 @@ namespace PostRoutesDemo.Controller
                 found.Lastname = pupil.Lastname;
                 found.Firstname = pupil.Firstname;
                 found.Gender = pupil.Gender;
-                return Ok(found);
+                // Der PUT Request sendet keinen Inhalt, nur HTTP 204
+                return NoContent();
             }
-            // Kann der Schüler nicht aktualisiert werden (z. B. Verletzung von Contraints in der Db),
-            // wird 400 geliefert.
             catch
             {
-                return BadRequest();
+                // Bei einer PK Kollision würden wir Conflict() senden. Da wir Autowerte haben,
+                // kommt das aber nicht vor.
+                // Wenn hier ein Fehler auftritt, muss das also serverseitige Ursachen haben. Daher
+                // geben wir den Fehler weiter, der dann als HTTP 500 gesendet wird.
+                throw;
             }
         }
 
@@ -120,8 +121,7 @@ namespace PostRoutesDemo.Controller
         /// Löscht einen Schüler aus der Collection.
         /// </summary>
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public StatusCodeResult Delete(int id)
         {
@@ -130,13 +130,17 @@ namespace PostRoutesDemo.Controller
                 Pupil found = db.Pupil.SingleOrDefault(p => p.Id == id);
                 if (found == null) { return NotFound(); }
                 db.Pupil.Remove(found);
-                return Ok();
+                return NoContent();
             }
             // Wenn der Schüler als Fremdschlüssel verwendet wird, kann er z. B. in einer Db nicht
             // gelöscht werden.
             catch
             {
-                return BadRequest();
+                // Kann der Schüler nicht gelöscht werden, weil z. B. Datensätze mit ihm in
+                // Beziehung stehen, senden wir Conflict().
+                // Wenn hier ein Fehler auftritt, muss das also serverseitige Ursachen haben. Daher
+                // geben wir den Fehler weiter, der dann als HTTP 500 gesendet wird.
+                throw;
             }
         }
     }
