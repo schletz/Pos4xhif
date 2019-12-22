@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,7 +27,8 @@ namespace EntityFrameworkCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<Model.TestsContext>();
+            services.AddDbContext<Model.TestsContext>(options =>
+                options.UseSqlite(Configuration["AppSettings:Database"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
