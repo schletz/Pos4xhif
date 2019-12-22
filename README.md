@@ -55,10 +55,9 @@ git init
 git remote add origin https://github.com/schletz/Pos4xhif.git
 ```
 
-4. Lege dir in diesem Ordner eine Datei *syncGit.cmd* mit folgenden Befehlen an. 
-    Durch Doppelklick auf diese Datei wird immer der neueste Stand geladen. Neu erstellte Dateien
-    in diesem Ordner bleiben auf der Festplatte, geänderte Dateien werden allerdings durch 
-    *git reset* auf den Originalstand zurückgesetzt.
+4. Um neue Inhalte zu laden, starte die Datei *resetGit.cmd*. Achtung: Es werden dabei alle lokalen
+Änderungen zurückgesetzt. Diese Datei führt nämlich die folgenden Kommandos aus:
+
 ```bash {.line-numbers}
 git fetch --all
 git reset --hard origin/master
