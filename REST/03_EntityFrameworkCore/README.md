@@ -139,8 +139,8 @@ public partial class Pupil
 
 ## Der Code von PupilController.cs
 
-Als Basis für den PupilController wurde das Template von Visual Studio verwendet und erweitert.
-da bei einer Datenbank natürlich mehr Probleme als bei reinen Speicherlisten vorkommen können,
+Als Basis für den *PupilController* wurde das Template von Visual Studio verwendet und erweitert.
+Da bei einer Datenbank natürlich mehr Probleme als bei reinen Speicherlisten vorkommen können,
 ist das korrekte Behandeln von Fehlern sehr wichtig. Diese Fehler müssen in schlüssige HTTP
 Statuscodes übersetzt werden, damit die aufrufende Applikation entsprechend reagieren kann.
 
@@ -206,7 +206,7 @@ namespace EntityFrameworkCore.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Pupil>> GetPupil(long id)
         {
-            // Navigationen in der Entity Klasse Pupil können über
+            // Navigationen in der Entity Klasse Pupil können über 
             // [System.Text.Json.Serialization.JsonIgnore] ausgeschlossen werden.
             Pupil pupil = await _context.Pupil.FindAsync(id);
 
@@ -232,10 +232,6 @@ namespace EntityFrameworkCore.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (InvalidOperationException e)
-            {
-                return Conflict(e.Message);
             }
             catch (DbUpdateException)
             {

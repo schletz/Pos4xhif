@@ -84,10 +84,6 @@ namespace EntityFrameworkCore.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (InvalidOperationException e)
-            {
-                return Conflict(e.Message);
-            }
             catch (DbUpdateException)
             {
                 // Hier landet man, wenn Contraints fehlschlagen. Möchte man diese feiner
