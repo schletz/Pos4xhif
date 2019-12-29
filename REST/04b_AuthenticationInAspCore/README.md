@@ -232,8 +232,8 @@ und benutzt werden.
 public class MyController : ControllerBase
 {
     ...
-    private readonly ILogger<UserController> _logger;
-    public UserController(ILogger<UserController> logger)
+    private readonly ILogger<MyController> _logger;
+    public UserController(ILogger<MyController> logger)
     {
         ...
         _logger = logger;
@@ -245,4 +245,6 @@ public class MyController : ControllerBase
         _logger.LogWarning("Warning");
         _logger.LogError("Error");
     }
+    ...
+}
 ```
