@@ -164,9 +164,9 @@ im Moment noch statisch die oben genannten Benutzer als richtig zurück. Das mus
 werden.
 
 Soll in dieser Methode auf die Datenbank zugegriffen werden, so kann der Datenbankcontext mit
-AddDbContext in *ConfigureServices()* registriert werden. Dadurch wird dem Service der Datenabnkcontext
+*AddDbContext()* in *ConfigureServices()* registriert werden. Dadurch wird dem Service der Datenabnkcontext
 im Konstruktor übergeben und kann gespeichert werden. Details sind im Kapitel
-[03_EntityFrameworkCore][../03_EntityFrameworkCore] zu finden.
+[03_EntityFrameworkCore](../03_EntityFrameworkCore) zu finden.
 
 Wenn erforderlich kann noch die Methode *GetUserDetails()* implementiert werden, die genauere
 Informationen zum übergebenen Usernamen aus der Datenbank herausliest.
