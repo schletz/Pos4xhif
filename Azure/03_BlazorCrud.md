@@ -341,6 +341,7 @@ das Event reagieren.
 ## Weitere Informationen
 
 - Create and use ASP.NET Core Razor components: https://docs.microsoft.com/en-us/aspnet/core/blazor/components?view=aspnetcore-3.0
+- A Demonstration of Simple Server-side Blazor Cookie Authentication: http://blazorhelpwebsite.com/Blog/tabid/61/EntryId/4316/A-Demonstration-of-Simple-Server-side-Blazor-Cookie-Authentication.aspx
 
 ![](blazor_vs_mvc.jpg)
 

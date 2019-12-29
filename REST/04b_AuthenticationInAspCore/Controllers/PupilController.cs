@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace AuthenticationDemo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]                       // Aktiviert die Authentication für den Controller.
+    // Aktiviert die Authentication für den Controller. Wenn JWT nicht als Default Authentication
+    // gesetzt wurde, muss es speziell angegeben werden.
+    // https://docs.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-3.1
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PupilController : ControllerBase
     {
         private static readonly List<string> _demopupils = new List<string> { "Pupil1", "Pupil2", "Pupil3" };

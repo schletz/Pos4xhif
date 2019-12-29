@@ -1,18 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AuthenticationDemo.Extensions;
 using AuthenticationDemo.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AuthenticationDemo
 {
@@ -30,40 +22,23 @@ namespace AuthenticationDemo
         {
             services.AddControllers();
 
-            // JWT Aktivieren
-            byte[] key = Convert.FromBase64String(Configuration["AppSettings:Secret"]);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                // Damit der Token auch als GET Parameter in der Form ...?token=xxxx übergben
-                // werden kann, reagieren wir auf den Event für ankommende Anfragen.
-                options.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = ctx =>
-                    {
-                        string token = ctx.Request.Query["token"];
-                        if (!string.IsNullOrEmpty(token))
-                            ctx.Token = ctx.Request.Query["token"];
-                        return Task.CompletedTask;
-                    }
-                };
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+            // Soll ein gespeichertes Secret verwendet werden, kann folgende Zeite statt dessen
+            // verwendet werden:
+            string jwtSecret = Configuration["AppSettings:Secret"] ?? AuthService.GenerateRandom(1024);
+
+            // JWT aktivieren, aber nicht standardmäßig aktivieren. Daher muss beim Controller
+            //     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+            // geschrieben werden. Wird nur eine API bereitgestellt, kann dieser Parameter auf
+            // true gesetzt und Cookies natürlich deaktiviert werden.
+            services.AddJwtAuthentication(jwtSecret, setDefault: false);
+
+            // Cookies aktivieren. Dies ist für Blazor oder MVC Applikationen gedacht.
+            services.AddCookieAuthentication(setDefault: true);
 
             // Instanzieren des Userservices mit einer Factorymethode. Diese übergibt das gespeicherte
             // Secret.
-            services.AddScoped<UserService>(services => 
-                new UserService(Configuration["AppSettings:Secret"]));
+            services.AddScoped<AuthService>(services =>
+                new AuthService(jwtSecret));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +58,7 @@ namespace AuthenticationDemo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
             });
         }
     }
