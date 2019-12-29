@@ -53,6 +53,8 @@ public void ConfigureServices(IServiceCollection services)
 {
     ...
     // BEGIN AUTHENTICATION ************************************************************************
+    // using AuthenticationDemo.Extensions;
+    // using AuthenticationDemo.Services;
     string jwtSecret = Configuration["AppSettings:Secret"] ?? AuthService.GenerateRandom(1024);
     services.AddJwtAuthentication(jwtSecret, setDefault: true);
     services.AddScoped<AuthService>(services =>
@@ -73,6 +75,8 @@ public void ConfigureServices(IServiceCollection services)
 {
     ...
     // BEGIN AUTHENTICATION ************************************************************************
+    // using AuthenticationDemo.Extensions;
+    // using AuthenticationDemo.Services;
     string jwtSecret = Configuration["AppSettings:Secret"] ?? AuthService.GenerateRandom(1024);
     services.AddJwtAuthentication(jwtSecret, setDefault: false);
     services.AddCookieAuthentication(setDefault: true);
