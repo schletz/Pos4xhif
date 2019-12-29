@@ -225,8 +225,8 @@ public static IHostBuilder CreateHostBuilder(string[] args)
 }
 ```
 
-Durch den Logger kann nun in jeder Klasse der Logger über Dependency Injection geholt und benutzt
-werden.
+Durch *ConfigureLogging()* kann der Logger nun in jeder Klasse über Dependency Injection geholt
+und benutzt werden.
 
 ```c#
 public class MyController : ControllerBase

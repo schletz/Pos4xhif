@@ -95,6 +95,49 @@ Es gibt die Adresse an, die beim Öffnen des Browsers nach dem Serverstart ersch
   }
 }
 ```
+Über die Methode *CreateHostBuilder()* in *Program.cs* kann ebenfalls der Port und das Logging
+konfiguriert werden:
+
+```c#
+public static IHostBuilder CreateHostBuilder(string[] args)
+{
+    return Host.CreateDefaultBuilder(args)
+        .ConfigureLogging(logging =>
+        {
+            logging
+                .ClearProviders()
+                .AddConsole();
+        })
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder
+                .UseUrls("http://*:80;https://*.443")
+                .UseStartup<Startup>();
+        });
+}
+```
+
+Durch *ConfigureLogging()* kann der Logger nun in jeder Klasse über Dependency Injection geholt
+und benutzt werden.
+
+```c#
+public class MyController : ControllerBase
+{
+    ...
+    private readonly ILogger<UserController> _logger;
+    public UserController(ILogger<UserController> logger)
+    {
+        ...
+        _logger = logger;
+    }
+
+    public string MyMethod()
+    {
+        _logger.LogInformation("Info");
+        _logger.LogWarning("Warning");
+        _logger.LogError("Error");
+    }
+```
 
 Weitere Informationen:
 - https://www.dpunkt.de/common/leseproben/12326/4_Kapitel%208.pdf
