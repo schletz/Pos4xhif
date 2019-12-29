@@ -159,7 +159,7 @@ Natürlich muss die Logik noch an die eigenen Erfordernisse angepasst werden.
 
 ### Anpassung des Authentication Services
 
-In der Klasse *Services/AuthServices()* gibt es die Methode *CheckUserAndGetRole()*. Sie liefert
+In der Klasse *AuthServices* gibt es die Methode *CheckUserAndGetRole()*. Sie liefert
 im Moment noch statisch die oben genannten Benutzer als richtig zurück. Das muss natürlich geändert
 werden.
 
