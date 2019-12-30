@@ -141,6 +141,56 @@ public class MyController : ControllerBase
 }
 ```
 
+## Minimales Beispiel für einen Server
+
+Die Projektdatei muss vom Typ *Microsoft.NET.Sdk.Web* sein:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk.Web">
+...
+</Project>
+```
+
+Danach kann folgendes Programm in *Program.cs* einfach mit *dotnet run* ausgeführt werden.
+Im Browser erscheint dann unter der Adresse *http://localhost/sayhello/User* der Text *Hello User*.
+
+```c#
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Hosting;
+using System;
+
+namespace MinimalWebserver
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Host
+                .CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                        .UseUrls("http://*:80;https://*.443")
+                        .Configure(app =>
+                        {
+                            app.UseRouting();
+                            app.UseEndpoints(route =>
+                            {
+                                route.MapGet("/", context => context.Response.WriteAsync("ASP.NET Core"));
+                                route.MapGet("/sayhello/{name}", context => context.Response.WriteAsync($"Hello {context.GetRouteValue("name")}"));
+                            });
+                        });
+                })
+                .Build()
+                .Run();
+        }
+    }
+}
+```
+
 Weitere Informationen:
 - https://www.dpunkt.de/common/leseproben/12326/4_Kapitel%208.pdf
 - https://www.infosys.com/digital/insights/Documents/restful-web-services.pdf
