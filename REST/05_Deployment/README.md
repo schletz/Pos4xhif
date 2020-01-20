@@ -111,8 +111,22 @@ Der folgende Befehl erzeugt einen Releasebuild mit folgenden Optionen:
   zu finden.
 
 ```text
-...\AuthExample.App>dotnet publish -c Release -o ../Production --self-contained -r win-x64
+...\AuthExample.App>dotnet publish -c Release -o ../Production -r win-x64 --self-contained
 ```
+
+### Erstellen einer einzelnen exe Datei
+
+Mit .NET Core 3 ist es auch möglich, das gesamte Framework samt Dependencies in eine einzelne exe
+Datei (self-contained single executable) zu packen. Diese hat rd. 100 MB, dafür kann sie auf jedem
+Rechner ausgeführt werden.
+
+```text
+...\AuthExample.App>dotnet publish -c Release -o ../Production -r win-x64 /p:PublishSingleFile=true
+```
+
+Ein experimentelles Feature ist der zusätzliche Parameter */p:PublishTrimmed=true*. Es reduziert die
+Größe der exe Datei. Diese Option ist allerdings noch experimentell und sollte noch nicht verwendet
+werden.
 
 ## Ausführen der Datei
 
