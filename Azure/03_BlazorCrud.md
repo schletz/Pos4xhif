@@ -89,6 +89,7 @@ public void ConfigureServices(IServiceCollection services)
 
     // Fügt den DbContext als Service hinzu, damit wir ihn über @inject bekommen.
     services.AddDbContext<AzureDemoContext>();
+        
 }
 ```
 
