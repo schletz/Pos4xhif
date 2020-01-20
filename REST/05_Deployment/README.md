@@ -126,7 +126,8 @@ Rechner ausgeführt werden.
 
 Ein experimentelles Feature ist der zusätzliche Parameter */p:PublishTrimmed=true*. Es reduziert die
 Größe der exe Datei. Diese Option ist allerdings noch experimentell und sollte noch nicht verwendet
-werden.
+werden. Details sind auf https://dotnetcoretutorials.com/2019/06/27/the-publishtrimmed-flag-with-il-linker/
+erklärt.
 
 ## Ausführen der Datei
 
