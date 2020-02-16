@@ -77,6 +77,7 @@ private void NavigationList_ItemSelected(object sender, SelectedItemChangedEvent
 ```
 
 ### Die DetailPages
+
 Die DetailPages entsprechen weitgehend dem XAML Code, der auch bei WPF Anwendungen verwendet wird.
 Sie unterstützen Bindings und ein ViewModel. In [ClassPage.xaml](TestAdministrator.App/TestAdministrator.App/ClassPage.xaml)
 werden zum Beispiel alle vom Server geladenen Klassen als Liste angezeigt. Dieses Laden wird im Event
@@ -86,6 +87,7 @@ Klasse anzeigt. Im [CodeBehind](TestAdministrator.App/TestAdministrator.App/Clas
 man das Reagieren auf den Event.
 
 ### Die ViewModels
+
 Unsere Viewmodels leiten sich alle von [BaseViewModel](TestAdministrator.App/TestAdministrator.App/ViewModels/BaseViewModel.cs)
 ab. Diese Klasse implementiert einerseits das INotifyPropertyChanged Interface zum Aktualisieren der
 gebundenen Felder, andererseite lädt es das [RestService](TestAdministrator.App/TestAdministrator.App/Services/RestService.cs) 
@@ -95,8 +97,93 @@ Teilweise werden die ViewModels in XAML über *ContentPage.BindingContext* einge
 Argumente im Konstruktor haben. Bei Argumenten wird im CodeBehind der *BindingContext* gesetzt, so
 wie in [ClassDetailPage.xaml.cs](TestAdministrator.App/TestAdministrator.App/ClassDetailPage.xaml.cs).
 
+### Etwas heikel: Laden vom Server, bevor die Seite dargestellt wird
+
+Da Konstruktoren nicht *async* sein dürfen, behelfen wir uns mit dem Factorypattern. Im Falle des
+[DashboardViewModel](TestAdministrator.App\TestAdministrator.App\ViewModels\DashboardViewModel.cs)
+wird in der *FactoryAsync()* Methode der Request *.../api/dashboard* abgesetzt
+und das Ergebnis in Response geschrieben. Den Standardkonstruktor machen wir *private*,
+damit nicht ein Viewmodel ohne Initialisierung erzeugt werden kann.
+
+```c#
+public class DashboardViewModel : BaseViewModel
+{
+   private readonly RestService _restService = DependencyService.Get<RestService>();
+   public string Response { get; set; }
+
+   private DashboardViewModel() { }
+   public static async Task<DashboardViewModel> FactoryAsync()
+   {
+      DashboardViewModel vm = new DashboardViewModel();
+      vm.Response = (await vm._restService.SendAsync<List<string>>(HttpMethod.Get, "dashboard"))[0];
+      return vm;
+   }
+}
+```
+
+[DashboardPage.xaml.cs](TestAdministrator.App\TestAdministrator.App\ClassDetailPage.xaml.cs) bekommt
+nun einen Konstruktor, der ein fertig erstelltes Viewmodel erwartet.
+So umgehen wir das *async* Problem im Konstruktor. Den Standardkonstruktor machen wir *private*,
+damit nicht eine Seite ohne Initialisierung erzeugt werden kann.
+
+```c#
+public partial class DashboardPage : ContentPage
+{
+   private DashboardPage()
+   {
+      InitializeComponent();
+   }
+   public DashboardPage(DashboardViewModel vm) : this()
+   {
+      BindingContext = vm;
+   }
+}
+```
+
+Jetzt ergibt sich in der MainPage das Problem, dass in
+[MainPage.xaml](TestAdministrator.App\TestAdministrator.App\MainPage.xaml) die Detailseite als erste
+Seite dargestellt wird. Dadurch wird aber der Standardkonstruktor aufgerufen. Wir umgehen das Problem,
+indem wir im Konstruktor der Seite in
+[MainPage.xaml.cs](TestAdministrator.App\TestAdministrator.App\MainPage.xaml.cs)
+die Detailseite im Programmcode setzen. Den Konstruktor machen wir zur Sicherheit wieder *private*.
+Wichtig ist der Aufruf von *InitializeComponent()* mit *this()*.
+
+```c#
+public partial class MainPage : MasterDetailPage
+{
+   private MainPage()
+   {
+      InitializeComponent();
+   }
+  public MainPage(Page detailPage) : this()
+   {
+      Detail = detailPage;
+   }
+}
+```
+
+Zum Schluss muss noch [App.xaml.cs](TestAdministrator.App\TestAdministrator.App\App.xaml.cs)
+angepasst werden. Denn die MasterPage wird im Konstruktor gesetzt, was natürlich nicht mehr
+möglich ist. Deswegen verwenden wir das *OnStart()* Event.
+
+```c#
+public partial class App : Application
+{
+   public App()
+   {
+      InitializeComponent();
+   }
+
+   protected override async void OnStart()
+   {
+      MainPage = new MainPage(new DashboardPage(await DashboardViewModel.FactoryAsync()));
+   }
+   // ...
+}
+```
 
 ## Übung
+
 Das Dashboard soll alle in der Datenbank eingetragenen Tests des angemeldeten Lehrers anzeigen. Da
 wir noch keine Loginseite haben, können wir das Login im Code wie in 
 [ClassDetailViewModel.cs](TestAdministrator.App/TestAdministrator.App/ViewModels/ClassDetailViewModel.cs)

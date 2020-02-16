@@ -12,12 +12,14 @@
         <!-- Verweis auf die Masterpage mit dem Menü im Namespace local, siehe oben -->
         <local:MasterPage />
     </MasterDetailPage.Master>
+    <!-- Die Detailpage wird im Konstruktor gesetzt. Deswegen ist dieser Code auskommentiert. -->
+    <!--
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <!-- Verweis auf die zuerst angezeigte Detail Page im Namespace pages, siehe oben -->
                 <local:DashboardPage />
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>
+    -->
 </MasterDetailPage>

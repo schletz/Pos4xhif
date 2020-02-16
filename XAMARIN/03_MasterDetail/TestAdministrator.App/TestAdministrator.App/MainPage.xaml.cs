@@ -12,9 +12,18 @@ namespace TestAdministrator.App
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : MasterDetailPage
     {
-        public MainPage()
+        private MainPage()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Initialisiert die Mainpage. Wird in App.OnStart() aufgerufen.
+        /// </summary>
+        /// <param name="detailPage">Die erste anzuzeigende Seite.</param>
+        public MainPage(Page detailPage) : this()
+        {
+            Detail = detailPage;
         }
     }
 }

@@ -16,12 +16,6 @@ namespace TestAdministrator.App.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected RestService RestService { get; }
-
-        public BaseViewModel()
-        {
-            RestService = DependencyService.Get<RestService>();
-        }
 
         /// <summary>
         /// Setzt den Wert eines Properties und ruft das PropertyChanged Event auf, um die Bindings

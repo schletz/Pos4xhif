@@ -87,9 +87,9 @@ namespace TestAdministrator.App.Services
             _client.DefaultRequestHeaders.Authorization = null;
         }
 
-        Task<T> SendAsync<T>(HttpMethod method, string actionUrl) => SendAsync<T>(method, actionUrl, "", null);
-        Task<T> SendAsync<T>(HttpMethod method, string actionUrl, object requestData) => SendAsync<T>(method, actionUrl, "", requestData);
-        Task<T> SendAsync<T>(HttpMethod method, string actionUrl, string idParam) => SendAsync<T>(method, actionUrl, idParam, null);
+        public Task<T> SendAsync<T>(HttpMethod method, string actionUrl) => SendAsync<T>(method, actionUrl, "", null);
+        public Task<T> SendAsync<T>(HttpMethod method, string actionUrl, object requestData) => SendAsync<T>(method, actionUrl, "", requestData);
+        public Task<T> SendAsync<T>(HttpMethod method, string actionUrl, string idParam) => SendAsync<T>(method, actionUrl, idParam, null);
         /// <summary>
         /// Sendet einen Request an die REST API und gibt das Ergebnis zurück.
         /// </summary>

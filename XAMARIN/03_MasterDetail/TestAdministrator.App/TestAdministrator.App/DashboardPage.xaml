@@ -9,7 +9,7 @@
              Title="Dashboard">
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Label Text="Dashboard"/>
+            <Label Text="{Binding Response}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

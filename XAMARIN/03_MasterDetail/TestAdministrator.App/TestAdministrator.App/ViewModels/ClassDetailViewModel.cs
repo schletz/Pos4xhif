@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
+using TestAdministrator.App.Services;
 using TestAdministrator.Dto;
+using Xamarin.Forms;
 
 namespace TestAdministrator.App.ViewModels
 {
@@ -12,6 +14,8 @@ namespace TestAdministrator.App.ViewModels
     /// </summary>
     public class ClassDetailViewModel : BaseViewModel
     {
+        private readonly RestService _restService = DependencyService.Get<RestService>();
+
         public string CurrentId { get; }
         /// <summary>
         /// Details zur geladenen Klasse.
@@ -32,10 +36,10 @@ namespace TestAdministrator.App.ViewModels
         public async Task LoadClassDetails()
         {
             // Für die Klassendetails müssen wir uns anmelden.
-            if (await RestService.TryLoginAsync(
+            if (await _restService.TryLoginAsync(
                 new UserDto { Username = "schueler", Password = "pass" }))
             {
-                SchoolclassDto classDetails = await RestService.GetClassDetailsAsync(CurrentId);
+                SchoolclassDto classDetails = await _restService.GetClassDetailsAsync(CurrentId);
                 SetProperty(nameof(CurrentClassDetails), classDetails);
             }
             else

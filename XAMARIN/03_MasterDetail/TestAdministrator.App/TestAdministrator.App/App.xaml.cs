@@ -1,4 +1,5 @@
 ﻿using System;
+using TestAdministrator.App.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,13 +10,13 @@ namespace TestAdministrator.App
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            // Handle when your app starts
+            // Damit wir asynchron vom Server die ersten Daten laden können, verwenden wir OnStart
+            // und nicht den Konstruktor für die Initialisierung der ersten Seite.
+            MainPage = new MainPage(new DashboardPage(await DashboardViewModel.FactoryAsync()));
         }
 
         protected override void OnSleep()
