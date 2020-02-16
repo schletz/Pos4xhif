@@ -100,7 +100,7 @@ wie in [ClassDetailPage.xaml.cs](TestAdministrator.App/TestAdministrator.App/Cla
 ### Etwas heikel: Laden vom Server, bevor die Seite dargestellt wird
 
 Da Konstruktoren nicht *async* sein dürfen, behelfen wir uns mit dem Factorypattern. Im Falle des
-[DashboardViewModel](TestAdministrator.App\TestAdministrator.App\ViewModels\DashboardViewModel.cs)
+[DashboardViewModel](TestAdministrator.App/TestAdministrator.App/ViewModels/DashboardViewModel.cs)
 wird in der *FactoryAsync()* Methode der Request *.../api/dashboard* abgesetzt
 und das Ergebnis in Response geschrieben. Den Standardkonstruktor machen wir *private*,
 damit nicht ein Viewmodel ohne Initialisierung erzeugt werden kann.
@@ -121,7 +121,7 @@ public class DashboardViewModel : BaseViewModel
 }
 ```
 
-[DashboardPage.xaml.cs](TestAdministrator.App\TestAdministrator.App\ClassDetailPage.xaml.cs) bekommt
+[DashboardPage.xaml.cs](TestAdministrator.App/TestAdministrator.App/ClassDetailPage.xaml.cs) bekommt
 nun einen Konstruktor, der ein fertig erstelltes Viewmodel erwartet.
 So umgehen wir das *async* Problem im Konstruktor. Den Standardkonstruktor machen wir *private*,
 damit nicht eine Seite ohne Initialisierung erzeugt werden kann.
@@ -141,10 +141,10 @@ public partial class DashboardPage : ContentPage
 ```
 
 Jetzt ergibt sich in der MainPage das Problem, dass in
-[MainPage.xaml](TestAdministrator.App\TestAdministrator.App\MainPage.xaml) die Detailseite als erste
+[MainPage.xaml](TestAdministrator.App/TestAdministrator.App/MainPage.xaml) die Detailseite als erste
 Seite dargestellt wird. Dadurch wird aber der Standardkonstruktor aufgerufen. Wir umgehen das Problem,
 indem wir im Konstruktor der Seite in
-[MainPage.xaml.cs](TestAdministrator.App\TestAdministrator.App\MainPage.xaml.cs)
+[MainPage.xaml.cs](TestAdministrator.App/TestAdministrator.App/MainPage.xaml.cs)
 die Detailseite im Programmcode setzen. Den Konstruktor machen wir zur Sicherheit wieder *private*.
 Wichtig ist der Aufruf von *InitializeComponent()* mit *this()*.
 
@@ -162,7 +162,7 @@ public partial class MainPage : MasterDetailPage
 }
 ```
 
-Zum Schluss muss noch [App.xaml.cs](TestAdministrator.App\TestAdministrator.App\App.xaml.cs)
+Zum Schluss muss noch [App.xaml.cs](TestAdministrator.App/TestAdministrator.App/App.xaml.cs)
 angepasst werden. Denn die MasterPage wird im Konstruktor gesetzt, was natürlich nicht mehr
 möglich ist. Deswegen verwenden wir das *OnStart()* Event.
 
@@ -190,6 +190,7 @@ wir noch keine Loginseite haben, können wir das Login im Code wie in
 einfach vor dem Request senden.
 
 Um diese Aufgabe zu lösen, bearbeite folgende Punkte:
+
 1. Erstelle eine DTO Klasse *TestDto*, die alle relevanten Daten über den Test liefert. Dies sind alle
    Einträge in der Tabelle Tests und zudem noch der Klassenvorstand der betroffenen Klasse.
 
