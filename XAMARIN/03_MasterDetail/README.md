@@ -215,6 +215,7 @@ Um diese Aufgabe zu lösen, bearbeite folgende Punkte:
    das Layout kann beliebig gewählt werden.
 
 ## Datenbankschema
+
 Die Musterdatenbank *Tests.db* hat folgenden Aufbau:
 
 ![](datenmodell.png)
