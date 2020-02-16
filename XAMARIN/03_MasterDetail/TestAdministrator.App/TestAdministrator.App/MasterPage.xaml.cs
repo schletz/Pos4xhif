@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using TestAdministrator.App.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,15 +28,25 @@ namespace TestAdministrator.App
             InitializeComponent();
         }
 
-        private void NavigationList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void NavigationList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             MasterDetailPage mainPage = App.Current.MainPage as MasterDetailPage;
             NavigationItem item = e.SelectedItem as NavigationItem;
             if (mainPage != null && item != null)
             {
-                // Wir brauchen eine Navigation, sonst kommen wir in Android nicht mehr zurück wenn
-                // die Masterpage versteckt wird.
-                mainPage.Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+                if (item.TargetType == typeof(DashboardPage))
+                {
+                    var page = new DashboardPage(
+                        await DashboardViewModel.FactoryAsync());
+                    mainPage.Detail = new NavigationPage(page);
+                }
+                else
+                {
+                    // Wir brauchen eine Navigation, sonst kommen wir in Android nicht mehr zurück wenn
+                    // die Masterpage versteckt wird.
+                    mainPage.Detail = new NavigationPage(
+                        (Page)Activator.CreateInstance(item.TargetType));
+                }
                 // Die Masterpage soll nach dem Auswählen verschwinden.
                 mainPage.IsPresented = false;
             }

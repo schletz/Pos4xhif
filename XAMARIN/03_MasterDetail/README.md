@@ -162,6 +162,29 @@ public partial class MainPage : MasterDetailPage
 }
 ```
 
+Nun muss der Eventhandler für die Liste der Seiten im Navigationsmenü links angepasst werden. Im
+Moment wird mit *Activator.CreateInstance()* über Reflection die Klasse gesucht und mit dem
+Standardkonstruktor erstellt. Unsere *DashboardPage* bekommt nun eine Sonderbehandlung in
+[MasterPage.xaml.cs](TestAdministrator.App/TestAdministrator.App/MasterPage.xaml.cs)
+
+```c#
+private async void NavigationList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+{
+   MasterDetailPage mainPage = App.Current.MainPage as MasterDetailPage;
+   NavigationItem item = e.SelectedItem as NavigationItem;
+   if (mainPage != null && item != null)
+   {
+         if (item.TargetType == typeof(DashboardPage))
+         {
+            var page = new DashboardPage(
+               await DashboardViewModel.FactoryAsync());
+            mainPage.Detail = new NavigationPage(page);
+         }
+         else
+         // ...
+}
+```
+
 Zum Schluss muss noch [App.xaml.cs](TestAdministrator.App/TestAdministrator.App/App.xaml.cs)
 angepasst werden. Denn die MasterPage wird im Konstruktor gesetzt, was natürlich nicht mehr
 möglich ist. Deswegen verwenden wir das *OnStart()* Event.
