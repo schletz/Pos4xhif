@@ -15,8 +15,6 @@ namespace TestAdministrator.App.ViewModels
     /// </summary>
     public class ClassDetailViewModel : BaseViewModel
     {
-        private readonly RestService _restService = DependencyService.Get<RestService>();
-
         public string CurrentId { get; }
         /// <summary>
         /// Details zur geladenen Klasse.
@@ -36,19 +34,8 @@ namespace TestAdministrator.App.ViewModels
         /// <returns></returns>
         public async Task LoadClassDetails()
         {
-            try
-            {
-                SchoolclassDto classDetails = await _restService.GetClassDetailsAsync(CurrentId);
-                SetProperty(nameof(CurrentClassDetails), classDetails);
-            }
-            catch (ServiceException e) when (e.HttpStatusCode == (int)HttpStatusCode.Unauthorized)
-            {
-                await App.Current.MainPage.DisplayAlert("Fehler", "Nicht angemeldet", "OK");
-            }
-            catch (ServiceException e) when (e.HttpStatusCode == (int)HttpStatusCode.Forbidden)
-            {
-                await App.Current.MainPage.DisplayAlert("Fehler", "Keine Berechtigung", "OK");
-            }
+            SchoolclassDto classDetails = await RestService.Instance.GetClassDetailsAsync(CurrentId);
+            SetProperty(nameof(CurrentClassDetails), classDetails);
         }
     }
 }

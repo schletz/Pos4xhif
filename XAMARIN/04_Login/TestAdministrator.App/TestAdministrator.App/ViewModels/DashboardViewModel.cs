@@ -4,14 +4,14 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TestAdministrator.App.Services;
+using TestAdministrator.Dto;
 using Xamarin.Forms;
 
 namespace TestAdministrator.App.ViewModels
 {
     public class DashboardViewModel : BaseViewModel
     {
-        private readonly RestService _restService = DependencyService.Get<RestService>();
-        public string Response { get; set; }
+        public List<TestinfoDto> TestInfos { get; private set; }
 
         private DashboardViewModel() { }
 
@@ -22,8 +22,12 @@ namespace TestAdministrator.App.ViewModels
         /// <returns></returns>
         public static async Task<DashboardViewModel> FactoryAsync()
         {
+            // Das RestService über das Xamarin Dependency Service holen.
+            RestService restService = RestService.Instance;
             DashboardViewModel vm = new DashboardViewModel();
-            vm.Response = (await vm._restService.SendAsync<List<string>>(HttpMethod.Get, "dashboard"))[0];
+
+            vm.TestInfos = await restService.SendAsync<List<TestinfoDto>>(
+                HttpMethod.Get, "dashboard", restService.CurrentUser.Username);
             return vm;
         }
     }

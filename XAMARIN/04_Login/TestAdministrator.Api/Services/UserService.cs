@@ -83,6 +83,8 @@ namespace TestAdministrator.Api.Services
             };
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
+            // Den Zeitpunkt des Logins in die DB schreiben.
+            dbUser.LastLogin = DateTime.UtcNow;
             return user;
         }
 

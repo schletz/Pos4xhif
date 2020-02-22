@@ -8,6 +8,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TestAdministrator.Dto;
 using TestAdministrator.App.ViewModels;
+using TestAdministrator.App.Services;
+using System.Net;
 
 namespace TestAdministrator.App
 {
@@ -25,7 +27,7 @@ namespace TestAdministrator.App
         /// Konstruktor, der die Page und das ViewModel mit der übergebenen Klasse initialisiert.
         /// </summary>
         /// <param name="currentId">ID der Klasse, dessen Details angezeigt werden sollen.</param>
-        public ClassDetailPage(string currentId): this()
+        public ClassDetailPage(string currentId) : this()
         {
             // Das Viewmodel mit der anzuzeigenden Klasse initialisieren.
             BindingContext = new ClassDetailViewModel(currentId);
@@ -41,8 +43,21 @@ namespace TestAdministrator.App
         /// <param name="e"></param>
         private async void ContentPage_Appearing(object sender, EventArgs e)
         {
-            ClassDetailViewModel vm = BindingContext as ClassDetailViewModel;
-            await vm.LoadClassDetails();
+            try
+            {
+                ClassDetailViewModel vm = BindingContext as ClassDetailViewModel;
+                await vm?.LoadClassDetails();
+            }
+            // Diese Fehler dürften hier gar nicht mehr auftreten, da das Laden der Seite nur mit
+            // gültiger Rolle zu ermöglichen ist.
+            catch (ServiceException err) when (err.HttpStatusCode == (int)HttpStatusCode.Unauthorized)
+            {
+                await App.Current.MainPage.DisplayAlert("Fehler", "Nicht angemeldet", "OK");
+            }
+            catch (ServiceException err) when (err.HttpStatusCode == (int)HttpStatusCode.Forbidden)
+            {
+                await App.Current.MainPage.DisplayAlert("Fehler", "Keine Berechtigung", "OK");
+            }
         }
     }
 }

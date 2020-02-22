@@ -25,8 +25,7 @@ namespace TestAdministrator.App
             // Holt sich das Rest Service als Singleton. Nicht new verwenden,
             // da sonst der Token im Header beim Request nicht mitgesendet
             // wird.
-            RestService _restService = DependencyService.Get<RestService>();
-            if (await _restService.TryLoginAsync(new Dto.UserDto
+            if (await RestService.Instance.TryLoginAsync(new Dto.UserDto
                 {
                     Username = this.Username.Text,
                     Password = this.Password.Text

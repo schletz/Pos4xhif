@@ -16,9 +16,9 @@ namespace TestAdministrator.Api.Model
         [Key]
         public long P_Nr { get; set; }
         [Column(TypeName = "TIMESTAMP")]
-        public DateTime P_From { get; set; }
+        public TimeSpan P_From { get; set; }
         [Column(TypeName = "TIMESTAMP")]
-        public DateTime P_To { get; set; }
+        public TimeSpan P_To { get; set; }
 
         [InverseProperty("L_HourNavigation")]
         public virtual ICollection<Lesson> Lesson { get; set; }

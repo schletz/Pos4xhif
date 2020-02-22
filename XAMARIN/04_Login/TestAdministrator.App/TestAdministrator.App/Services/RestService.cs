@@ -27,6 +27,17 @@ namespace TestAdministrator.App.Services
         private readonly HttpClientHandler _handler;           // Genauere Steuerung des HttpClient
         private readonly HttpClient _client;                   // Einzige Instanz des HttpClient
         private UserDto _currentUser;                          // Aktuell angemeldeter Benutzer.
+
+        /// <summary>
+        /// Liefert den angemelteten Benutzer oder ein leeres Benutzerobjekt, wenn noch kein
+        /// Login stattgefunden hat.
+        /// </summary>
+        public UserDto CurrentUser => _currentUser ?? new UserDto();
+        /// <summary>
+        /// Liefert die einzige Instanz über das DependencyService von Xamarin.
+        /// </summary>
+        public static RestService Instance => DependencyService.Get<RestService>();
+
         // Properties werden von System.Text.Json in camelCase umgewandelt. Daher muss bei der
         // Deserialisierung Case Sensitive deaktiviert werden.
         private readonly JsonSerializerOptions _jsonOptions =

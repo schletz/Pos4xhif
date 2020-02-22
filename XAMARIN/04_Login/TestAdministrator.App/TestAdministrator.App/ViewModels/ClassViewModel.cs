@@ -12,8 +12,6 @@ namespace TestAdministrator.App.ViewModels
 {
     public class ClassViewModel : BaseViewModel
     {
-        private readonly RestService _restService;
-
         /// <summary>
         /// Liste der gelesenen Klassen.
         /// </summary>
@@ -22,13 +20,7 @@ namespace TestAdministrator.App.ViewModels
         /// Die in der ListView ausgewählte Klasse. Wird über Binding geschrieben.
         /// </summary>
         public SchoolclassDto SelectedClass { get; set; }
-        /// <summary>
-        /// Konstruktor. Holt alle benötigten Objekte aus dem DependencyService.
-        /// </summary>
-        public ClassViewModel()
-        {
-            _restService = DependencyService.Get<RestService>();
-        }
+
         /// <summary>
         /// Lädt eine Liste der Klassen von der REST API.
         /// </summary>
@@ -37,7 +29,7 @@ namespace TestAdministrator.App.ViewModels
         {
             try
             {
-                SetProperty(nameof(Classes), await _restService.GetClassesAsync());
+                SetProperty(nameof(Classes), await RestService.Instance.GetClassesAsync());
             }
             catch (Exception e)
             {

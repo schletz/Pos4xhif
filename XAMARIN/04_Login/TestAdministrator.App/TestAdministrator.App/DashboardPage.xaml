@@ -9,7 +9,20 @@
              Title="Dashboard">
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Label Text="{Binding Response}"/>
+            <ListView x:Name="TestList" ItemsSource="{Binding TestInfos}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding Schoolclass}" />
+                                <Label Text="{Binding Teacher}" />
+                                <Label Text="{Binding Subject}" />
+                                <Label Text="{Binding DateFrom}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

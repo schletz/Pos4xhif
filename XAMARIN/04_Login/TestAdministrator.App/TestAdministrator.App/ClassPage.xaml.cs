@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestAdministrator.App.Services;
 using TestAdministrator.App.ViewModels;
 using TestAdministrator.Dto;
 using Xamarin.Forms;
@@ -39,8 +40,15 @@ namespace TestAdministrator.App
         /// <param name="e"></param>
         private async void ClassList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            ClassViewModel vm = BindingContext as ClassViewModel;
-            await Navigation.PushAsync(new ClassDetailPage(vm.SelectedClass.Id));
+            if (RestService.Instance.CurrentUser.Role == UserDto.Userrole.Teacher)
+            {
+                ClassViewModel vm = BindingContext as ClassViewModel;
+                await Navigation.PushAsync(new ClassDetailPage(vm.SelectedClass.Id));
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("Fehler", "Nur für Lehrer möglich.", "OK");
+            }
         }
     }
 }
