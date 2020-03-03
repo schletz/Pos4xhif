@@ -69,6 +69,10 @@ Beim Verbindungsstring von scaffold sind folgende Dinge anzupassen:
 </ItemGroup>
 ```
 
+Falls Probleme mit der Übertragung der Datenbank auftreten (Fehlermeldung *No such Table xxx*), kann
+wie im Punkt *FTP Zugriff auf das App Service* beschrieben die Datenbank auch über FTP/S kopiert
+werden.
+
 ## Hinzufügen eines Controllers
 
 ### ConfigureServices
@@ -170,6 +174,13 @@ Database=localdb;Data Source=127.0.0.1:50513;User Id=azure;Password=xxxxxx
 Natürlich sind auch andere Varianten dieses Codes möglich. So kann z. B. wenn *GetEnvironmentVariable()*
 null liefert, nicht der Leerstring sondern der String aus der Datei *appsettings.json* geladen werden.
 
-![](https://docs.microsoft.com/en-us/azure/architecture/guide/images/compute-decision-tree.svg)
+## FTP Zugriff auf das App Service
 
-<sup>Quelle: https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/compute-decision-tree</sup>
+Falls die Datenbank nicht korrekt angelegt wurde oder aus anderen Gründen ein Zugriff auf Dateiebene
+notwendig ist, kann dies über FTP/S geschehen. Lade zuerst das Programm WinSCP von der
+[Downloadseite](https://winscp.net/eng/downloads.php) und installiere das Programm.
+
+Danach können die generierten FTP Zugangsdaten im App Service
+(*https://portal.azure.com/* - *App Services*) der Applikation kopiert werden:
+
+![](ftp_access.png)
