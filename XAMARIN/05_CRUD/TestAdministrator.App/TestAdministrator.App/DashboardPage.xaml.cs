@@ -18,6 +18,7 @@ namespace TestAdministrator.App
         private DashboardPage()
         {
             InitializeComponent();
+            //EditFrame.IsVisible = false;
         }
 
         /// <summary>
@@ -28,6 +29,5 @@ namespace TestAdministrator.App
         {
             BindingContext = vm;
         }
-
     }
 }

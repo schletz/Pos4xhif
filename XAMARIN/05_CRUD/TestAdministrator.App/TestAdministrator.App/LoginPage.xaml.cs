@@ -31,8 +31,10 @@ namespace TestAdministrator.App
                     Password = this.Password.Text
                 }))
             {
-                Application.Current.MainPage = new MainPage(
-                    new DashboardPage(await DashboardViewModel.FactoryAsync()));
+                NavigationPage newNavigation = new NavigationPage();
+                await newNavigation.PushAsync(new DashboardPage(await DashboardViewModel.FactoryAsync(newNavigation.Navigation)));
+
+                Application.Current.MainPage = new MainPage(newNavigation);
             }
         }
     }

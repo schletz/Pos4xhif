@@ -36,9 +36,9 @@ namespace TestAdministrator.App
             {
                 if (item.TargetType == typeof(DashboardPage))
                 {
-                    var page = new DashboardPage(
-                        await DashboardViewModel.FactoryAsync());
-                    mainPage.Detail = new NavigationPage(page);
+                    NavigationPage newNavigation = new NavigationPage();
+                    await newNavigation.PushAsync(new DashboardPage(await DashboardViewModel.FactoryAsync(newNavigation.Navigation)));
+                    mainPage.Detail = newNavigation;
                 }
                 else
                 {

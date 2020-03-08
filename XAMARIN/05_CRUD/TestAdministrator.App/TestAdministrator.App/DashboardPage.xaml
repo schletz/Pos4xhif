@@ -4,41 +4,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
+             xmlns:local="clr-namespace:TestAdministrator.App"
              x:Class="TestAdministrator.App.DashboardPage"
+             mc:Ignorable="d"
              Title="Dashboard"
              x:Name="MyDashboardPage">
+    <!-- Funktioniert nur, wenn diese Page als Navigation Page (mit new Navigationpage(...) geladen
+         wurde -->
+    <ContentPage.ToolbarItems>
+        <!-- https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/images?tabs=windows#embedded-images:
+          - xmlns:local="clr-namespace:TestAdministrator.App" und 
+          - x:Class="TestAdministrator.App.DashboardPage"
+        in der Pagedefinition. Außerdem muss die Klasse ImageResourceExtension.cs im Namespace 
+        TestAdministrator.App sein.
+        Das Bild muss als Embedded Resource definiert sein. -->
+        <ToolbarItem Text="Add"
+            IconImageSource="{local:ImageResource TestAdministrator.App.Resources.add.png}"
+            Order="Primary"  
+            Command="{Binding NewItem}"
+            Priority="0" >
+        </ToolbarItem>
+        <ToolbarItem Text="Edit"
+            IconImageSource="{local:ImageResource TestAdministrator.App.Resources.edit.png}"
+            Order="Primary"  
+            Command="{Binding EditItem}"
+            Priority="1" >
+        </ToolbarItem>
+        <ToolbarItem Text="Delete"
+            IconImageSource="{local:ImageResource TestAdministrator.App.Resources.delete.png}"
+            Order="Primary"
+            Command="{Binding DeleteItem}"
+            Priority="2" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="10" VerticalOptions="FillAndExpand">
             <ListView x:Name="TestList" ItemsSource="{Binding TestInfos}" SelectedItem="{Binding SelectedTest}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Delete"
+                                     Command="{Binding Source={x:Reference MyDashboardPage}, Path=BindingContext.DeleteItem}" CommandParameter="{Binding .}"/>
+                            </ViewCell.ContextActions>
                             <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
                                 <Label Text="{Binding Schoolclass}" />
                                 <Label Text="{Binding Teacher}" />
                                 <Label Text="{Binding Subject}" />
                                 <Label Text="{Binding DateFrom}" />
+                                <!--
                                 <Button Text="Löschen" Command="{Binding Source={x:Reference MyDashboardPage}, Path=BindingContext.DeleteItem}" CommandParameter="{Binding .}"></Button>
+                                -->
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Frame HasShadow="True">
-                <StackLayout>
-                    <Label Text="Tests bearbeiten" FontAttributes="Bold"/>
-                    <Label Text="Klasse"/>
-                    <!-- ItemDisplayBinding können wir uns sparen, da es eine Stringliste ist.-->
-                    <Picker ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}" />
-                    <Label Text="Fach"/>
-                    <Picker ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" />
-                    <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedTest.DateFrom}" />
-                    <Entry Text="{Binding SelectedTest.Lesson}"/>
-                    <Button Text="Neuer Test" Command="{Binding NewTest}"></Button>
-                    <Button Text="Speichern" Command="{Binding SaveTest}"></Button>
-                </StackLayout>
-            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

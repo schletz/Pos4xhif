@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TestAdministrator.App.EditTestPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Tests bearbeiten" FontAttributes="Bold" />
+            <Label Text="Klasse"/>
+            <!-- ItemDisplayBinding können wir uns sparen, da es eine Stringliste ist.-->
+            <Picker ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}" />
+            <Label Text="Fach"/>
+            <Picker ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" />
+            <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding Test.DateFrom}" />
+            <Entry Text="{Binding Test.Lesson}"/>
+            <!--<Button Text="Neuer Test" Command="{Binding NewTest}"></Button> -->
+            <Button Text="Speichern" Command="{Binding SaveTest}"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
