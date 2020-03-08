@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Startseite für die App. -->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="TestAdministrator.App.DashboardPage"
+             Title="Dashboard"
+             x:Name="MyDashboardPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10" VerticalOptions="FillAndExpand">
+            <ListView x:Name="TestList" ItemsSource="{Binding TestInfos}" SelectedItem="{Binding SelectedTest}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding Schoolclass}" />
+                                <Label Text="{Binding Teacher}" />
+                                <Label Text="{Binding Subject}" />
+                                <Label Text="{Binding DateFrom}" />
+                                <Button Text="Löschen" Command="{Binding Source={x:Reference MyDashboardPage}, Path=BindingContext.DeleteItem}" CommandParameter="{Binding .}"></Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Frame HasShadow="True">
+                <StackLayout>
+                    <Label Text="Tests bearbeiten" FontAttributes="Bold"/>
+                    <Label Text="Klasse"/>
+                    <!-- ItemDisplayBinding können wir uns sparen, da es eine Stringliste ist.-->
+                    <Picker ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}" />
+                    <Label Text="Fach"/>
+                    <Picker ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" />
+                    <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedTest.DateFrom}" />
+                    <Entry Text="{Binding SelectedTest.Lesson}"/>
+                    <Button Text="Neuer Test" Command="{Binding NewTest}"></Button>
+                    <Button Text="Speichern" Command="{Binding SaveTest}"></Button>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+ <!-- Masterpage: Beinhaltet die Navigation auf der linken Seite -->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:TestAdministrator.App"
+             x:Class="TestAdministrator.App.MasterPage"
+             Title="MyTests">
+    <StackLayout>
+        <ListView x:Name="NavigationList" SeparatorVisibility="None" HasUnevenRows="true" ItemSelected="NavigationList_ItemSelected">
+            <!-- Erstellt 2 Instanzen vom Typ NavigationItem (Klasse definiert im Code Behind. Durch den
+            Type können wir typensicher arbeiten, d. h. ein Verschreiben wird vom Compiler erkannt. -->
+            <ListView.ItemsSource>
+                <x:Array Type="{x:Type local:NavigationItem}" >
+                    <local:NavigationItem Title="Dashboard" TargetType="{x:Type local:DashboardPage}" />
+                    <local:NavigationItem Title="Klassen" TargetType="{x:Type local:ClassPage}" />
+                </x:Array>
+            </ListView.ItemsSource>
+            <ListView.Header>
+                <Label Text="MyTests" FontSize="36"/>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                            <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" 
+                                   Text="{Binding Title}" FontSize="24"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
+    
