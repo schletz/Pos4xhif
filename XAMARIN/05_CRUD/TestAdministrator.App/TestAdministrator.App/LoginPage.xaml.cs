@@ -32,7 +32,8 @@ namespace TestAdministrator.App
                 }))
             {
                 NavigationPage newNavigation = new NavigationPage();
-                await newNavigation.PushAsync(new DashboardPage(await DashboardViewModel.FactoryAsync(newNavigation.Navigation)));
+                TestRepository testRepository = await TestRepository.CreateAsync(RestService.Instance.CurrentUser, RestService.Instance);
+                await newNavigation.PushAsync(new DashboardPage(new DashboardViewModel(testRepository, newNavigation.Navigation, RestService.Instance.CurrentUser)));
 
                 Application.Current.MainPage = new MainPage(newNavigation);
             }

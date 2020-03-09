@@ -16,6 +16,7 @@ namespace TestAdministrator.App.ViewModels
     {
         private readonly TestRepository _testRepository;
         private readonly INavigation _navigation;
+        private readonly UserDto _user;
 
         public ObservableCollection<TestDto> TestInfos => _testRepository?.Tests;
         public TestDto SelectedTest { get; set; }
@@ -24,10 +25,11 @@ namespace TestAdministrator.App.ViewModels
         public ICommand NewItem { get; }
         public ICommand EditItem { get; }
 
-        private DashboardViewModel(TestRepository testRepository, INavigation navigation)
+        public DashboardViewModel(TestRepository testRepository, INavigation navigation, UserDto user)
         {
             _testRepository = testRepository;
             _navigation = navigation;
+            _user = user;
 
             DeleteItem = new Command<TestDto>(async (current) =>
             {
@@ -44,27 +46,14 @@ namespace TestAdministrator.App.ViewModels
 
             NewItem = new Command(async () =>
             {
-                await _navigation.PushAsync(new EditTestPage(await EditTestViewModel.FactoryAsync(_testRepository, _navigation)));
+                await _navigation.PushAsync(new EditTestPage(new EditTestViewModel(_testRepository, _navigation, _user)));
             });
 
             EditItem = new Command(async () =>
             {
-                await _navigation.PushAsync(new EditTestPage(await EditTestViewModel.FactoryAsync(_testRepository, SelectedTest, _navigation)));
+                await _navigation.PushAsync(new EditTestPage(new EditTestViewModel(_testRepository, _navigation, _user, SelectedTest)));
             });
 
         }
-
-        /// <summary>
-        /// Lädt die Daten, die die Seite für die erste Darstellung benötigt, und gibt das
-        /// initialisierte Viewmodel zurück.
-        /// </summary>
-        /// <returns></returns>
-        public static async Task<DashboardViewModel> FactoryAsync(INavigation navigation)
-        {
-            TestRepository testRepository = await TestRepository.LoadAsync(RestService.Instance.CurrentUser.Username);
-            return new DashboardViewModel(testRepository, navigation);
-        }
-
-
     }
 }

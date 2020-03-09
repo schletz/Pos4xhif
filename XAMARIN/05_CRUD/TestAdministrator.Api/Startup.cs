@@ -43,6 +43,9 @@ namespace TestAdministrator.Api
             // angehängt werden.
             services.AddControllers();
 
+            // Damit im Konstruktor eines Controllers auf den User zugegriffen werden kann.
+            services.AddHttpContextAccessor();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

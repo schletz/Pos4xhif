@@ -15,8 +15,10 @@ namespace TestAdministrator.App.ViewModels
     {
         private readonly TestRepository _testRepository;
         private readonly INavigation _navigation;
+        private readonly UserDto _user;
 
-        public List<LessonDto> Lessons { get; }
+        public List<LessonDto> Lessons => _testRepository.Lessons;
+
         public ICommand SaveTest { get; }
         public TestDto Test { get; }
 
@@ -33,7 +35,8 @@ namespace TestAdministrator.App.ViewModels
                     SetProperty(
                         nameof(Subjects),
                         Lessons.Where(l => l.Class == SelectedClass).Select(l => l.Subject).ToList());
-                    SetProperty(nameof(SelectedSubject), Subjects[0]);
+                    if (Subjects.Count == 1)
+                        SetProperty(nameof(SelectedSubject), Subjects[0]);
                 }
 
             }
@@ -49,12 +52,16 @@ namespace TestAdministrator.App.ViewModels
         public DateTime MinDate => DateTime.Now.Month >= 9 ? new DateTime(DateTime.Now.Year, 9, 1) : new DateTime(DateTime.Now.Year - 1, 9, 1);
         public DateTime MaxDate => DateTime.Now.Month >= 9 ? new DateTime(DateTime.Now.Year + 1, 9, 1) : new DateTime(DateTime.Now.Year, 9, 1);
 
-        private EditTestViewModel(TestRepository testRepository, List<LessonDto> lessons, TestDto test, INavigation navigation)
+        public EditTestViewModel(TestRepository testRepository, INavigation navigation, UserDto user)
+            : this(testRepository, navigation, user, new TestDto())
+        { }
+
+        public EditTestViewModel(TestRepository testRepository, INavigation navigation, UserDto user, TestDto test)
         {
             _testRepository = testRepository;
             _navigation = navigation;
+            _user = user;
             Test = test ?? new TestDto();
-            Lessons = lessons;
 
             SaveTest = new Command(async () =>
             {
@@ -62,7 +69,7 @@ namespace TestAdministrator.App.ViewModels
                 {
                     if (Test.TestId == null)
                     {
-
+                        Test.Teacher = user.TeacherId;
                         await _testRepository.Add(Test);
                     }
                     else
@@ -79,16 +86,6 @@ namespace TestAdministrator.App.ViewModels
                     await _navigation.PopAsync();
                 }
             });
-        }
-
-        public static Task<EditTestViewModel> FactoryAsync(TestRepository testRepository, INavigation navigation) => 
-            FactoryAsync(testRepository, new TestDto(), navigation);
-
-        public static async Task<EditTestViewModel> FactoryAsync(TestRepository testRepository, TestDto test, INavigation navigation)
-        {
-            List<LessonDto> lessons = await RestService.Instance.SendAsync<List<LessonDto>>(
-                HttpMethod.Get, "lessons", RestService.Instance.CurrentUser.Username);
-            return new EditTestViewModel(testRepository, lessons, test, navigation);
         }
     }
 }

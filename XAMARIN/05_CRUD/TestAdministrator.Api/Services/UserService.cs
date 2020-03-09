@@ -58,10 +58,18 @@ namespace TestAdministrator.Api.Services
             else
             { user.Password = ""; }
 
-            // 4. Die Rolle aus der DB lesen oder bestimmen.
+            // 4. Die Rolle aus der DB lesen oder bestimmen. Außerdem wird die ID des Users
+            //    (Kürzel oder Schülernummer) gesetzt.
             user.Role = UserDto.Userrole.Pupil;
             if (db.Teacher.Any(t => t.T_Account == user.Username))
-            { user.Role = UserDto.Userrole.Teacher; }
+            { 
+                user.Role = UserDto.Userrole.Teacher;
+                user.TeacherId = db.Teacher.SingleOrDefault(t => t.T_Account == user.Username)?.T_ID;
+            }
+            else
+            {
+                user.PupilId = db.Pupil.SingleOrDefault(p => p.P_Account == user.Username)?.P_ID;
+            }
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             // Aus appsettings.json das Secret lesen.

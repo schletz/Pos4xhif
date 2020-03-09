@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TestAdministrator.Api.Model;
 using TestAdministrator.Dto;
 
@@ -17,21 +18,34 @@ namespace TestAdministrator.Api.Controllers
     public class TestController : ControllerBase
     {
         private readonly TestsContext _context;
+        private readonly string _authTeacherId;
 
-        public TestController(TestsContext context)
+        /// <summary>
+        /// Konstruktor. Liest den angemeldeten User aus dem Token und ermittelt die Lehrer-ID
+        /// des angemeldeten Benutzers (wenn es eine gibt)
+        /// </summary>
+        /// <param name="contextAccessor">
+        /// Hinweis: Braucht services.AddHttpContextAccessor() in ConfigureServices
+        /// </param>
+        /// <param name="context"></param>
+        public TestController(IHttpContextAccessor contextAccessor, TestsContext context)
         {
             _context = context;
+            string username = contextAccessor.HttpContext.User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+            // Die Lehrer-ID des anfragenden Users herausfinden.
+            _authTeacherId = _context.Teacher.SingleOrDefault(t => t.T_Account == username)?.T_ID;
         }
 
 
         /// <summary>
-        /// Reagiert auf /api/test/(username)
+        /// Reagiert auf /api/testsbyuser/(username)
         /// Liefert Informationen zu den eingetragenen Tests, die für den User interessant sind.
         /// Eine Route ohne Username, die mit dem angemeldeten User arbeitet, ist zwar möglich, 
         /// wäre aber nicht stateless.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{userId}")]
+        [HttpGet("/api/testsbyuser/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -79,18 +93,20 @@ namespace TestAdministrator.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/api/lessons/{userId}")]
+        /// <summary>
+        /// Liefert die Unterrichtsstunden (Kombination aus Klasse und Fach), die der Lehrer
+        /// lt. Stundenplan unterrichtet.
+        /// </summary>
+        /// <param name="teacherId"></param>
+        /// <returns></returns>
+        [HttpGet("/api/lessons/{teacherId}")]
         [Authorize(Roles = "teacher")]
-        public ActionResult<LessonDto> GetLessons(string userId)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public ActionResult<LessonDto> GetLessons(string teacherId)
         {
-            // Wer fragt an?
-            string username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            // Jeder User darf nur Infos über seine Tests abfragen. Ist der abgefragte User nicht
-            // der angemeldete User, so wird 403 Forbidden geliefert.
-            if (userId != username)
-            { return Forbid(); }
-
-            string teacherId = _context.Teacher.SingleOrDefault(t => t.T_Account == userId)?.T_ID;
+            if (teacherId != _authTeacherId) { return Forbid(); }
 
             var subjects = (from l in _context.Lesson
                             where l.L_Teacher == teacherId
@@ -104,19 +120,23 @@ namespace TestAdministrator.Api.Controllers
 
         }
 
-        // POST: api/Test
-        [HttpPost("{userId}")]
+        /// <summary>
+        /// Reagiert auf POST /api/test
+        /// Trägt einen Test eines Lehrers ein.
+        /// </summary>
+        /// <param name="teacherId"></param>
+        /// <param name="testinfo"></param>
+        /// <returns></returns>
+        [HttpPost]
         [Authorize(Roles = "teacher")]
-        public ActionResult<TestDto> Post(string userId, [FromBody] TestDto testinfo)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<TestDto> Post([FromBody] TestDto testinfo)
         {
-            // Wer fragt an?
-            string username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            // Jeder User darf nur Infos über seine Tests abfragen. Ist der abgefragte User nicht
-            // der angemeldete User, so wird 403 Forbidden geliefert.
-            if (userId != username)
-            { return Forbid(); }
-
-            string teacherId = _context.Teacher.SingleOrDefault(t => t.T_Account == userId)?.T_ID;
+            // Der User darf nur für sich Tests eintragen.
+            if (testinfo.Teacher != _authTeacherId) { return Forbid(); }
             try
             {
                 Test newTest = new Test
@@ -125,7 +145,7 @@ namespace TestAdministrator.Api.Controllers
                     TE_LessonNavigation = _context.Period.Find(testinfo.Lesson),
                     TE_Date = testinfo.DateFrom,
                     TE_Subject = testinfo.Subject,
-                    TE_TeacherNavigation = _context.Teacher.Find(teacherId)
+                    TE_TeacherNavigation = _context.Teacher.Find(testinfo.Teacher)
                 };
                 _context.Test.Add(newTest);
                 _context.SaveChanges();
@@ -141,26 +161,37 @@ namespace TestAdministrator.Api.Controllers
                     TestId = newTest.TE_ID
                 });
             }
-            catch
+            catch (DbUpdateException)
             {
                 return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
 
-        // PUT: api/Test
-        [HttpPut("{userId}")]
+        /// <summary>
+        /// Reagiert auf PUT /api/test/(testId)
+        /// Ändert einen eingetragenen Test in der Datenbank. Die Lehrer ID darf natürlich nicht
+        /// geändert werden.
+        /// </summary>
+        /// <param name="teacherId"></param>
+        /// <param name="testinfo"></param>
+        /// <returns></returns>
+        [HttpPut("{testId}")]
         [Authorize(Roles = "teacher")]
-        public ActionResult<TestDto> Put(string userId, [FromBody] TestDto testinfo)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<TestDto> Put(long testId, [FromBody] TestDto testinfo)
         {
-            // Wer fragt an?
-            string username = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            // Jeder User darf nur Infos über seine Tests abfragen. Ist der abgefragte User nicht
-            // der angemeldete User, so wird 403 Forbidden geliefert.
-            if (userId != username)
-            { return Forbid(); }
-
-            Test found = _context.Test.Find(testinfo.TestId);
+            // Natürlich darf ein Lehrer - auch wenn er korrekt angemeldet ist - nur Test-IDs von
+            // seinen Tests ändern.
+            Test found = _context.Test
+                .Where(t => t.TE_Teacher == _authTeacherId && t.TE_ID == testId).SingleOrDefault();
             if (found == null) { return NotFound(); }
             try
             {
@@ -181,23 +212,49 @@ namespace TestAdministrator.Api.Controllers
                     TestId = found.TE_ID
                 });
             }
-            catch
+            catch (DbUpdateException)
             {
                 return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public ActionResult Delete(long id)
+        /// <summary>
+        /// Reagiert auf DELETE /api/test/(testID)
+        /// Löscht den eingetragenen Test aus der Datenbank.
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <returns></returns>
+        [HttpDelete("{testId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult Delete(long testId)
         {
-            Test found = _context.Test.Find(id);
+            // Natürlich darf ein Lehrer - auch wenn er korrekt angemeldet ist - nur Test-IDs von
+            // seinen Tests ändern.
+            Test found = _context.Test
+                .Where(t => t.TE_Teacher == _authTeacherId && t.TE_ID == testId).SingleOrDefault();
             if (found == null) { return NotFound(); }
-
-            _context.Test.Remove(found);
-            _context.SaveChanges();
-            return Ok();
+            try
+            {
+                _context.Test.Remove(found);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
