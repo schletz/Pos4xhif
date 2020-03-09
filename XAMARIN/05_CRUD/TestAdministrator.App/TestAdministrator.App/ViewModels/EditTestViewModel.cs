@@ -15,7 +15,6 @@ namespace TestAdministrator.App.ViewModels
     {
         private readonly TestRepository _testRepository;
         private readonly INavigation _navigation;
-        private readonly UserDto _user;
 
         public List<LessonDto> Lessons => _testRepository.Lessons;
 
@@ -38,7 +37,6 @@ namespace TestAdministrator.App.ViewModels
                     if (Subjects.Count == 1)
                         SetProperty(nameof(SelectedSubject), Subjects[0]);
                 }
-
             }
         }
 
@@ -52,16 +50,16 @@ namespace TestAdministrator.App.ViewModels
         public DateTime MinDate => DateTime.Now.Month >= 9 ? new DateTime(DateTime.Now.Year, 9, 1) : new DateTime(DateTime.Now.Year - 1, 9, 1);
         public DateTime MaxDate => DateTime.Now.Month >= 9 ? new DateTime(DateTime.Now.Year + 1, 9, 1) : new DateTime(DateTime.Now.Year, 9, 1);
 
-        public EditTestViewModel(TestRepository testRepository, INavigation navigation, UserDto user)
-            : this(testRepository, navigation, user, new TestDto())
+        public EditTestViewModel(TestRepository testRepository, INavigation navigation)
+            : this(testRepository, navigation, null)
         { }
 
-        public EditTestViewModel(TestRepository testRepository, INavigation navigation, UserDto user, TestDto test)
+        public EditTestViewModel(TestRepository testRepository, INavigation navigation, TestDto test)
         {
             _testRepository = testRepository;
             _navigation = navigation;
-            _user = user;
-            Test = test ?? new TestDto();
+            // Legt einen leeren Test mit der entsprechenden Lehrer ID an.
+            Test = test ?? _testRepository.CreateTest();
 
             SaveTest = new Command(async () =>
             {
@@ -69,12 +67,11 @@ namespace TestAdministrator.App.ViewModels
                 {
                     if (Test.TestId == null)
                     {
-                        Test.Teacher = user.TeacherId;
                         await _testRepository.Add(Test);
                     }
                     else
                     {
-                        await _testRepository.Update((long)Test.TestId, Test);
+                        await _testRepository.Update(Test);
                     }
                 }
                 catch (ServiceException e)

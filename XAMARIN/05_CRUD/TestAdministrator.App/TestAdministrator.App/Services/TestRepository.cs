@@ -40,6 +40,8 @@ namespace TestAdministrator.App.Services
             Lessons = lessons;
         }
 
+        public TestDto CreateTest() => new TestDto { Teacher = _user.TeacherId };
+
         /// <summary>
         /// Lädt die Tests vom Server. Bei Lehrern werden auch die unterrichteten Fächer geladen.
         /// Gibt das initialisierte Repository zurück.
@@ -81,10 +83,10 @@ namespace TestAdministrator.App.Services
         /// <param name="id">Die ID des Testes, die für den HTTP Request verwendet wird.</param>
         /// <param name="test">Die neuen Daten des Testes.</param>
         /// <returns></returns>
-        public async Task Update(long id, TestDto test)
+        public async Task Update(TestDto test)
         {
-            TestDto newTest = await RestService.Instance.SendAsync<TestDto>(HttpMethod.Put, "test", id.ToString(), test);
-            Tests.Remove(Tests.FirstOrDefault(t => t.TestId == id));
+            TestDto newTest = await RestService.Instance.SendAsync<TestDto>(HttpMethod.Put, "test", test.TestId.ToString(), test);
+            Tests.Remove(test);
             Tests.Add(newTest);
         }
 
@@ -92,12 +94,12 @@ namespace TestAdministrator.App.Services
         /// Ruft DELETE /api/test/id mit dem übergebenen Id auf.
         /// Löscht danach das Objekt aus der ObservableCollection.
         /// </summary>
-        /// <param name="id">Die ID des Testes, der gelöscht werden soll.</param>
+        /// <param name="test">Der Test, der gelöscht werden soll.</param>
         /// <returns></returns>
-        public async Task Remove(long id)
+        public async Task Remove(TestDto test)
         {
-            await RestService.Instance.SendAsync(HttpMethod.Delete, "test", id.ToString(), null);
-            Tests.Remove(Tests.FirstOrDefault(t => t.TestId == id));
+            await RestService.Instance.SendAsync(HttpMethod.Delete, "test", test.TestId?.ToString(), null);
+            Tests.Remove(test);
         }
 
     }

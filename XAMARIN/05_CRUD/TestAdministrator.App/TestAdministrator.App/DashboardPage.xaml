@@ -47,10 +47,15 @@
                                      Command="{Binding Source={x:Reference MyDashboardPage}, Path=BindingContext.DeleteItem}" CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
                             <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
-                                <Label Text="{Binding Schoolclass}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Schoolclass}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Subject}" FontAttributes="Bold" />
+                                </StackLayout>
                                 <Label Text="{Binding Teacher}" />
-                                <Label Text="{Binding Subject}" />
-                                <Label Text="{Binding DateFrom}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding DateFrom, StringFormat='{0:dd.MM.yyyy}'}" />
+                                    <Label Text="{Binding Lesson, StringFormat='{0:0}. Stunde'}" />
+                                </StackLayout>
                                 <!--
                                 <Button Text="Löschen" Command="{Binding Source={x:Reference MyDashboardPage}, Path=BindingContext.DeleteItem}" CommandParameter="{Binding .}"></Button>
                                 -->
