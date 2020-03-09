@@ -40,6 +40,10 @@ namespace TestAdministrator.App.Services
             Lessons = lessons;
         }
 
+        /// <summary>
+        /// Erstellt einen leeren Test mit dem aktuellen User aus eingetragenem Lehrer.
+        /// </summary>
+        /// <returns></returns>
         public TestDto CreateTest() => new TestDto { Teacher = _user.TeacherId };
 
         /// <summary>

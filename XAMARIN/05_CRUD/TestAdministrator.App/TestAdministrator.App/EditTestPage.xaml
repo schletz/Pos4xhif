@@ -8,15 +8,21 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Tests bearbeiten" FontAttributes="Bold" />
+            
             <Label Text="Klasse"/>
             <!-- ItemDisplayBinding können wir uns sparen, da es eine Stringliste ist.-->
             <Picker ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}" />
+            
             <Label Text="Fach"/>
             <Picker ItemsSource="{Binding Subjects}" SelectedItem="{Binding SelectedSubject}" />
+            
             <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding Test.DateFrom}" />
-            <Entry Text="{Binding Test.Lesson}"/>
+            
+            <Entry Text="{Binding Test.Lesson}"/>            
             <!--<Button Text="Neuer Test" Command="{Binding NewTest}"></Button> -->
+            
             <Button Text="Speichern" Command="{Binding SaveTest}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+    

@@ -11,18 +11,24 @@ using Xamarin.Forms;
 
 namespace TestAdministrator.App.ViewModels
 {
+    /// <summary>
+    /// Viewmodel für die EditTest Seite
+    /// </summary>
     public class EditTestViewModel : BaseViewModel
     {
         private readonly TestRepository _testRepository;
         private readonly INavigation _navigation;
 
+        // Alle Klassen und Fächer, die ein Lehrer unterrichtet.
         public List<LessonDto> Lessons => _testRepository.Lessons;
 
         public ICommand SaveTest { get; }
         public TestDto Test { get; }
 
+        // Binding für den Picker der Klassen.
         public List<string> Classes => Lessons.Select(l => l.Class).Distinct().ToList();
 
+        // Binding für die gesetzte Klasse.
         public string SelectedClass
         {
             get => Test.Schoolclass;
@@ -31,6 +37,7 @@ namespace TestAdministrator.App.ViewModels
                 if (value != null)
                 {
                     Test.Schoolclass = value;
+                    // Die Fächer, die der Lehrer in der Klasse unterrichtet für den Fachpicker setzen.
                     SetProperty(
                         nameof(Subjects),
                         Lessons.Where(l => l.Class == SelectedClass).Select(l => l.Subject).ToList());
@@ -40,9 +47,12 @@ namespace TestAdministrator.App.ViewModels
             }
         }
 
+        // Binding für den Picker der Fächer.
         public List<string> Subjects { get; set; }
 
-        public string SelectedSubject { 
+        // Selektiertes Fach gleich in den Testdatensatz schreiben.
+        public string SelectedSubject
+        {
             get => Test.Subject;
             set => Test.Subject = value;
         }

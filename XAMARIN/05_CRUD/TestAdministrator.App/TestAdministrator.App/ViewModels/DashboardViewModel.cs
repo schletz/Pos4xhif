@@ -35,6 +35,7 @@ namespace TestAdministrator.App.ViewModels
             _testRepository = testRepository;
             _navigation = navigation;
 
+            // Löscht den aktiven Test über das Repository.
             DeleteItem = new Command<TestDto>(async (current) =>
             {
                 // Damit die Methode auch mit CommandParameter funktioniert, wählen wir entweder
@@ -52,11 +53,13 @@ namespace TestAdministrator.App.ViewModels
                 SelectedTest = null;
             });
 
+            // Öffnet die EditTest Seite mit einem leeren Test.
             NewItem = new Command(async () =>
             {
                 await _navigation.PushAsync(new EditTestPage(new EditTestViewModel(_testRepository, _navigation)));
             });
 
+            // Öffnet die EditTest Seite mit dem ausgewähltem Test.
             EditItem = new Command(async () =>
             {
                 await _navigation.PushAsync(new EditTestPage(new EditTestViewModel(_testRepository, _navigation, SelectedTest)));

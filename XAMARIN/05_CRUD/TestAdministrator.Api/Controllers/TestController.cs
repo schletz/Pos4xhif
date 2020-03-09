@@ -117,7 +117,6 @@ namespace TestAdministrator.Api.Controllers
                                 Subject = g.Key.L_Subject
                             });
             return Ok(subjects);
-
         }
 
         /// <summary>
