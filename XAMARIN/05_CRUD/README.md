@@ -349,6 +349,8 @@ So wird z. B. der SQL Server Typ *INTEGER* auf *int* (im Gegensatz zu long) abge
 [docs.microsoft.com](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings)
 nachzulesen.
 
+### Verwenden von MySQL
+
 Soll MySQL verwendet werden, empfieht sich das Anlegen einer eigenen MySQL Datenbank im Azure
 Portal. Danach muss das Paket *Pomelo.EntityFrameworkCore.MySql* als Dependency installiert oder
 gleich direkt in der Datei
@@ -363,3 +365,5 @@ eingetragen werden:
 ```
 
 Version 3.* bedeutet, dass die neueste Version mit der Major Version 3 über NuGet geladen wird.
+Beachte, dass eine MySQL Instanz in Azure im Vergleich zu einer SQL Server Datenbank recht teuer
+ist.
