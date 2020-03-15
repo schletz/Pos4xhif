@@ -6,24 +6,29 @@ wurden.
 
 Bei Buildproblemen starte bei geschlossenem Visual Studio die Datei
 [cleanSolution.cmd](cleanSolution.cmd). Sie löscht alle Builds und Visual Studio Einstellungen.
-Danach dauert es beim Laden der Solution etwas, bis die Pakete wieder nachgeladen wurden.
+Danach dauert es beim Laden der Solution etwas, bis die Pakete wieder nachgeladen wurden (sichbar
+durch Klick auf die Benachrichtigung links unten). Danach schließe Visual Studio und nach erneutem
+Öffnen lässt sich die Applikation erstellen.
 
-## Anpassen des Test Controllers
+In der Datenbank gibt es 2 bestehende Benutzer: *schletz* (als Lehrer) und *AKC11470* (als Schüler)
+mit dem Kennwort *1234*.
+
+## Der Test Controller
 
 Wir erinnern uns aus dem Kapitel REST, dass den Datenbankoperationen bestimmte HTTP Requestarten
 zugeordnet sind:
 
-| Operation | Controller Action             | Route                         |
-|-----------|-------------------------------|-------------------------------|
+| Operation | Controller Action             | Route im Test Controller      |
+| --------- | ----------------------------- | ----------------------------- |
 | Create    | POST Request im Controller.   | POST /api/test                |
 | Read      | GET Request im Controller.    | GET /api/testsbyuser/{userId} |
 | Update    | PUT Request Im Controller.    | PUT /api/test/(testId)        |
 | Delete    | DELETE Request im Controller. | DELETE /api/test/(testID)     |
 
-Diese Requestarten müssen im Test Controller realisiert werden. Der Controller in
-[TestController.cs](TestAdministrator.Api/Controllers/TestController.cs) implementiert diese
-Features. Der alte Dashboard Controller wurde entfernt, statt dessen liefert die Route
-*/api/testsbyuser/(userId)* mittels Annotation die Daten:
+Diese Requestarten müssen im Test Controller realisiert werden, der in
+[TestController.cs](TestAdministrator.Api/Controllers/TestController.cs) implementiert ist.
+Der alte Dashboard Controller wurde entfernt, statt dessen liefert die Route
+*/api/testsbyuser/(userId)* mittels HttpGet Annotation die Daten:
 
 ```c#
 [HttpGet("/api/testsbyuser/{userId}")]
@@ -43,6 +48,38 @@ nur Tests für seine Fächer und Klassen, in denen er auch unterrichtet, eintrag
 Wichtig ist das Setzen von *[Authorize]* über der Klassendefinition, damit nur angemeldete Benutzer
 Daten vom Controller bekommen.
 
+### Achtung vor Sicherheitslücken: Prüfen des Users
+
+Im [TestController](TestAdministrator.Api/Controllers/TestController.cs) wird bei manchen Routen
+geprüft, ob ein Lehrer auch nur die eigenen Tests ändert oder bearbeitet:
+
+```c#
+public ActionResult<TestDto> Post([FromBody] TestDto testinfo)
+{
+    if (testinfo.Teacher != _authTeacherId) { return Forbid(); }
+    ...
+}
+```
+
+Da über die *Authorize* Annotation nur Konstanten angegeben werden können, würde die fixe
+Angabe einer User-ID nichts nützen. Deswegen müssen wir in der Route prüfen, ob der User auch
+die Aktion auslösen darf.
+
+### Die DTO Klassen
+
+Die Klasse [UserDto](TestAdministrator.Dto/UserDto.cs) wurde dahingehend angepasst, dass sie nun
+die Properties *TeacherId* bzw. *PupilId* beinhaltet. Sie stellen die in der Datenbank verwendeten
+ID Werte für Lehrer (also das Lehrerkürzel wie SZ) bzw. für Schüler (die Schülernummer) dar. Der
+[Usercontroller](TestAdministrator.Api/Controllers/UserController.cs) ermittelt diese Werte
+und gibt sie der Applikation mit. Das ist notwendig, damit die App entsprechende Requests an den
+Testcontroller leichter senden kann.
+
+Der Testcontroller selbst verwendet die Klasse [TestDto](TestAdministrator.Dto/TestDto.cs). Hier
+werden die Informationen für die Seiten
+[DashboardPage](TestAdministrator.App/TestAdministrator.App/DashboardPage.xaml) und
+[EditTestPage](TestAdministrator.App/TestAdministrator.App/EditTestPage.xaml) in der App
+übermittelt.
+
 ### Test mit Postman
 
 Führe die REST API aus und sende folgende Requests in Postman:
@@ -60,8 +97,8 @@ Führe die REST API aus und sende folgende Requests in Postman:
 
 ## Das Test Repository
 
-In der App befindet sich im Ordner Services die Datei
-[TestRepository.cs](TestAdministrator.App/TestAdministrator.App/Services/TestRepository.cs).
+In der App befindet sich im Ordner Services die Klasse
+[TestRepository](TestAdministrator.App/TestAdministrator.App/Services/TestRepository.cs).
 
 ### Wozu ein Repository
 
@@ -122,8 +159,8 @@ generell vermieden werden und sind nur in Entity- oder DTO Klassen flächig vorh
 
 ## Anpassungen im ViewModel
 
-Das ViewModel der Dashboardpage in
-[DashboardViewModel.cs](TestAdministrator.App/TestAdministrator.App/ViewModels/DashboardViewModel.cs)
+Das ViewModel der Dashboardpage in der Klasse
+[DashboardViewModel](TestAdministrator.App/TestAdministrator.App/ViewModels/DashboardViewModel.cs)
 hat nun (wieder) einen public Konstruktor. Er bekommt ein fertig initialisiertes Test Repository und
 den Navigation Stack.
 
@@ -148,7 +185,8 @@ public gemacht werden muss.
 
 Beim Klicken auf den *New* Button im Menü soll eine neue Seite
 ([EditTestPage](TestAdministrator.App/TestAdministrator.App/EditTestPage.xaml)) angezeigt werden.
-Damit das gelingt, wird in [LoginPage.xaml.cs](TestAdministrator.App/TestAdministrator.App/LoginPage.xaml.cs)
+Damit das gelingt, wird in der
+[LoginPage](TestAdministrator.App/TestAdministrator.App/LoginPage.xaml.cs)
 nach erfolgreichem Login zuerst eine neue Navigation Page erzeugt. Sie beinhaltet einen Navigation
 Stack. Danach wird das Test Repository mit der *CreateAsync()* Methode erzeugt. Am Ende wird dann
 die neue Dashboard Page mit dem Viewmodel auf den Navigation Stack gelegt:
@@ -229,7 +267,7 @@ Ein Eintrag im Kontextmenü sieht dann fast ident aus:
 Unser Menü verwendet Bilder, die eingebettet wurden. Mit normalen XAML Mitteln kann leider nicht
 darauf zugegriffen werden, deswegen wurde von
 [Microsoft Docs](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/images?tabs=windows#xaml)
-die Klasse [ImageResourceExtension.cs](TestAdministrator.App/TestAdministrator.App/Resources/ImageResourceExtension.cs)
+die Klasse [ImageResourceExtension](TestAdministrator.App/TestAdministrator.App/Resources/ImageResourceExtension.cs)
 in den Ordner Resources kopiert. Achte auf den Namespace, er ist ident mit den der einzelnen Pages.
 
 Nun verweisen wir in der Pagedefinition in XAML auf diesen Namespace und nennen ihn *local*.
