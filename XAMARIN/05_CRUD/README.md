@@ -342,3 +342,24 @@ services.AddDbContext<TestsContext>(options =>
     options.UseSqlServer(Configuration["AppSettings:Database"])
 );
 ```
+
+Wenn vorher eine SQLite Datenbank verwendet wurde, müssen die Modelklassen ggf. angepasst werden.
+So wird z. B. der SQL Server Typ *INTEGER* auf *int* (im Gegensatz zu long) abgebildet. Eine
+Ünersicht über das Mapping der SQL Server Datentypen ist auf
+[docs.microsoft.com](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql-server-data-type-mappings)
+nachzulesen.
+
+Soll MySQL verwendet werden, empfieht sich das Anlegen einer eigenen MySQL Datenbank im Azure
+Portal. Danach muss das Paket *Pomelo.EntityFrameworkCore.MySql* als Dependency installiert oder
+gleich direkt in der Datei
+[TestAdministrator.Api.csproj](Testadministrator.api/TestAdministrator.Api.csproj)
+eingetragen werden:
+
+```xml
+  <ItemGroup>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.*" />
+    ...
+  </ItemGroup>
+```
+
+Version 3.* bedeutet, dass die neueste Version mit der Major Version 3 über NuGet geladen wird.
