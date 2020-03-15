@@ -1,5 +1,7 @@
 # CRUD Operationen in Xamarin Forms
 
+![](screenshot.png)
+
 Die Solution [TestAdministrator.sln](TestAdministrator.sln) beinhaltet den neuesten Stand unserer
 Testverwaltungs-App. Der Quelltext ist kommentiert und beschreibt, warum Lösungen so implementiert
 wurden.
