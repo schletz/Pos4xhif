@@ -18,22 +18,28 @@ namespace TestAdministrator.Api.Controllers
     public class TestController : ControllerBase
     {
         private readonly TestsContext _context;
+        /// <summary>
+        /// Lehrer-ID. Ist NULL bei Schülern oder anonymen Zugriff.
+        /// </summary>
         private readonly string _authTeacherId;
 
         /// <summary>
         /// Konstruktor. Liest den angemeldeten User aus dem Token und ermittelt die Lehrer-ID
-        /// des angemeldeten Benutzers (wenn es eine gibt)
+        /// des angemeldeten Benutzers (wenn es eine gibt).
+        /// Wichtig: Braucht services.AddHttpContextAccessor() in ConfigureServices
         /// </summary>
         /// <param name="contextAccessor">
-        /// Hinweis: Braucht services.AddHttpContextAccessor() in ConfigureServices
+        /// Über DI übergebener HttpContext (services.AddHttpContextAccessor())
         /// </param>
-        /// <param name="context"></param>
+        /// <param name="context">
+        /// Über DI übergebener DB Context (services.AddDbContext())
+        /// </param>
         public TestController(IHttpContextAccessor contextAccessor, TestsContext context)
         {
             _context = context;
+            // Die Lehrer-ID des anfragenden Users herausfinden.
             string username = contextAccessor.HttpContext.User.Claims
                 .FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            // Die Lehrer-ID des anfragenden Users herausfinden.
             _authTeacherId = _context.Teacher.SingleOrDefault(t => t.T_Account == username)?.T_ID;
         }
 

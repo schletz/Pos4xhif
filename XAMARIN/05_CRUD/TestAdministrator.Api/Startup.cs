@@ -31,8 +31,13 @@ namespace TestAdministrator.Api
             // automatisch bei den Controllern im Konstruktor übergeben, wenn sie den Parameter TestsContext
             // erwarten.
             services.AddDbContext<TestsContext>(options =>
-                options.UseSqlite($"DataSource={Configuration["AppSettings:Database"]}")
+                options.UseSqlite(Configuration["AppSettings:Database"])
             );
+
+            // Für SQL Server:
+            //services.AddDbContext<TestsContext>(options =>
+            //    options.UseSqlServer(Configuration["AppSettings:Database"])
+            //);
 
             // Das Secret für den JSON Web Token aus appsettings.json lesen und 
             // den Server dafür konfigurieren.

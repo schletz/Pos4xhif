@@ -7,6 +7,13 @@ using Xamarin.Forms.Xaml;
 
 namespace TestAdministrator.App
 {
+    /// <summary>
+    /// Definiert die Xaml Erweiterung, sodass mit 
+    /// "{local:ImageResource TestAdministrator.App.Resources.filename.png}"
+    /// auf das Bild zugegriffen werden kann. Dabei muss das Bild als Embedded resource in den
+    /// Eigenschaften definiert werden.
+    /// Quelle: https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/images?tabs=windows#xaml
+    /// </summary>
     [ContentProperty(nameof(Source))]
     public class ImageResourceExtension : IMarkupExtension
     {

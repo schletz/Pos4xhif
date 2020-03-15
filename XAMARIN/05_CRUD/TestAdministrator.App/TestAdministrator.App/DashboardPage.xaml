@@ -22,14 +22,12 @@
             IconImageSource="{local:ImageResource TestAdministrator.App.Resources.add.png}"
             Order="Primary"  
             Command="{Binding NewItem}"
-            Priority="0" >
-        </ToolbarItem>
+            Priority="0" />
         <ToolbarItem Text="Edit"
             IconImageSource="{local:ImageResource TestAdministrator.App.Resources.edit.png}"
             Order="Primary"  
             Command="{Binding EditItem}"
-            Priority="1" >
-        </ToolbarItem>
+            Priority="1" />
         <ToolbarItem Text="Delete"
             IconImageSource="{local:ImageResource TestAdministrator.App.Resources.delete.png}"
             Order="Primary"
@@ -38,15 +36,18 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="10" VerticalOptions="FillAndExpand">
-            <ListView x:Name="TestList" ItemsSource="{Binding TestInfos}" SelectedItem="{Binding SelectedTest}">
+            <!-- Damit die Darstellung unter Android nicht abgeschnitten wird, wird  RowHeight="80" gesetzt (64 = 1 cm) -->
+            <ListView x:Name="TestList" ItemsSource="{Binding TestInfos}" SelectedItem="{Binding SelectedTest}" RowHeight="80">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <!-- Kontextmenü. Wird beim langen Drücken auf das Element angezeigt.
+                                 Beachte, dass x:Name="MyDashboardPage" der Pagedefinition ganz oben zugewiesen wurde. -->
                             <ViewCell.ContextActions>
                                 <MenuItem Text="Delete"
                                      Command="{Binding Source={x:Reference MyDashboardPage}, Path=BindingContext.DeleteItem}" CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
-                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                            <StackLayout HorizontalOptions="FillAndExpand">
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Schoolclass}" FontAttributes="Bold" />
                                     <Label Text="{Binding Subject}" FontAttributes="Bold" />

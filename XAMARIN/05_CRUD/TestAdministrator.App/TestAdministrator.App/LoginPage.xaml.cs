@@ -22,20 +22,38 @@ namespace TestAdministrator.App
 
         private async void Login_Clicked(object sender, EventArgs e)
         {
-            // Holt sich das Rest Service als Singleton. Nicht new verwenden,
-            // da sonst der Token im Header beim Request nicht mitgesendet
-            // wird.
-            if (await RestService.Instance.TryLoginAsync(new Dto.UserDto
+            // Damit der Button nicht mehrfach während des Ladens gedrückt wird, deaktivieren wir ihn.
+            Login.IsEnabled = false;
+            try
+            {
+                // Greift auf das RestService mit RestService.Instance zu. Nicht new verwenden,
+                // da sonst der Token im Header beim Request nicht mitgesendet
+                // wird.
+                if (await RestService.Instance.TryLoginAsync(new Dto.UserDto
                 {
                     Username = this.Username.Text,
                     Password = this.Password.Text
                 }))
-            {
-                NavigationPage newNavigation = new NavigationPage();
-                TestRepository testRepository = await TestRepository.CreateAsync(RestService.Instance.CurrentUser, RestService.Instance);
-                await newNavigation.PushAsync(new DashboardPage(new DashboardViewModel(testRepository, newNavigation.Navigation)));
+                {
+                    NavigationPage newNavigation = new NavigationPage();
+                    TestRepository testRepository = await TestRepository.CreateAsync(RestService.Instance.CurrentUser, RestService.Instance);
+                    await newNavigation.PushAsync(new DashboardPage(new DashboardViewModel(testRepository, newNavigation.Navigation)));
 
-                Application.Current.MainPage = new MainPage(newNavigation);
+                    Application.Current.MainPage = new MainPage(newNavigation);
+                }
+                else
+                {
+                    ErrorMessage.Text = "Fehler beim Login.";
+                }
+            }
+            catch (Exception err)
+            {
+                ErrorMessage.Text = err.Message;
+            }
+            // Damit der Button sicher wieder aktiviert wird, kommt der Block ins Finally
+            finally
+            {
+                Login.IsEnabled = true;
             }
         }
     }

@@ -14,7 +14,7 @@ namespace TestAdministrator.App.Services
     /// </summary>
     public class TestRepository
     {
-        private RestService _restService;
+        private readonly RestService _restService;
         private UserDto _user { get; }
 
         /// <summary>

@@ -10,6 +10,7 @@
     <None Remove="Resources\add.png" />
     <None Remove="Resources\delete.png" />
     <None Remove="Resources\edit.png" />
+    <None Remove="Resources\exam.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\delete.png" />
     <EmbeddedResource Include="Resources\edit.png" />
+    <EmbeddedResource Include="Resources\exam.png" />
   </ItemGroup>
 
   <ItemGroup>
