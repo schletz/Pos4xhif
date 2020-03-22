@@ -57,6 +57,7 @@
     <PackageReference Include="Xamarin.Forms" Version="*" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="*" />
     <PackageReference Include="Xamarin.Essentials" Version="*" />
+    <PackageReference Include="Xamarin.Android.Support.Compat" Version="27.0.2.1" />    
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
