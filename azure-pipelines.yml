@@ -25,3 +25,10 @@ steps:
     projectFile: 'XAMARIN/05_CRUD/TestAdministrator.App/TestAdministrator.App.Android/TestAdministrator.App.Android.csproj'
     outputDirectory: '$(outputDirectory)'
     configuration: '$(buildConfiguration)'
+
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'App'
+    publishLocation: 'Container'
