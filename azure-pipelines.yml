@@ -23,12 +23,6 @@ steps:
 - task: XamarinAndroid@1
   inputs:
     projectFile: 'XAMARIN/05_CRUD/TestAdministrator.App/TestAdministrator.App.Android/TestAdministrator.App.Android.csproj'
-    outputDirectory: '$(outputDirectory)'
+    outputDirectory: '/AppRelease'
     configuration: '$(buildConfiguration)'
 
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'App'
-    publishLocation: 'Container'
