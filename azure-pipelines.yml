@@ -23,6 +23,6 @@ steps:
 - task: XamarinAndroid@1
   inputs:
     projectFile: 'XAMARIN/05_CRUD/TestAdministrator.App/TestAdministrator.App.Android/TestAdministrator.App.Android.csproj'
-    outputDirectory: '/AppRelease'
+    outputDirectory: '$(build.binariesDirectory)/AppRelease'
     configuration: '$(buildConfiguration)'
 
