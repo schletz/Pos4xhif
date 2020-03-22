@@ -15,10 +15,11 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  inputs:
+    checkLatest: true
 
 - task: NuGetCommand@2
   inputs:
-    command: restore
     restoreSolution: 'XAMARIN/05_CRUD/TestAdministrator.sln'
 
 - task: XamarinAndroid@1
