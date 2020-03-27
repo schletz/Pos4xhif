@@ -1,4 +1,4 @@
-# .NET Conf: Focus on Xamarin
+# .NET Conf: Focus on Xamarin (23. März 2020)
 
 .NET Conf: Focus on Xamarin is a free, one-day livestream event that features speakers from the
 community and .NET product teams that are working on building native mobile apps with Xamarin
