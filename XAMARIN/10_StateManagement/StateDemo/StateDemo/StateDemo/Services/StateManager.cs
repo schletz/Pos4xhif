@@ -13,7 +13,6 @@ namespace StateDemo.Services
     {
         // Es darf nur 1 Instanz geben
         public static StateManager Instance => DependencyService.Get<StateManager>();
-        private StateManager() { }
 
         // Events: Die Viewmodels und Pages können das Event abonnieren und werden so benachrichtigt,
         // ob sich etwas geändert hat.
