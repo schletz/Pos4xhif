@@ -301,14 +301,14 @@ Zuerst die Methode:
 private IEdmModel GetEdmModel()
 {
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    var students = builder.EntitySet<Measurements>("Measurements");
-    students.EntityType.Count().Filter().OrderBy().Expand().Select();
+    var schoolClasses = builder.EntitySet<SchoolClasses>("SchoolClasses");
+    schoolClasses.EntityType.Count().Filter().OrderBy().Expand().Select();
 
     return builder.GetEdmModel();
 }
 ```
 
-Wir benötigen eine Instanz vom OData Model Builder (oder eine abgeleitete Klasse) die dann konfiguriert wird. `EntitySet` gibt das Entity an, von dem weg gemappt wird. Danach, wie bereits gehabt, die Methoden die OData umsetzten soll. (Count, FIlter, OerderBy, ...) angeben.
+Wir benötigen eine Instanz vom OData Model Builder (oder eine abgeleitete Klasse) die dann konfiguriert wird. `EntitySet` gibt das Entity an, von dem weg gemappt wird. Danach, wie bereits gehabt, die Methoden die OData umsetzten soll. (Count, Filter, OrderBy, ...) angeben.
 
 Aufgerufen wird die Methhode natürlich unter `Configure`:
 
