@@ -67,8 +67,8 @@ namespace SPG.AirQuality
         private IEdmModel GetEdmModel()
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            var students = builder.EntitySet<Measurements>("Measurements");
-            students.EntityType.Count().Filter().OrderBy().Expand().Select();
+            var measurements = builder.EntitySet<Measurements>("Measurements");
+            measurements.EntityType.Count().Filter().OrderBy().Expand().Select();
 
             return builder.GetEdmModel();
         }
