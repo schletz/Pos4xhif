@@ -92,7 +92,7 @@ namespace PostRoutesDemo.Controller
             {
                 // Wenn der PK des Pupil Objektes vom Parameter der Anfrage abweicht, 
                 // senden wir HTTP 409 (Conflict).
-                if (id != pupil.Id) { return BadRequest(); }
+                if (id != pupil.Id) { return Conflict(); }
                 Pupil found = db.Pupil.SingleOrDefault(p => p.Id == id);
                 if (found == null) { return NotFound(); }
                 // Simuliert das Aktualisieren des Datensatzes in der Db. Dabei darf der Primärschlüssel
