@@ -31,3 +31,41 @@ Der *Heartbeat* wird im Background Service
 geprüft. Es wird mit dem Server gestartet. Der Controller setzt im Service den letzten
 empfangenen Zeitstempel. Ist dieser zu alt, kann das Service entsprechende Aktionen
 auslösen.
+
+## Das Service Hearbeat Service
+
+Da das *HearbeatService* über DI vom Controller verwendet wird (setzen des letzten Beats),
+ist es kein klassisches Hosted Service. Es ist ein Singleton, welches in der Main Methode
+in [Program.cs](SensorDemo.Webapp/Program.cs) zu Beginn gestartet wird:
+
+```c#
+public static void Main(string[] args)
+{
+    var host = CreateHostBuilder(args).Build();
+    // using Microsoft.Extensions.DependencyInjection;
+    var service = host.Services.GetRequiredService<HearbeatService>();
+    service.StartHearbeatService();
+    host.Run();
+}
+```
+
+Danach wird es in *ConfigureServices* normal als Singleton registriert: 
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSingleton<HearbeatService>();
+    services.AddTransient(provider => new Controllers.CheckApiKeyFilterAttribute(
+        secret: Configuration["Secret"]));
+    // ...
+}
+```
+
+## Der Filter CheckApiKeyFilter
+
+Der Controller [RaspberryController](SensorDemo.Webapp/Controllers/RaspberryController.cs) wird
+durch einen Filter geschützt. Er ist in der Klasse
+[CheckApiKeyFilterAttribute](SensorDemo.Webapp/Controllers/RaspberryController.cs) definiert und
+ist ein Service Filter, da er das Secret über DI bekommen muss. Deswegen wurde er auch mit
+*AddTransient* in *ConfigureServices* registriert.
+
