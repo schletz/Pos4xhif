@@ -32,7 +32,7 @@ geprüft. Es wird mit dem Server gestartet. Der Controller setzt im Service den 
 empfangenen Zeitstempel. Ist dieser zu alt, kann das Service entsprechende Aktionen
 auslösen.
 
-## Das Service Hearbeat Service
+## Das Hearbeat Service
 
 Da das *HearbeatService* über DI vom Controller verwendet wird (setzen des letzten Beats),
 ist es kein klassisches Hosted Service. Es ist ein Singleton, welches in der Main Methode
