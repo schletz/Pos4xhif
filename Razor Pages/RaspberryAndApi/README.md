@@ -34,9 +34,10 @@ auslösen.
 
 ## Das Hearbeat Service
 
-Da das *HearbeatService* über DI vom Controller verwendet wird (setzen des letzten Beats),
-ist es kein klassisches Hosted Service. Es ist ein Singleton, welches in der Main Methode
-in [Program.cs](SensorDemo.Webapp/Program.cs) zu Beginn gestartet wird:
+Da das [HearbeatService](SensorDemo.Webapp/Services/HearbeatService.cs) über DI vom Controller
+verwendet wird (setzen des letzten Beats), ist es kein klassisches Hosted Service.
+Es ist ein Singleton, welches in der Main Methode in [Program.cs](SensorDemo.Webapp/Program.cs)
+zu Beginn gestartet wird:
 
 ```c#
 public static void Main(string[] args)
@@ -49,7 +50,7 @@ public static void Main(string[] args)
 }
 ```
 
-Danach wird es in *ConfigureServices* normal als Singleton registriert: 
+Danach wird es in *ConfigureServices* normal als Singleton registriert:
 
 ```c#
 public void ConfigureServices(IServiceCollection services)
@@ -68,4 +69,3 @@ durch einen Filter geschützt. Er ist in der Klasse
 [CheckApiKeyFilterAttribute](SensorDemo.Webapp/Controllers/RaspberryController.cs) definiert und
 ist ein Service Filter, da er das Secret über DI bekommen muss. Deswegen wurde er auch mit
 *AddTransient* in *ConfigureServices* registriert.
-
