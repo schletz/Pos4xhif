@@ -1,5 +1,13 @@
 # Stresstest mit ASP.NET Core
 
+Im Moment (1.3.2021) ist die Plattform [Impfservice Wien](https://impfservice.wien/) durch die Anmeldung der
+Personen in Bildungseinrichtungen nicht erreichbar bzw. funktioniert nicht. Es wird eine Maske mit
+Terminen angeboten, die gebucht werden können. Das Klicken auf einen grünen Termin funktioniert
+allerdings nicht. Offensichtlich wurde nie getestet, wie sehr sich der Aufbau dieser komplexeren
+Maske auf das Laufzeitverhalten der Applikation auswirkt.
+
+![](terminwahl.png)
+
 ## Direktes Testen von Services mit route-to-code in *Startup.Configure*
 
 Um eine direkte Route ohne Controller oder Razor Page zu definieren, kann in der Methode
