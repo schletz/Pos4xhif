@@ -35,7 +35,7 @@ Auf https://github.com/codesenberg/bombardier/releases kann ein kleines Programm
 den Server mit HTTP Requests bombardiert. Achtung: Der Browser und Windows Defender wird beim
 Download mögliche Schadsoftware anzeigen, da das Programm eigentlich eine DoS Attacke durchführt.
 
-Der folgende Aufruf öffnet 125 Verbindungen und Sendet in Summe 10000 Anfragen an den Server:
+Der folgende Aufruf öffnet 125 Verbindungen und sendet in Summe 10000 Anfragen an den Server:
 
 ```text
 bombardier -c 125 -n 10000 http://localhost:5000/stresstest
