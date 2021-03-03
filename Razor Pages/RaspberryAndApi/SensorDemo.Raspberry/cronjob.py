@@ -11,7 +11,11 @@ class Cronjob:
 
     # Fügt eine Callback Funktion hinzu, die in bestimmten Abständen ausgeführt werden soll.
     def append_work(self, id, action, interval):
-        self.__work_items.append({'id': id, 'action': action, 'interval': interval, 'next_run': int(time.time() / interval + 1) * interval})
+        self.__work_items.append(
+            {'id': id, 
+            'action': action, 
+            'interval': interval, 
+            'next_run': int(time.time() / interval + 1) * interval})
         self.__logger.debug(self.__work_items)
 
     # Führt jede Callback Methode zur definierten Zeit lt. Intervall in einem eigenen Thread aus.
