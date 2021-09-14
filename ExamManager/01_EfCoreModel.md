@@ -82,9 +82,53 @@ public class Student
 
 ### Value Objects and Records
 
-Now we want to add some address fields (home address, parents address).
+Now we want to add some address fields (home address, parents address). Our Address class 
+- should implement *Equals()* and
+- it shout be immutable.
+
+C# 9 introduced records. A *positional record* provides immutability and implements equality for all properties.
+So we use a positional record to create our address class:
+```c#
+  public record Address(
+      [property: MaxLength(255)] string City,
+      [property: MaxLength(255)] string Zip,
+      [property: MaxLength(255)] string Street
+      )
+  {
+      public string FullAddress => $"{Zip} {City}, {Street}";
+  }
+```
+
+Not we can use this type in your class Student:
+```c#
+  public class Student
+  {
+      // ...
+      public Address Home { get; set; } = default!;
+      public Address? Parents { get; set; }
+  }
+```
 
 ### OnModelConfiguring
+
+```c#
+public class ExamContext : DbContext
+{
+    public DbSet<Student> Students => Set<Student>();
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=Exam.db");
+        optionsBuilder.LogTo(
+            Console.WriteLine,
+            Microsoft.Extensions.Logging.LogLevel.Information);
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Student>().OwnsOne(s => s.Home);
+        modelBuilder.Entity<Student>().OwnsOne(s => s.Parents);
+    }
+}
+```
 
 #### Unique Index
 
