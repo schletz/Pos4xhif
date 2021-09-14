@@ -113,7 +113,7 @@ More information on value objects can be found at [docs.microsoft.com](https://d
 
 #### OnModelConfiguring
 
-EF Core will create a table *Address*. But we want to include the address information
+Without further configuration EF Core will try to create a table *Address*. But we want to include the address information
 as columns in our student table. With *OwnsOne()* we can configure our properties
 *Home* and *Parents* as a value object:
 
