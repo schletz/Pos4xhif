@@ -136,6 +136,27 @@ public class ExamContext : DbContext
 }
 ```
 
+### Creation of our database
+
+We use a unit test to create our SQLite file database. The
+test method *EnsureDatabaseCreatedTest()* calls
+*EnsureDeleted()* to delete the old file database. 
+*EnsureCreated()* will create a new SQLite Database based on
+our model (code first approach).
+
+```c#
+public class ExamContextTests
+{
+    [Fact]
+    public void EnsureDatabaseCreatedTest()
+    {
+        using var context = new ExamContext();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+    }
+}
+```
+
 ### Unique Index
 
 ### 1 to many relationship
