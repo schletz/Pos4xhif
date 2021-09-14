@@ -47,8 +47,8 @@ and set the *nullable* option:
 ### Private constructors and private setters
 
 To ensure the initialization of all required properties, you can define a
-(public) constructor with all your required fields (*RequiredArgsConstructor* in Lombock).
-EF Core dosen't support changing the primary key, therefore the property *Id*
+(public) constructor with all your required fields (*@RequiredArgsConstructor,* in Lombok).
+EF Core doesn't support changing the primary key, therefore the property *Id*
 has a private setter. EF Core requires a parameterless constructor, so we can
 use a private constructor for this.
 
@@ -57,11 +57,11 @@ C# 8 won't recognize this. So we have to initialize these properties with the
 *null forgiving* operator (!).
 
 *Account*, *Lastname*, *Firstname* are required, EF Core will create NOT NULL
-fields in our database. *Email* is optional, therefore we define this proeprty
+fields in our database. *Email* is optional, therefore we define this property
 with *string?*. 
 
 ```c#
-class Student
+public class Student
 {
     public Student(string account, string lastname, string firstname)
     {
@@ -76,10 +76,19 @@ class Student
     public string Lastname { get; set; } = default!;
     public string Firstname { get; set; } = default!;
     private string? Email { get; set; }
-    private int MailLength => string.IsNullOrEmpty(Email) ? 0 : Email.Length;
 }
 ```
 
 ### Value Objects and Records
 
 Now we want to add some address fields (home address, parents address).
+
+### OnModelConfiguring
+
+More information at [docs.microsoft.com](https://docs.microsoft.com/en-us/ef/core/modeling/).
+
+### 1 to many relationship
+
+### 1 to 1 relationship
+
+
