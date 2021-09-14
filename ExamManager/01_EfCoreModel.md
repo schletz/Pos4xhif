@@ -2,7 +2,7 @@
 
 ![](er_diagram.png)
 
-## CCreation of your solution
+## Creation of your solution
 
 ```text
 rd /S /Q ExamManager
