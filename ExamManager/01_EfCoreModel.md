@@ -99,7 +99,8 @@ So we use a positional record to create our address class:
   }
 ```
 
-Not we can use this type in your class Student:
+Now we can use this type in our *Student* class:
+
 ```c#
   public class Student
   {
@@ -108,8 +109,13 @@ Not we can use this type in your class Student:
       public Address? Parents { get; set; }
   }
 ```
+More information on value objects can be found at [docs.microsoft.com](https://docs.microsoft.com/en-us/ef/core/modeling/).
 
-### OnModelConfiguring
+#### OnModelConfiguring
+
+EF Core will create a table *Address*. But we want to include the address information
+as columns in our student table. With *OwnsOne()* we can configure our properties
+*Home* and *Parents* as a value object:
 
 ```c#
 public class ExamContext : DbContext
@@ -130,11 +136,7 @@ public class ExamContext : DbContext
 }
 ```
 
-#### Unique Index
-
-#### Value Objects
-
-More information at [docs.microsoft.com](https://docs.microsoft.com/en-us/ef/core/modeling/).
+### Unique Index
 
 ### 1 to many relationship
 
