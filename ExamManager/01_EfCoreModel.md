@@ -63,6 +63,7 @@ with *string?*.
 ```c#
 public class Student
 {
+    // Constructor without id (Id is database generated)
     public Student(string account, string lastname, string firstname)
     {
         Account = account;
@@ -85,10 +86,14 @@ Now we want to add some address fields (home address, parents address).
 
 ### OnModelConfiguring
 
+#### Unique Index
+
+#### Value Objects
+
 More information at [docs.microsoft.com](https://docs.microsoft.com/en-us/ef/core/modeling/).
 
 ### 1 to many relationship
 
 ### 1 to 1 relationship
 
-
+### Inheritance
