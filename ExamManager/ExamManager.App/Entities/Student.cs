@@ -12,6 +12,9 @@ namespace ExamManager.App.Entities
     // POJO class (= plain old java class)
     public class Student
     {
+
+
+
         public Student(string account, string lastname, string firstname, Address home)
         {
             Account = account;
@@ -34,6 +37,8 @@ namespace ExamManager.App.Entities
         // Home address
         public Address Home { get; set; } = default!;
         public Address? Parents { get; set; }
+        public string SchoolClassName { get; set; } = default!;  // FK Value (4EHIF, ...)
+        public SchoolClass SchoolClass { get; set; } = default!; // Navigation to class
 
         private int MailLength => string.IsNullOrEmpty(Email) ? 0 : Email.Length;
     }
