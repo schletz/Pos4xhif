@@ -16,6 +16,7 @@ namespace ExamManager.Test
             using var context = new ExamContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
+            context.Seed();
         }
     }
 }

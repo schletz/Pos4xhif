@@ -20,6 +20,7 @@ namespace ExamManager.App.Entities
         public string Name { get; private set; } = default!;  // 4EHIF, ..
         public string? Room { get; set; }
         public List<Student> Students { get; } = new(0);
+        public List<Exam> Exams { get; } = new(0);
 
     }
 }
