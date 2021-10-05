@@ -12,15 +12,13 @@ namespace ExamManager.App.Entities
     // POJO class (= plain old java class)
     public class Student
     {
-
-
-
-        public Student(string account, string lastname, string firstname, Address home)
+        public Student(string account, string lastname, string firstname, Address home, DateTime dateOfBirth)
         {
             Account = account;
             Lastname = lastname;
             Firstname = firstname;
             Home = home;
+            DateOfBirth = dateOfBirth;
         }
         private Student() { }
         // Id -> primary key, int Id -> autoincrement
@@ -31,6 +29,7 @@ namespace ExamManager.App.Entities
         public string Lastname { get; set; } = default!;
         [MaxLength(255)]
         public string Firstname { get; set; } = default!;
+        public DateTime DateOfBirth { get; set; }
         [MaxLength(255)]
         public string? Email { get; set; }
 
