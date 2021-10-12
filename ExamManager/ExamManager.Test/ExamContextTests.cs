@@ -10,6 +10,14 @@ namespace ExamManager.Test
 {
     public class ExamContextTests
     {
+        private ExamContext GetContext()
+        {
+            var context = new ExamContext();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            context.Seed();
+            return context;
+        }
         [Fact]
         public void EnsureDatabaseCreatedTest()
         {
@@ -17,6 +25,24 @@ namespace ExamManager.Test
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Seed();
+        }
+
+        [Fact]
+        public void StudentsCountSuccessTest()
+        {
+            using (var context = new ExamContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                context.Seed();
+            }
+            using (var context = new ExamContext())
+            {
+                var schoolclass = context.SchoolClasses.First();
+                Assert.True(schoolclass.StudentsCount > 0);
+            }
+
+
         }
     }
 }

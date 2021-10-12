@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Bogus.Extensions;
+using ExamManager.App.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace ExamManager.App.Entities
         public DbSet<Student> Students => Set<Student>();
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.UseSqlite("Data Source=Exam.db");
             optionsBuilder.LogTo(
                 Console.WriteLine,

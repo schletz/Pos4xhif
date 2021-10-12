@@ -14,13 +14,13 @@ namespace ExamManager.App.Entities
             Name = name;
         }
 
-        private SchoolClass() { }
+        protected SchoolClass() { }
 
         [Key]
         public string Name { get; private set; } = default!;  // 4EHIF, ..
         public string? Room { get; set; }
-        public List<Student> Students { get; } = new(0);
-        public List<Exam> Exams { get; } = new(0);
-
+        public virtual ICollection<Student> Students { get; } = new List<Student>(0);
+        public virtual ICollection<Exam> Exams { get; } = new List<Exam>(0);
+        public int StudentsCount => Students.Count();
     }
 }

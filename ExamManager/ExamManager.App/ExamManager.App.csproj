@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Bogus" Version="33.*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.*" />
   </ItemGroup>
 

@@ -6,9 +6,12 @@
         {
 
         }
-        public CommitedExam(Exam e, string room)
+        public CommitedExam(Exam e, string room) : base(
+            teacherId: e.TeacherId,
+            subjectId: e.SubjectId,
+            date: e.Date,
+            schoolClassName: e.SchoolClassName)
         {
-            Id = e.Id;
             TeacherId = e.TeacherId;
             SubjectId = e.SubjectId;
             Date = e.Date;
