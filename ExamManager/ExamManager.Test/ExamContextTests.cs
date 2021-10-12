@@ -8,6 +8,7 @@ using Xunit;
 
 namespace ExamManager.Test
 {
+    [Collection("Sequential")]
     public class ExamContextTests
     {
         private ExamContext GetContext()

@@ -7,14 +7,11 @@
 
         }
         public CommitedExam(Exam e, string room) : base(
-            teacherId: e.TeacherId,
-            subjectId: e.SubjectId,
+            teacherShortname: e.TeacherShortname,
+            subjectShortname: e.SubjectShortname,
             date: e.Date,
             schoolClassName: e.SchoolClassName)
         {
-            TeacherId = e.TeacherId;
-            SubjectId = e.SubjectId;
-            Date = e.Date;
             Room = room;
         }
         public string Room { get; set; } = default!;

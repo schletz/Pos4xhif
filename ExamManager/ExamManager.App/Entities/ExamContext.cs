@@ -16,8 +16,10 @@ namespace ExamManager.App.Entities
         public DbSet<Exam> Exam => Set<Exam>();
         // SELECT * FROM Exam WHERE Discriminator = 'CommitedExam'
         public DbSet<CommitedExam> CommitedExams => Set<CommitedExam>();
-
         public DbSet<Student> Students => Set<Student>();
+        public DbSet<Teacher> Teachers => Set<Teacher>();
+        public DbSet<Subject> Subjects => Set<Subject>();
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
@@ -33,9 +35,48 @@ namespace ExamManager.App.Entities
         }
 
         public void Seed()
-
         {
             Randomizer.Seed = new Random(1035);
+            var faker = new Faker("de");
+
+            var teachers = new Faker<Teacher>("de")
+                .CustomInstantiator(f =>
+                {
+                    var lastname = f.Name.LastName();
+                    var shortname = lastname.Left(3).ToUpper();
+
+                    return new Teacher(
+                        shortname: shortname,
+                        firstname: f.Name.FirstName(),
+                        lastname: lastname,
+                        email: f.Internet.Email());
+                })
+                .Generate(50)
+                .GroupBy(t => t.Shortname)
+                .Select(g => g.First())
+                .Take(30)
+                .ToList();
+            Teachers.AddRange(teachers);
+            SaveChanges();
+
+            var subjects = new Faker<Subject>("de")
+                .CustomInstantiator(f =>
+                {
+                    var name = f.Commerce.ProductMaterial();
+                    var shortname = name.Left(3).ToUpper();
+
+                    return new Subject(
+                        shortname: shortname,
+                        name: name);
+                })
+                .Generate(50)
+                .GroupBy(t => t.Shortname)
+                .Select(g => g.First())
+                .Take(10)
+                .ToList();
+            Subjects.AddRange(subjects);
+            SaveChanges();
+
             var departments = new string[] { "HIF", "HBGM", "HMNA" };
             var classes = new Faker<SchoolClass>("de")
                 .CustomInstantiator(f =>
@@ -90,6 +131,31 @@ namespace ExamManager.App.Entities
             .Take(10)
             .ToList();
             SchoolClasses.AddRange(classes);
+            SaveChanges();
+
+            // 20 exams per class -> 200 exams
+            var exams = new Faker<Exam>("de")
+                .CustomInstantiator(f =>
+                {
+                    return new Exam(
+                        teacherShortname: f.Random.ListItem(teachers).Shortname,
+                        subjectShortname: f.Random.ListItem(subjects).Shortname,
+                        date: new DateTime(2021, 10, 1)
+                            .AddDays(f.Random.Int(0, 30 * 9))
+                            .AddHours(f.Random.Int(8, 16)),
+                        schoolClassName: f.Random.ListItem(classes).Name);
+                })
+                .Generate(200)
+                .ToList();
+            Exam.AddRange(exams.Take(100));
+            SaveChanges();
+            CommitedExams.AddRange(exams
+                .Skip(100)
+                .Select(e =>
+                {
+                    var room = $"{faker.Random.String2(1, "ABCD")}{faker.Random.String2(1, "E1234")}.{faker.Random.String2(1, "01")}{faker.Random.Int(1, 9)}";
+                    return new CommitedExam(e, room);
+                }));
             SaveChanges();
         }
 
