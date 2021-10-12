@@ -1,5 +1,9 @@
 ﻿namespace ExamManager.App.Entities
 {
+    /// <summary>
+    /// An exam committed by the teacher. Adds a room to
+    /// the planned exam.
+    /// </summary>
     public class CommitedExam : Exam
     {
         private CommitedExam()

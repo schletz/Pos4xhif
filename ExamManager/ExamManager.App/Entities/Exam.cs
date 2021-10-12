@@ -25,9 +25,11 @@ namespace ExamManager.App.Entities
         public string TeacherShortname { get; set; } = default!;
         public virtual Teacher Teacher { get; set; } = default!; 
         public string SubjectShortname { get; set; } = default!;
+        // Virtual for EF Core Proxies (requires NuGet Microsoft.EntityFrameworkCore.Proxies)
         public virtual Subject Subject { get; set; } = default!;
 
         public string SchoolClassName { get; set; } = default!;
+        // Virtual for EF Core Proxies (requires NuGet Microsoft.EntityFrameworkCore.Proxies)
         public virtual SchoolClass SchoolClass { get; set; } = default!;
         public DateTime Date { get; set; }
     }

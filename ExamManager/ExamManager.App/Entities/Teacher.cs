@@ -5,11 +5,7 @@ namespace ExamManager.App.Entities
 {
     public class Teacher
     {
-        public Teacher(
-            string shortname,
-            string firstname,
-            string lastname,
-            string email)
+        public Teacher(string shortname, string firstname, string lastname, string email)
         {
             Shortname = shortname;
             Firstname = firstname;
@@ -19,7 +15,7 @@ namespace ExamManager.App.Entities
 
         protected Teacher() { }
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)] // by convention
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]         // by convention (string datatype)
         public string Shortname { get; private set; } = default!; // Shortname (SZ)
         public string Firstname { get; set; } = default!;
         public string Lastname { get; set; } = default!;

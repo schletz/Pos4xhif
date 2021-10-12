@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace ExamManager.App.Entities
 {
+    /// <summary>
+    /// EF Core Database Context
+    /// </summary>
     public class ExamContext : DbContext
     {
         public DbSet<SchoolClass> SchoolClasses => Set<SchoolClass>();
@@ -22,6 +25,7 @@ namespace ExamManager.App.Entities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            // Needs NuGet package Microsoft.EntityFrameworkCore.Proxies
             optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.UseSqlite("Data Source=Exam.db");
             optionsBuilder.LogTo(
