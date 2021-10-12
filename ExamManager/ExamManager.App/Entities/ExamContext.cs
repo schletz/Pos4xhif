@@ -85,7 +85,6 @@ namespace ExamManager.App.Entities
             var classes = new Faker<SchoolClass>("de")
                 .CustomInstantiator(f =>
                 {
-
                     var name = $"{f.Random.Int(1, 5)}{f.Random.String2(1, "ABCDE")}{f.Random.ListItem(departments)}";
                     return new SchoolClass(name);
                 })
@@ -153,6 +152,7 @@ namespace ExamManager.App.Entities
                 .ToList();
             Exam.AddRange(exams.Take(100));
             SaveChanges();
+
             CommitedExams.AddRange(exams
                 .Skip(100)
                 .Select(e =>
