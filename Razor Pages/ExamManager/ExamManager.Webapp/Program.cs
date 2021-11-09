@@ -22,9 +22,13 @@ public static class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+        // Middleware
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
+        // WepAPI and MVC
+        app.MapControllers();
+        // Razor Page
         app.MapRazorPages();
         app.Run();
     }
