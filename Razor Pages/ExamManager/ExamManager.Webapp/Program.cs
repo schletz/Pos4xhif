@@ -1,3 +1,4 @@
+using ExamManager.App.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,10 +10,19 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        using (var context = new ExamContext())
+        {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            context.Seed();
+        }
+
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
         builder.Services.AddRazorPages();
+        builder.Services.AddDbContext<ExamContext>();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -24,7 +34,7 @@ public static class Program
         }
         // Middleware
         app.UseHttpsRedirection();
-        app.UseStaticFiles();
+        app.UseStaticFiles();  // no default document
         app.UseRouting();
         // WepAPI and MVC
         app.MapControllers();

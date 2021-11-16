@@ -1,0 +1,32 @@
+﻿@page
+@model ExamManager.Webapp.Pages.Students.IndexModel
+<h3>Students</h3>
+
+<p>Student list, generated 
+    at @DateTime.UtcNow.ToString("dd.MM.yyyy HH:mm") UTC.
+    @Model.Students.Count students read.
+</p>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Room</th>
+            <th>Lastname</th>
+            <th>Firstname</th>
+            <th>Date of birth</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var s in Model.Students)
+        {
+            <tr>
+                <td>@s.SchoolClassName</td>
+                <td>@s.SchoolClass.Room</td>
+                <td>@s.Lastname</td>
+                <td>@s.Firstname</td>
+                <td>@s.DateOfBirth</td>
+            </tr>
+        }
+    </tbody>
+</table>
