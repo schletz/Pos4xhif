@@ -19,10 +19,12 @@ namespace ExamManager.App.Entities
             Firstname = firstname;
             Home = home;
             DateOfBirth = dateOfBirth;
+            Guid = Guid.NewGuid();
         }
         protected Student() { }
         // Id -> primary key, int Id -> autoincrement
         public int Id { get; private set; }
+        public Guid Guid { get; private set; }
         [MaxLength(255)]
         public string Account { get; set; } = default!;
         [MaxLength(255)]
@@ -32,10 +34,10 @@ namespace ExamManager.App.Entities
         public DateTime DateOfBirth { get; set; }
         [MaxLength(255)]
         public string? Email { get; set; }
-
         // Home address
         public Address Home { get; set; } = default!;
         public Address? Parents { get; set; }
+
         public string SchoolClassName { get; set; } = default!;  // FK Value (4EHIF, ...)
         public virtual SchoolClass SchoolClass { get; set; } = default!; // Navigation to class
 

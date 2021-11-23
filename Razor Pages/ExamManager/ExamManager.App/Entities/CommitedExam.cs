@@ -6,7 +6,7 @@
     /// </summary>
     public class CommitedExam : Exam
     {
-        private CommitedExam()
+        protected CommitedExam()
         {
 
         }

@@ -36,6 +36,9 @@ namespace ExamManager.App.Entities
         {
             modelBuilder.Entity<Student>().OwnsOne(s => s.Home);
             modelBuilder.Entity<Student>().OwnsOne(s => s.Parents);
+            modelBuilder.Entity<Student>().HasIndex(s => s.Guid).IsUnique();
+            modelBuilder.Entity<Exam>().HasIndex(e => e.Guid).IsUnique();
+
         }
 
         public void Seed()

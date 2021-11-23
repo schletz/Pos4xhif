@@ -1,0 +1,42 @@
+﻿@page "{studentGuid}"
+@model ExamManager.Webapp.Pages.Exams.StudentExamsModel
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div>
+        <p class="text-danger">@Model.Message</p>
+    </div>
+}
+else
+{
+    <div class="d-sm-table">
+        <div class="d-sm-table-row">
+            <div class="d-lg-table-cell">
+                Teacher
+            </div>
+            <div class="d-lg-table-cell">
+                Subject
+            </div>
+            <div class="d-lg-table-cell">
+                Date
+            </div>
+        </div>
+        @foreach (var e in Model.Exams)
+        {
+            <div class="d-sm-table-row">
+                <div class="d-lg-table-cell">
+                    @e.TeacherShortname
+                    @e.Teacher.Lastname
+                    @e.Teacher.Firstname
+                </div>
+                <div class="d-lg-table-cell">
+                    @e.SubjectShortname
+                </div>
+                <div class="d-lg-table-cell">
+                    @e.Date.ToString("dd.MM.yyyy")
+                </div>
+            </div>
+        }
+    </div>
+}
+

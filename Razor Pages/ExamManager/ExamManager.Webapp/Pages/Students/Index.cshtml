@@ -2,7 +2,8 @@
 @model ExamManager.Webapp.Pages.Students.IndexModel
 <h3>Students</h3>
 
-<p>Student list, generated 
+<p>
+    Student list, generated
     at @DateTime.UtcNow.ToString("dd.MM.yyyy HH:mm") UTC.
     @Model.Students.Count students read.
 </p>
@@ -15,10 +16,11 @@
             <th>Lastname</th>
             <th>Firstname</th>
             <th>Date of birth</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach(var s in Model.Students)
+        @foreach (var s in Model.Students)
         {
             <tr>
                 <td>@s.SchoolClassName</td>
@@ -26,6 +28,10 @@
                 <td>@s.Lastname</td>
                 <td>@s.Firstname</td>
                 <td>@s.DateOfBirth</td>
+                <td>
+                    <a asp-page="/Exams/StudentExams"
+                   asp-route-studentGuid="@s.Guid">Exams</a>
+                </td>
             </tr>
         }
     </tbody>

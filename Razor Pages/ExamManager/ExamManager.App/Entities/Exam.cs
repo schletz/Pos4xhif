@@ -18,9 +18,11 @@ namespace ExamManager.App.Entities
             SubjectShortname = subjectShortname;
             Date = date;
             SchoolClassName = schoolClassName;
+            Guid = Guid.NewGuid();
         }
         protected Exam() { }
         public int Id { get; private set; }
+        public Guid Guid { get; private set; }
         // Name of the navigation property + name of the PK
         public string TeacherShortname { get; set; } = default!;
         public virtual Teacher Teacher { get; set; } = default!; 
