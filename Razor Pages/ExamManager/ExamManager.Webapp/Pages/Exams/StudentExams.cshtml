@@ -1,6 +1,18 @@
 ﻿@page "{studentGuid}"
 @model ExamManager.Webapp.Pages.Exams.StudentExamsModel
 
+@section Head
+{
+    <style>
+        .examTable {
+            border-spacing: 5px;
+        }
+        .header {
+            font-weight: bold;
+        }
+    </style>
+}
+
 @if (!string.IsNullOrEmpty(Model.Message))
 {
     <div>
@@ -9,30 +21,30 @@
 }
 else
 {
-    <div class="d-sm-table">
+    <div class="d-sm-table examTable">
         <div class="d-sm-table-row">
-            <div class="d-lg-table-cell">
+            <div class="d-sm-table-cell header">
                 Teacher
             </div>
-            <div class="d-lg-table-cell">
+            <div class="d-sm-table-cell header">
                 Subject
             </div>
-            <div class="d-lg-table-cell">
+            <div class="d-sm-table-cell header">
                 Date
             </div>
         </div>
         @foreach (var e in Model.Exams)
         {
             <div class="d-sm-table-row">
-                <div class="d-lg-table-cell">
+                <div class="d-sm-table-cell">
                     @e.TeacherShortname
                     @e.Teacher.Lastname
                     @e.Teacher.Firstname
                 </div>
-                <div class="d-lg-table-cell">
+                <div class="d-sm-table-cell">
                     @e.SubjectShortname
                 </div>
-                <div class="d-lg-table-cell">
+                <div class="d-sm-table-cell">
                     @e.Date.ToString("dd.MM.yyyy")
                 </div>
             </div>

@@ -8,9 +8,9 @@ namespace ExamManager.App.Entities
     /// ExamContext.OnModelCreating
     /// </summary>
     public record Address(
-        [property: MaxLength(255)] string City,
-        [property: MaxLength(255)] string Zip,
-        [property: MaxLength(255)] string Street
+        [MaxLength(255)] string City,
+        [MaxLength(255)] string Zip,
+        [MaxLength(255)] string Street
         )
     {
         public string FullAddress => $"{Zip} {City}, {Street}";

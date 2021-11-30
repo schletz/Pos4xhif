@@ -1,0 +1,47 @@
+﻿@page
+@model ExamManager.Webapp.Pages.Students.AddModel
+@{
+}
+<h3>Add a student</h3>
+<form method="post">
+    <label>
+        Account:
+        <input class="form-control" asp-for="Student.Account" />
+    </label>
+    <label>
+        Lastname:
+        <input class="form-control" asp-for="Student.Lastname" />
+    </label>
+    <label>
+        Firstname:
+        <input class="form-control" asp-for="Student.Firstname" />
+    </label>
+    <label>
+        Date of birth:
+        <input class="form-control" asp-for="Student.DateOfBirth" />
+    </label>
+    <label>
+        Email (optional):
+        <input class="form-control" asp-for="Student.Email" />
+    </label>
+    <label>
+        School class:
+        <input class="form-control" asp-for="Student.SchoolClassName" />
+    </label>
+    <label>
+        Street:
+        <input class="form-control" asp-for="Student.Home.Street" />
+    </label>
+    <label>
+        ZIP:
+        <input class="form-control" asp-for="Student.Home.Zip" />
+    </label>
+    <label>
+        City:
+        <input class="form-control" asp-for="Student.Home.City" />
+    </label>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+
+<div class="text-danger" asp-validation-summary="All"></div>

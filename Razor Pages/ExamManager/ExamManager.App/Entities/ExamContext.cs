@@ -116,7 +116,8 @@ namespace ExamManager.App.Entities
                             lastname: lastname,
                             firstname: firstname,
                             home: home,
-                            dateOfBirth: dateOfBirth);
+                            dateOfBirth: dateOfBirth,
+                            schoolClass: sc);
                     })
                     .Rules((f2, s) =>
                     {
