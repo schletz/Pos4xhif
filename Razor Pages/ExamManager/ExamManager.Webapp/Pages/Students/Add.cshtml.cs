@@ -1,7 +1,11 @@
+using AutoMapper;
 using ExamManager.App.Dtos;
 using ExamManager.App.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ExamManager.Webapp.Pages.Students
@@ -9,29 +13,23 @@ namespace ExamManager.Webapp.Pages.Students
     public class AddModel : PageModel
     {
         private readonly ExamContext _db;
-
-        public AddModel(ExamContext db)
+        private readonly IMapper _mapper;
+        public AddModel(ExamContext db, IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
 
         [BindProperty]
-        public StudentDto Student { get; set; } = new StudentDto(
-            Guid: default,
-            Account: string.Empty,
-            Lastname: string.Empty,
-            Firstname: string.Empty,
-            DateOfBirth: default,
-            Email: default,
-            SchoolClassName: string.Empty,
-            Home: new Address(string.Empty, string.Empty, string.Empty),
-            Parents: default);
-            
+        public StudentDto Student { get; set; } = default!;
+
+        public IEnumerable<SelectListItem> Classes { get; private set; } = Enumerable.Empty<SelectListItem>();
 
         public void OnGet()
         {
-        }
 
+        }
+        // HANDLER for POST requests
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -46,17 +44,25 @@ namespace ExamManager.Webapp.Pages.Students
                 return Page();
 
             }
-            var student = new Student(
-                account: Student.Account,
-                lastname: Student.Lastname,
-                firstname: Student.Firstname,
-                home: Student.Home,
-                dateOfBirth: Student.DateOfBirth,
-                schoolClass: schoolClass);
+            var student = _mapper.Map<Student>(Student);
 
             _db.Students.Add(student);
             _db.SaveChanges();
+
+            // REDIRECT AFTER POST
+            //return Page();
             return RedirectToPage("/Students/Index");
+        }
+
+        public override void OnPageHandlerExecuting(PageHandlerExecutingContext context)
+        {
+            Classes = _db.SchoolClasses
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Name,
+                    Text = c.Name
+                })
+                .OrderBy(o => o.Text);
         }
     }
 }

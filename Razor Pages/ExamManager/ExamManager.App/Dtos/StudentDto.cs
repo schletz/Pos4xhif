@@ -15,8 +15,9 @@ namespace ExamManager.App.Dtos
         [StringLength (255, MinimumLength = 2, ErrorMessage ="Invalid Lastname")]
         string Lastname,
         string Firstname,
-
+        [DataType(DataType.Date)]
         DateTime DateOfBirth,
+        [EmailAddress]
         string? Email,
         Address Home,
         Address? Parents,
