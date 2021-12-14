@@ -1,0 +1,55 @@
+﻿@page "{guid}"
+@model ExamManager.Webapp.Pages.Students.EditModel
+
+<form method="post">
+    <label>
+        Account:
+        <input class="form-control" asp-for="Student.Account" />
+        <span class="error" asp-validation-for="Student.Account"></span>
+    </label>
+    <label>
+        Lastname:
+        <input class="form-control" asp-for="Student.Lastname" />
+        <span class="error" asp-validation-for="Student.Lastname"></span>
+    </label>
+    <label>
+        Firstname:
+        <input class="form-control" asp-for="Student.Firstname" />
+        <span class="error" asp-validation-for="Student.Firstname"></span>
+    </label>
+    <label>
+        Date of birth:
+        <input type="date" class="form-control" asp-for="Student.DateOfBirth" />
+        <span class="error" asp-validation-for="Student.DateOfBirth"></span>
+    </label>
+    <label>
+        Email (optional):
+        <input class="form-control" asp-for="Student.Email" />
+        <span class="error" asp-validation-for="Student.Email"></span>
+    </label>
+    <label>
+        School class:
+        <select class="form-select" asp-for="Student.SchoolClassName" asp-items="Model.Classes">
+
+        </select>
+        <span class="error" asp-validation-for="Student.SchoolClassName"></span>
+    </label>
+    <label>
+        Street:
+        <input class="form-control" asp-for="Student.Home.Street" />
+        <span class="error" asp-validation-for="Student.Home.Street"></span>
+    </label>
+    <label>
+        ZIP:
+        <input class="form-control" asp-for="Student.Home.Zip" />
+        <span class="error" asp-validation-for="Student.Home.Zip"></span>
+    </label>
+    <label>
+        City:
+        <input class="form-control" asp-for="Student.Home.City" />
+    </label>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+
+<div class="text-danger" asp-validation-summary="All"></div>

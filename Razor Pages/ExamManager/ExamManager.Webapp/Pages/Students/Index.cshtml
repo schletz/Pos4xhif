@@ -31,8 +31,9 @@
                 <td>@s.Firstname</td>
                 <td>@s.DateOfBirth</td>
                 <td>
-                    <a asp-page="/Exams/StudentExams"
-                   asp-route-studentGuid="@s.Guid">Exams</a>
+                    <a asp-page="/Exams/StudentExams" asp-route-studentGuid="@s.Guid">Exams</a>
+                    <a asp-page="/Students/Edit" asp-route-guid="@s.Guid">Edit</a>
+                    <a asp-page="/Students/Delete" asp-route-guid="@s.Guid">Delete</a>
                 </td>
             </tr>
         }

@@ -13,7 +13,8 @@ namespace ExamManager.App.Mappings
     {
         public DtoMappings()
         {
-            CreateMap<StudentDto, Student>();
+            CreateMap<StudentDto, Student>();  // StudentDto --> Student
+            CreateMap<Student, StudentDto>();  // Student --> StudentDto
         }
 
     }

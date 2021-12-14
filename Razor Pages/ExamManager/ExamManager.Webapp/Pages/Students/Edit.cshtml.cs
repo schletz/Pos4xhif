@@ -5,32 +5,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ExamManager.Webapp.Pages.Students
 {
-    public class AddModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly ExamContext _db;
         private readonly IMapper _mapper;
-        public AddModel(ExamContext db, IMapper mapper)
+
+        public string? Message { get; set; }
+        [BindProperty]
+        public StudentDto Student { get; set; } = default!;
+        public IEnumerable<SelectListItem> Classes { get; private set; } = Enumerable.Empty<SelectListItem>();
+
+        public EditModel(ExamContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
         }
 
-        [BindProperty]
-        public StudentDto Student { get; set; } = default!;
-
-        public IEnumerable<SelectListItem> Classes { get; private set; } = Enumerable.Empty<SelectListItem>();
-
-        public void OnGet()
+        public IActionResult OnGet(Guid guid)
         {
-
+            var student = _db.Students.FirstOrDefault(s => s.Guid == guid);
+            if (student is null)
+            {
+                Message = "Student not found.";
+                return Page();
+            }
+            Student = _mapper.Map<StudentDto>(student);
+            return Page();
         }
-        // HANDLER for POST requests
-        public IActionResult OnPost()
+
+        public IActionResult OnPost(Guid guid)
         {
             if (!ModelState.IsValid)
             {
@@ -43,9 +52,20 @@ namespace ExamManager.Webapp.Pages.Students
                 ModelState.AddModelError(nameof(StudentDto.SchoolClassName), "Class not knwon.");
                 return Page();
             }
-            var student = _mapper.Map<Student>(Student);
-
-            _db.Students.Add(student);
+            var studentDb = _db.Students.FirstOrDefault(s => s.Guid == guid);
+            if (studentDb is null)
+            {
+                Message = "Student not found";
+                return Page();
+            }
+            studentDb.Account = Student.Account;
+            studentDb.DateOfBirth = Student.DateOfBirth;
+            studentDb.Email = Student.Email;
+            studentDb.Lastname = studentDb.Lastname;
+            studentDb.Firstname = studentDb.Firstname;
+            studentDb.Home = studentDb.Home;
+            studentDb.Parents = studentDb.Parents;
+            studentDb.SchoolClass = schoolClass;
             _db.SaveChanges();
 
             // REDIRECT AFTER POST
@@ -63,5 +83,6 @@ namespace ExamManager.Webapp.Pages.Students
                 })
                 .OrderBy(o => o.Text);
         }
+
     }
 }
