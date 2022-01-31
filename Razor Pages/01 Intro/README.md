@@ -25,6 +25,7 @@ dotnet new webapp
 dotnet add reference ..\StoreManager.Application
 cd ..
 dotnet new sln
+dotnet sln add StoreManager.Webapp
 dotnet sln add StoreManager.Application
 dotnet sln add StoreManager.Test
 start StoreManager.sln
