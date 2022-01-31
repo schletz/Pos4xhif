@@ -1,7 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CodeFirstDemo.Application.Model
+namespace StoreManager.Application.Model
 {
     [Table("Product")]
     public class Product
@@ -25,6 +30,6 @@ namespace CodeFirstDemo.Application.Model
         public int ProductCategoryId { get; set; }            // Value of the FK
         public ProductCategory ProductCategory { get; set; }  // Navigation property
         // Navigation to the offers of the product. Read-only (get) because this is not a mapped property for the database.
-        public ICollection<Offer> Offers { get; } = new List<Offer>(); 
+        public ICollection<Offer> Offers { get; } = new List<Offer>();
     }
 }

@@ -1,6 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CodeFirstDemo.Application.Model
+namespace StoreManager.Application.Model
 {
     [Table("Offer")]       // EF Core Annotation for a specific table name.
     public class Offer

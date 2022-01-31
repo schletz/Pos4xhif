@@ -1,13 +1,13 @@
-using CodeFirstDemo.Application.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StoreManager.Application.Infrastructure;
 
+// Erstellen und seeden der Datenbank
 var opt = new DbContextOptionsBuilder()
-    .UseSqlite("Data Source=Stores.db")
+    .UseSqlite("Data Source=stores.db")  // Keep connection open (only needed with SQLite in memory db)
     .Options;
-
 using (var db = new StoreContext(opt))
 {
     db.Database.EnsureDeleted();
@@ -19,13 +19,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
-    opt.UseSqlite("Data Source=Stores.db");
+    opt.UseSqlite("Data Source=stores.db");
 });
 builder.Services.AddRazorPages();
 
-var app = builder.Build();
-
 // MIDDLEWARE
+var app = builder.Build();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.MapRazorPages();
 app.Run();

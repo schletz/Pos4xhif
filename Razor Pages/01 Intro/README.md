@@ -1,5 +1,18 @@
 # Razor Pages Intro
 
+## Inhalt
+
+- Anlegen einer Solution mit Application, Test und Webapp Projekt
+- Erstellen und Seeden eines EF Core Models
+- Erstellen der ersten Razor Page
+
+Das Video ist auf https://youtu.be/OzDa0B9BonI verfügbar (63min). Der Programmcode ist im
+Ordner [StoreManager](StoreManager) zu finden.
+
+Voraussetzung ist der sichere Umgang mit EF Core und dem Code First Ansatz. Dieser wird auf
+https://github.com/schletz/Pos3xhif/tree/master/03%20EF%20Core
+beschrieben.
+
 ## Anlegen des Projektes
 
 ```

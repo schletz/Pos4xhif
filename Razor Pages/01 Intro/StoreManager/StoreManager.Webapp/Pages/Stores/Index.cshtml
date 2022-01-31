@@ -1,0 +1,25 @@
+﻿@page
+@model StoreManager.Webapp.Pages.Stores.IndexModel
+
+<h3>Stores in der Datenbank</h3>
+<p>@Model.Stores.Count Stores gefunden. Erstellt um @DateTime.Now.ToString("HH:mm").</p>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>CloseDate</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var s in Model.Stores)
+        {
+            <tr>
+                <td>@s.Name</td>
+                <td>@(s.CloseDate?.ToString("dd.MM.yyyy") ?? "---")</td>
+                <td>@s.Url</td>
+            </tr>
+        }
+    </tbody>
+</table>

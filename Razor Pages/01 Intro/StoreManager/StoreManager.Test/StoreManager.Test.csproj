@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CodeFirstDemo.Application\CodeFirstDemo.Application.csproj" />
+    <ProjectReference Include="..\StoreManager.Application\StoreManager.Application.csproj" />
   </ItemGroup>
 
 </Project>
