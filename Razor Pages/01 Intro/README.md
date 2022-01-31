@@ -31,3 +31,11 @@ dotnet sln add StoreManager.Test
 start StoreManager.sln
 
 ```
+
+## Klassenmodell
+
+![](klassendiagramm.svg)
+
+<sup>
+https://www.plantuml.com/plantuml/uml/ZP3FQeSm3CVlVOhUn-y5F4p1UHYCRR3v0A6DMkWVQUD1njvzBR5Z4s7pelaaVFADNIA8j3ah5gDHebjfbmvf2Je9PI4b-KOXelmGCZztZresqdZYwXaSvZfHD7vcrDkGy06eyF9wDmvRRetHVW-tubCS_fTfmdZjVur1Rueougy3SwA6azL9emhIg8m3o_094esh_XscBEQLuNQxPyTFK3TnkbhsG3Y7kF_pFp0Q_CMzrLXD0_W_LES8pJbKTX-4JpYtE_HwS_OB
+</sup>
