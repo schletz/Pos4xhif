@@ -1,0 +1,24 @@
+﻿@page
+@model CodeFirstDemo.Webapp.Pages.Stores.IndexModel
+@{
+}
+<h3>Liste aller Stores</h3>
+<p>Generiert um  @Model.Time Uhr.</p>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Stores)
+        {
+            <tr>
+                <td>@s.Id</td>
+                <td>@s.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
