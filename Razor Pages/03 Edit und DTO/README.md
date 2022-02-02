@@ -4,6 +4,7 @@
 
 - Formulare mit dem asp-for Tag Helper
 - Model Binding
+- Validation
 - Redirect after POST
 - DTO Klassen
 - AutoMapper
