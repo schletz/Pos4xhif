@@ -42,6 +42,7 @@ namespace StoreManager.Webapp.Pages.Stores
             {
                 return RedirectToPage();
             }
+            // Braucht ein Mapping in Dto/MappingProfile.cs
             _mapper.Map(Offers[offerGuid], offer);
             offer.LastUpdate = DateTime.UtcNow;
             _db.Entry(offer).State = EntityState.Modified;
@@ -50,6 +51,7 @@ namespace StoreManager.Webapp.Pages.Stores
         }
         public IActionResult OnGet(Guid guid)
         {
+            // Braucht ein Mapping in Dto/MappingProfile.cs        
             Offers = _mapper.Map<IEnumerable<OfferDto>>(Store.Offers)
                 .ToDictionary(o => o.Guid, o => (OfferDtoBase)o);
             return Page();
