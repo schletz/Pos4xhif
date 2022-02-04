@@ -1,0 +1,40 @@
+﻿@page
+@model StoreManager.Webapp.Pages.Stores.IndexModel
+@section head
+{
+    <style>
+        .closed {
+            background-color:lightgray;
+        }
+    </style>
+}
+<h3>Stores in der Datenbank</h3>
+<p>@Model.Stores.Count Stores gefunden. Erstellt um @DateTime.Now.ToString("HH:mm").</p>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Offers</th>
+            <th>CloseDate</th>
+            <th>URL</th>
+            <th>Aktionen</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var s in Model.Stores)
+        {
+            var cssClass = s.CloseDate.HasValue ? "closed" : "";
+            <tr class="@cssClass">
+                <td>@s.Name</td>
+                <td>@s.OffersCount</td>
+                <td>@(s.CloseDate?.ToString("dd.MM.yyyy") ?? "---")</td>
+                <td>@s.Url</td>
+                <td>
+                    <a asp-page="/Stores/Details" asp-route-guid="@s.Guid">Details</a>
+                    <a asp-page="/Stores/Edit" asp-route-guid="@s.Guid">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
