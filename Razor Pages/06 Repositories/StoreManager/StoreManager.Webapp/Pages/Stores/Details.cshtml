@@ -46,7 +46,7 @@
                     <td>@o.ProductEan</td>
                     <td>@o.Product.Name</td>
                     <td>
-                        <input type="hidden" asp-for="EditOffers[o.Guid].Guid" />
+                        <input type="hidden" asp-for="EditOffers[o.Guid].Guid"/>
                         <input class="form-control" asp-for="EditOffers[o.Guid].Price" />
                         <small>
                             <span class="text-danger" asp-validation-for="EditOffers[o.Guid].Price"></span>
