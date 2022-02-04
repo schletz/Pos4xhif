@@ -18,6 +18,8 @@ namespace StoreManager.Webapp.Pages.Stores
             _stores = stores;
         }
 
+        [TempData]
+        public string? Message { get; set; }
         public IReadOnlyList<StoreRepository.StoreWithOffersCount> Stores { get; private set; } = new List<StoreRepository.StoreWithOffersCount>();
 
         public void OnGet()

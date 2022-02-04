@@ -37,6 +37,7 @@ namespace StoreManager.Webapp.Pages.Stores
         public Store Store { get; private set; } = default!;
         public IReadOnlyList<Offer> Offers { get; private set; } = new List<Offer>();
         public Dictionary<Guid, OfferDto> EditOffers { get; set; } = new();
+        public Dictionary<Guid, bool> OffersToDelete { get; set; } = new();
         public IEnumerable<SelectListItem> ProductSelectList =>
             _products.Set.OrderBy(p => p.Name).Select(p => new SelectListItem(p.Name, p.Guid.ToString()));
 
@@ -68,6 +69,22 @@ namespace StoreManager.Webapp.Pages.Stores
             }
             return RedirectToPage();
         }
+
+        public IActionResult OnPostDelete(Guid guid, Dictionary<Guid, bool> offersToDelete)
+        {
+            var offersDb = _offers.Set.Where(o => o.Store.Guid == guid).ToDictionary(o => o.Guid, o => o);
+            var offerGuids = offersToDelete.Where(o => o.Value == true).Select(o => o.Key);
+
+            foreach (var o in offerGuids)
+            {
+                if (!offersDb.TryGetValue(o, out var offer))
+                {
+                    continue;
+                }
+                _offers.Delete(offer);
+            }
+            return RedirectToPage();
+        }
         public IActionResult OnGet(Guid guid)
         {
             return Page();
@@ -93,6 +110,7 @@ namespace StoreManager.Webapp.Pages.Stores
             }
             Store = store;
             Offers = store.Offers.ToList();
+            OffersToDelete = Offers.ToDictionary(o => o.Guid, o => false);
             EditOffers = _offers.Set.Where(o => o.Store.Guid == Guid)
                 .ProjectTo<OfferDto>(_mapper.ConfigurationProvider)
                 .ToDictionary(o => o.Guid, o => o);
