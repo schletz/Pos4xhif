@@ -24,7 +24,7 @@ namespace StoreManager.Application.Infrastructure.Repositories
 
         public override (bool success, string message) Delete(Store store)
         {
-            if (!store.CloseDate.HasValue) { return (false, $"Der Store ist {store.Name} nicht geschlossen."); }
+            if (!store.CloseDate.HasValue) { return (false, $"Der Store {store.Name} ist nicht geschlossen."); }
             return base.Delete(store);
         }
     }
