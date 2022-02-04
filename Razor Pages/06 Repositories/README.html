@@ -56,6 +56,68 @@ Ordner <a href="StoreManager">StoreManager</a> zu finden.</p>
 <sup>
 Quelle: <a href="https://codewithmukesh.com/blog/repository-pattern-in-aspnet-core/">https://codewithmukesh.com/blog/repository-pattern-in-aspnet-core/</a>
 </sup></p>
+<p><strong>StoreManager.Application/Infrastructure/Repositories/Repository.cs</strong></p>
+<pre><code class="language-c#"><div><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Basisklasse für alle Repositories.</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Repository</span>&lt;<span class="hljs-title">Tentity</span>, <span class="hljs-title">Tkey</span>&gt; <span class="hljs-keyword">where</span> <span class="hljs-title">Tentity</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IEntity</span>&lt;<span class="hljs-title">Tkey</span>&gt; <span class="hljs-keyword">where</span> <span class="hljs-title">Tkey</span> : <span class="hljs-title">struct</span>
+{
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">readonly</span> StoreContext _db;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">IQueryable</span>&lt;<span class="hljs-title">Tentity</span>&gt; Set</span> =&gt; _db.Set&lt;Tentity&gt;();
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Repository</span>(<span class="hljs-params">StoreContext db</span>)</span>
+    {
+        _db = db;
+    }
+
+    <span class="hljs-keyword">public</span> Tentity? FindById(Tkey id) =&gt; _db.Set&lt;Tentity&gt;().FirstOrDefault(e =&gt; e.Id.Equals(id));
+    <span class="hljs-keyword">public</span> Tentity? FindByGuid(Guid guid) =&gt; _db.Set&lt;Tentity&gt;().FirstOrDefault(e =&gt; e.Guid == guid);
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">virtual</span> (<span class="hljs-params"><span class="hljs-keyword">bool</span> success, <span class="hljs-keyword">string</span> message</span>) <span class="hljs-title">Insert</span>(<span class="hljs-params">Tentity entity</span>)</span>
+    {
+        _db.Entry(entity).State = EntityState.Added;
+        <span class="hljs-keyword">try</span>
+        {
+            _db.SaveChanges();
+        }
+        <span class="hljs-keyword">catch</span> (DbUpdateException ex)
+        {
+            <span class="hljs-keyword">return</span> (<span class="hljs-literal">false</span>, ex.InnerException?.Message ?? ex.Message);
+        }
+        <span class="hljs-keyword">return</span> (<span class="hljs-literal">true</span>, <span class="hljs-keyword">string</span>.Empty);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">virtual</span> (<span class="hljs-params"><span class="hljs-keyword">bool</span> success, <span class="hljs-keyword">string</span> message</span>) <span class="hljs-title">Update</span>(<span class="hljs-params">Tentity entity</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!HasPrimaryKey(entity)) { <span class="hljs-keyword">return</span> (<span class="hljs-literal">false</span>, <span class="hljs-string">&quot;Missing primary key.&quot;</span>); }
+
+        _db.Entry(entity).State = EntityState.Modified;
+        <span class="hljs-keyword">try</span>
+        {
+            _db.SaveChanges();
+        }
+        <span class="hljs-keyword">catch</span> (DbUpdateException ex)
+        {
+            <span class="hljs-keyword">return</span> (<span class="hljs-literal">false</span>, ex.InnerException?.Message ?? ex.Message);
+        }
+        <span class="hljs-keyword">return</span> (<span class="hljs-literal">true</span>, <span class="hljs-keyword">string</span>.Empty);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">virtual</span> (<span class="hljs-params"><span class="hljs-keyword">bool</span> success, <span class="hljs-keyword">string</span> message</span>) <span class="hljs-title">Delete</span>(<span class="hljs-params">Tentity entity</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!HasPrimaryKey(entity)) { <span class="hljs-keyword">return</span> (<span class="hljs-literal">false</span>, <span class="hljs-string">&quot;Missing primary key.&quot;</span>); }
+
+        _db.Entry(entity).State = EntityState.Deleted;
+        <span class="hljs-keyword">try</span>
+        {
+            _db.SaveChanges();
+        }
+        <span class="hljs-keyword">catch</span> (DbUpdateException ex)
+        {
+            <span class="hljs-keyword">return</span> (<span class="hljs-literal">false</span>, ex.Message);
+        }
+        <span class="hljs-keyword">return</span> (<span class="hljs-literal">true</span>, <span class="hljs-keyword">string</span>.Empty);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">HasPrimaryKey</span>(<span class="hljs-params">Tentity entity</span>)</span> =&gt; !entity.Id.Equals(<span class="hljs-keyword">default</span>);
+}
+</div></code></pre>
 
     </body>
     </html>
