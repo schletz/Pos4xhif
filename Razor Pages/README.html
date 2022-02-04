@@ -46,23 +46,25 @@
 <p>Mit <a href="http://ASP.NET">ASP.NET</a> Core kannst du serverseitig gerenderte Webapps auf 2 Arten erstellen:</p>
 <h3 id="mvc-model-view-controller-dotnet-new-mvc">MVC (Model View Controller): dotnet new mvc</h3>
 <p>MVC Projekte haben 3 Ordner:</p>
-<p>Webapp
-|
-+--- Controllers
-+--- ViewModels
-+--- Views</p>
+<pre><code><code><div>Webapp
+  |
+  +--- Controllers
+  +--- ViewModels
+  +--- Views
+</div></code></code></pre>
 <p>Der Controller ist der Endpunkt für das Routing. Mit <em>return View(viewmodel)</em> liefert er eine
 Razor View an den Client aus, die das gerenderte HTML enthält.</p>
 <h3 id="mvvm-model---view---viewmodel-mit-razor-pages-dotnet-new-webapp">MVVM (Model - View - Viewmodel) mit Razor Pages: dotnet new webapp</h3>
 <p>Die Razor Pages Applikation besteht aus einer Razor View (die cshtml Datei) und einem entsprechenden
 Viewmodel (cshtml.cs Datei). Das Viewmodel behandelt die Requests selbst, es ist also Controller und
 (klassisches) Viewmodel in einem. Dadurch sind nur 2 Dateien notwendig:</p>
-<p>Webapp
-|
-+--- Pages
-|
-+---- Index.cshtml
-+---- Index.cshtml.cs</p>
+<pre><code><code><div>Webapp
+  |
+  +--- Pages
+         |
+         +---- Index.cshtml
+         +---- Index.cshtml.cs
+</div></code></code></pre>
 <h2 id="inhalt">Inhalt</h2>
 <p><a href="01%20Intro/README.html">Razor Pages 1 - Intro</a>
 <a href="02%20Details%20Page/README.html">Razor Pages 2 - Details Page</a>

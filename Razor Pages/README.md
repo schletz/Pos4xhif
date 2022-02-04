@@ -8,11 +8,13 @@ Mit ASP.NET Core kannst du serverseitig gerenderte Webapps auf 2 Arten erstellen
 
 MVC Projekte haben 3 Ordner:
 
+```
 Webapp
   |
   +--- Controllers
   +--- ViewModels
   +--- Views
+```
 
 Der Controller ist der Endpunkt für das Routing. Mit *return View(viewmodel)* liefert er eine
 Razor View an den Client aus, die das gerenderte HTML enthält.
@@ -23,12 +25,14 @@ Die Razor Pages Applikation besteht aus einer Razor View (die cshtml Datei) und 
 Viewmodel (cshtml.cs Datei). Das Viewmodel behandelt die Requests selbst, es ist also Controller und
 (klassisches) Viewmodel in einem. Dadurch sind nur 2 Dateien notwendig:
 
+```
 Webapp
   |
   +--- Pages
          |
          +---- Index.cshtml
          +---- Index.cshtml.cs
+```
 
 ## Inhalt
 
