@@ -1,5 +1,14 @@
 # Serverseitiges HTML mit ASP.NET Core Razor Pages
 
+## Inhalt
+
+- [Razor Pages 1 - Intro](01%20Intro/README.md)
+- [Razor Pages 2 - Details Page](02%20Details%20Page/README.md)
+- [Razor Pages 3 - Edit](03%20Edit%20und%20DTO/README.md)
+- [Razor Pages 4 - Add](04%20Add/README.md)
+- [Razor Pages 5 - Bulk Edit](05%20Bulk%20Edit/README.md)
+- [Razor Pages 6 - Repository Pattern](06%20Repositories/README.md)
+
 ## 2 Strukturen - 1 Ziel
 
 Mit ASP.NET Core kannst du serverseitig gerenderte Webapps auf 2 Arten erstellen:
@@ -34,11 +43,3 @@ Webapp
          +---- Index.cshtml.cs
 ```
 
-## Inhalt
-
-- [Razor Pages 1 - Intro](01%20Intro/README.md)
-- [Razor Pages 2 - Details Page](02%20Details%20Page/README.md)
-- [Razor Pages 3 - Edit](03%20Edit%20und%20DTO/README.md)
-- [Razor Pages 4 - Add](04%20Add/README.md)
-- [Razor Pages 5 - Bulk Edit](05%20Bulk%20Edit/README.md)
-- [Razor Pages 6 - Repository Pattern](06%20Repositories/README.md)
