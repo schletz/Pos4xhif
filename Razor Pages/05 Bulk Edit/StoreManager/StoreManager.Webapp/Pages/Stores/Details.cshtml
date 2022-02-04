@@ -1,0 +1,70 @@
+﻿@page "{guid}"
+@model StoreManager.Webapp.Pages.Stores.DetailsModel
+
+<h3>Details zum Store @Model.Store.Name</h3>
+
+<h4>Neues Offer</h4>
+
+<form method="post" asp-page-handler="NewOffer">
+    <div class="row">
+        <div class="col-6">
+            <label asp-for="NewOffer.ProductGuid">Produkt</label>
+            <select class="form-select"
+                    asp-items="@Model.ProductSelectList"
+                    asp-for="NewOffer.ProductGuid"></select>
+        </div>
+        <div class="col-6">
+            <label asp-for="NewOffer.Price">Preis</label>
+            <input class="form-control" asp-for="NewOffer.Price" />
+            <small>
+                <span class="text-danger" asp-validation-for="NewOffer.Price"></span>
+            </small>
+        </div>
+    </div>
+    <div class="text-danger" asp-validation-summary=ModelOnly></div>
+    <button class="mt-2 btn btn-primary">Speichern</button>
+</form>
+
+
+<h4>Liste aller Angebote</h4>
+<form method="post" asp-page-handler="EditOffer">
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>EAN</th>
+                <th>Produkt</th>
+                <th>Preis</th>
+                <th>Sold out</th>
+                <th>Last Update</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model.Offers.OrderBy(o => o.Product.Name))
+            {
+                <tr>
+                    <td>@o.ProductEan</td>
+                    <td>@o.Product.Name</td>
+                    <td>
+                        <input class="form-control" asp-for="EditOffers[o.Guid].Price" />
+                        <small>
+                            <span class="text-danger" asp-validation-for="EditOffers[o.Guid].Price"></span>
+                        </small>
+                    </td>
+                    <td>
+                        <input asp-for="EditOffers[o.Guid].SoldOut" />
+                    </td>
+                    <td>@o.LastUpdate.ToString("dd.MM.yyyy")</td>
+                    <td>
+                        <button class="btn btn-primary"
+                            type="submit"
+                            asp-page-handler="EditOffer"
+                            asp-route-offerGuid="@o.Guid">
+                            Save
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
