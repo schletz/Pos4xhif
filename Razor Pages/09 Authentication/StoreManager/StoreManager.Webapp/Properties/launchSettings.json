@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "StoreManager.Webapp": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7111;http://localhost:5103",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
