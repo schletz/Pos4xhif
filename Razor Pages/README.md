@@ -9,6 +9,7 @@
 - [Razor Pages 5 - Bulk Edit](05%20Bulk%20Edit/README.md)
 - [Razor Pages 6 - Repository Pattern](06%20Repositories/README.md)
 - [Razor Pages 7 - Delete Page](07%20Delete/README.md)
+- [Razor Pages 8 - Import von Text- und Exceldateien](08%20Import/README.md)
 
 Zur [YouTube Playlist](https://www.youtube.com/playlist?list=PLXaz8R749y5ks72kDo5n3nDm5PkA8fUvJ)
 
