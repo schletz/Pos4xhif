@@ -1,0 +1,6 @@
+EAN	Produkt	Kategorie	UVP	LieferbarAb
+117105a	Soup - Campbells, Chix Gumbo	Electrical and Fire Alarm		31.01.2022
+125634		Epoxy Flooring	362.58	
+137586	Daves Island Stinger	Landscaping & Irrigation	AB	
+144118	Chilli Paste, Hot Sambal Oelek	Epoxy Flooring		CD
+113124	Schönes Produkt	Epoxy Flooring		

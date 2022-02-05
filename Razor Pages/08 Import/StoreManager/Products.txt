@@ -1,0 +1,101 @@
+EAN	Produkt	Kategorie	UVP	LieferbarAb
+113124	Schönes Produkt	Epoxy Flooring		16.03.2022
+117105	Soup - Campbells, Chix Gumbo	Electrical and Fire Alarm		31.01.2022
+125634	Coffee Guatemala Dark	Epoxy Flooring	362.58	
+137586	Daves Island Stinger	Landscaping & Irrigation	681.52	
+144118	Chilli Paste, Hot Sambal Oelek	Epoxy Flooring		
+168465	Pork Salted Bellies	Epoxy Flooring	452.94	
+169951	Soap - Mr.clean Floor Soap	Epoxy Flooring	336.41	
+174951	Radish - Black, Winter, Organic	Casework	211.06	
+199389	Bagel - Whole White Sesame	Drywall & Acoustical (FED)		
+212060	Cheese - St. Paulin	Casework	719.38	
+222397	Steam Pan Full Lid	Overhead Doors	742.71	
+223315	Pastry - Trippleberry Muffin - Mini	Electrical and Fire Alarm		08.09.2022
+235385	Lemonade - Strawberry, 591 Ml	Overhead Doors		08.09.2022
+237103	Garlic	Electrical and Fire Alarm	357.65	
+255154	Garbage Bag - Clear	RF Shielding	818.61	
+282989	Chef Hat 25cm	Wall Protection		
+286166	Duck - Legs	RF Shielding		
+287026	Worcestershire Sauce	Casework		04.09.2022
+289154	Figs	Retaining Wall and Brick Pavers		09.10.2022
+309083	Truffle Cups Green	Overhead Doors	381.62	
+311657	Longos - Lasagna Beef	Landscaping & Irrigation	105.95	
+318611	Squid U5 - Thailand	Electrical and Fire Alarm	98.97	20.10.2022
+349170	Apple - Custard	RF Shielding	941.61	
+361151	Pasta - Canelloni, Single Serve	RF Shielding	124.69	29.07.2022
+365644	Jello - Assorted	Casework	394.54	
+366521	Wine - Remy Pannier Rose	Masonry & Precast	187.13	
+374933	Pie Shell - 9	Epoxy Flooring	253.81	
+376392	Salmon Steak - Cohoe 8 Oz	Overhead Doors		
+376517	Sansho Powder	Drywall & Acoustical (FED)	844.6	
+381362	Soup - Tomato Mush. Florentine	Landscaping & Irrigation	539.67	
+385745	Juice - Cranberry 284ml	Casework		11.10.2022
+389109	Magnotta - Bel Paese White	Electrical and Fire Alarm	541.4	
+389257	Pickles - Gherkins	Epoxy Flooring		
+395445	Table Cloth 62x120 White	Wall Protection		27.09.2022
+403796	Pepper - Black, Whole	Drywall & Acoustical (FED)	384.73	
+411942	Longos - Chicken Curried	Landscaping & Irrigation	934.59	
+703797	Foam Cup 6 Oz	Landscaping & Irrigation	278.98	11.03.2022
+421460	Pastry - Butterscotch Baked	Landscaping & Irrigation	36.5	
+426423	Compound - Rum	Retaining Wall and Brick Pavers	96.01	
+447890	Orange Roughy 4/6 Oz	Casework	593.94	
+448395	Yoplait - Strawbrasp Peac	Casework	820.48	
+457598	Pickerel - Fillets	Masonry & Precast		26.04.2022
+460282	Bread - Dark Rye	Wall Protection	60.8	
+462491	Syrup - Monin - Blue Curacao	Overhead Doors		23.01.2022
+464021	Carbonated Water - Raspberry	Epoxy Flooring	747.74	
+464042	Ice Cream Bar - Oreo Sandwich	RF Shielding	235.51	
+468671	Taro Root	Landscaping & Irrigation	517.92	08.10.2022
+476192	Wine - Magnotta - Cab Franc	Wall Protection		
+477690	Flour Pastry Super Fine	Wall Protection	912.29	
+478020	Nestea - Ice Tea, Diet	Casework		13.09.2022
+484133	Beans - Kidney White	Wall Protection		06.08.2022
+536277	Mushroom - Shitake, Fresh	Casework	159.55	12.06.2022
+537007	Jam - Raspberry	Masonry & Precast	236.16	04.09.2022
+539417	Coke - Diet, 355 Ml	RF Shielding		
+563312	Squash - Guords	Retaining Wall and Brick Pavers	412.78	30.07.2022
+574152	Towel Multifold	Wall Protection	320.05	31.03.2022
+576631	Muffin Mix - Raisin Bran	Drywall & Acoustical (FED)	41.93	
+592042	Nectarines	Masonry & Precast	36.82	
+608226	Godiva White Chocolate	Wall Protection	83.96	
+612286	Shrimp - Baby, Warm Water	RF Shielding	968.74	
+613886	Glove - Cutting	Masonry & Precast	391.91	
+624306	Lamb - Whole, Fresh	Landscaping & Irrigation		09.04.2022
+627341	Latex Rubber Gloves Size 9	Masonry & Precast	752.46	
+629339	Cheese - Feta	Casework	85.22	
+631452	Water - Tonic	Drywall & Acoustical (FED)	651.05	
+641601	Cleaner - Pine Sol	Retaining Wall and Brick Pavers	298.86	
+654164	Fork - Plastic	Retaining Wall and Brick Pavers		
+660172	Bread Cranberry Foccacia	RF Shielding	165.53	
+676531	Shiratamako - Rice Flour	Casework		26.10.2022
+680278	Butter Sweet	Masonry & Precast		21.03.2022
+689292	Tomatoes - Diced, Canned	Masonry & Precast		
+703392	Burger Veggie	Wall Protection	538.94	
+710696	Wine - Hardys Bankside Shiraz	Masonry & Precast		14.01.2022
+714872	C - Plus, Orange	Masonry & Precast		05.05.2022
+715982	Rum - Cream, Amarula	Electrical and Fire Alarm		
+742376	Wine - George Duboeuf Rose	Wall Protection	602.03	02.06.2022
+743756	Cookies - Englishbay Wht	Casework	89.97	
+783883	Beer - Guiness	Landscaping & Irrigation		14.10.2022
+785949	Wine - George Duboeuf Rose	Masonry & Precast		10.02.2022
+796486	Nantucket Apple Juice	Masonry & Precast	881.61	
+864382	Spinach - Packaged	Masonry & Precast	862.61	
+867631	Shrimp - Baby, Warm Water	Retaining Wall and Brick Pavers		07.02.2022
+875324	Vermacelli - Sprinkles, Assorted	Epoxy Flooring	375.93	
+876571	Bread - Bistro Sour	Casework		23.05.2022
+883267	Lamb - Leg, Diced	Masonry & Precast	923.8	
+886331	Bread - White, Unsliced	Landscaping & Irrigation		31.03.2022
+889794	Syrup - Kahlua Chocolate	Epoxy Flooring	822.6	
+903255	Potatoes - Parissienne	Epoxy Flooring		28.10.2022
+911201	Oyster - In Shell	Overhead Doors		20.08.2022
+916876	Garlic - Elephant	Casework	788.64	
+924002	Ecolab - Hand Soap Form Antibac	Wall Protection	322.57	03.09.2022
+932100	Flounder - Fresh	Electrical and Fire Alarm	319.48	
+943822	Pasta - Orecchiette	Masonry & Precast	416.2	22.02.2022
+948240	Yeast Dry - Fermipan	Landscaping & Irrigation	994.34	
+960456	Ham - Cooked Bayonne Tinned	RF Shielding		19.10.2022
+964698	Muffin Batt - Carrot Spice	Casework	168.88	
+977243	Bread - Rye	Drywall & Acoustical (FED)	806.43	
+985744	Rum - Spiced, Captain Morgan	Electrical and Fire Alarm		
+986787	Mop Head - Cotton, 24 Oz	Masonry & Precast	687.6	
+987460	Rice Pilaf, Dry,package	Overhead Doors	822.68	

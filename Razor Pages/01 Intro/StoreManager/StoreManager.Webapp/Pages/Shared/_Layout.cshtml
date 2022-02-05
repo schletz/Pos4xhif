@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Store Manager</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome5/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/StoreManager.Webapp.styles.css" asp-append-version="true" />
+    <script src="~/lib/fontawesome5/all.min.js"></script>
+    @RenderSection("head", false)
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Store Manager</a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -38,7 +41,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - StoreManager.Webapp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <img src="~/schullogo.png" style="height:32px;" class="me-3" />
+            <strong class="pe-3">
+                HTL Spengergasse - Abteilung Informatik
+            </strong>
+            &copy; Michael Schletz, 2022
         </div>
     </footer>
 
