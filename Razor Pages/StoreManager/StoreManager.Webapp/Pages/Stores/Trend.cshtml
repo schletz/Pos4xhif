@@ -25,7 +25,7 @@
         <label for="stores" class="form-label">Wähle einen Store:</label>
     </div>
     <div class="d-lg-table-cell d-block ps-lg-3">
-        <select class="form-select" id="stores" onchange="vm.storeChanged(this.value)">
+        <select class="form-select" id="stores" onchange="vm.currentStoreGuid = this.value">
         </select>
     </div>
     <div class="d-lg-table-cell d-block ps-lg-3">

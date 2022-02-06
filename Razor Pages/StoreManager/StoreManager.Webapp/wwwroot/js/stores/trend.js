@@ -1,5 +1,6 @@
 ﻿HTMLSelectElement.prototype.setOptions = function (items) {
     Array.from(this.childNodes).forEach(child => this.removeChild(child));
+    this.appendChild(document.createElement("option"));
     items.map(o => {
         const opt = document.createElement("option");
         opt.value = o.value;
@@ -33,34 +34,48 @@ const view = {
 // *************************************************************************************************
 
 const vm = {
-    stores: [],
-    currentStore: {},
-    trenddata: [],
+    _stores: [],
+    _currentStoreGuid: "",
+    _offers: [],
+    _currentOfferGuid: "",
+
+    get stores() { return this._stores; },
+    set stores(value) {
+        value = value || [];
+        this._stores = value;
+        this.currentStoreGuid = "";
+        view.stores.setOptions(value.map(s => ({ value: s.guid, text: s.name })));
+    },
+    get currentStoreGuid() { return this._currentStoreGuid; },
+    set currentStoreGuid(value) {
+        value = value || "";
+        this._currentStoreGuid = value;
+        const store = this.stores.find(s => s.guid == value) || {};
+        this.offers = store.offers;
+    },
+
+    get offers() { return this._offers; },
+    set offers(value) {
+        value = value || [];
+        this._offers = value;
+        this.currentOfferGuid = "";
+        view.offers.setOptions(value.map(o => ({ value: o.guid, text: o.productName })));
+    },
+    get currentOfferGuid() { return this._currentOfferGuid; },
+    set currentOfferGuid(value) {
+        value = value || "";
+        this._currentOfferGuid = value;
+        Array.from(view.chart.childNodes).forEach(child => view.chart.removeChild(child));
+    },
+
+    get currentStore() { return this.stores.find(s => s.guid == this.currentStoreGuid) || {}; },
+    get currentOffer() { return this.currentStore.offers.find(o => o.guid == this.currentOfferGuid) || {}; },
 
     async mounted() {
         try {
             const stores = await getJson(`${window.location.href}?handler=Stores`);
             if (!stores.length) { return; }
             this.stores = stores;
-            view.stores.setOptions(stores.map(s => ({ value: s.guid, text: s.name })));
-            this.storeChanged(stores[0].guid);
-        }
-        catch (e) {
-            error.innerHTML = e;
-        }
-    },
-
-    storeChanged(storeGuid) {
-        try {
-            view.offers.clear();
-            Array.from(view.chart.childNodes).forEach(child => view.chart.removeChild(child));
-            this.currentStore = {};
-            if (!storeGuid) { return; }
-            const store = this.stores.find(s => s.guid == storeGuid);
-            if (!store || !store.offers || !store.offers.length) { return; }
-            view.offers.setOptions(store.offers.map(o => ({ value: o.guid, text: o.productName })));
-            this.currentStore = store;
-            this.offerChanged(store.offers[0].guid);
         }
         catch (e) {
             error.innerHTML = e;
@@ -69,18 +84,17 @@ const vm = {
 
     async offerChanged(offerGuid) {
         try {
+            this.currentOfferGuid = offerGuid;
             if (!offerGuid) { return; }
-            const offer = this.currentStore.offers.find(o => o.guid == offerGuid)
-            if (!offer) { return; }
-            this.trenddata = await getJson(`${window.location.href}?offerGuid=${offer.guid}&handler=Trenddata`);
-            Highcharts.chart(this.getChartOptions(offer.productName));
+            const data = await getJson(`${window.location.href}?offerGuid=${offerGuid}&handler=Trenddata`);
+            Highcharts.chart(this.getChartOptions(this.currentOffer.productName, data));
         }
         catch (e) {
             error.innerHTML = e;
         }
     },
 
-    getChartOptions(product) {
+    getChartOptions(product, data) {
         return {
             title: null,
             chart: {
@@ -99,7 +113,7 @@ const vm = {
             series: [
                 {
                     name: "Preis",
-                    data: this.trenddata
+                    data: data
                 }
             ]
         };
