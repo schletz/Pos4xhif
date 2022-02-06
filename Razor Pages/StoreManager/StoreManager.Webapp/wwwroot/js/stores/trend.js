@@ -1,4 +1,29 @@
-﻿const dom = {
+﻿HTMLSelectElement.prototype.setOptions = function (items) {
+    Array.from(this.childNodes).forEach(child => this.removeChild(child));
+    items.map(o => {
+        const opt = document.createElement("option");
+        opt.value = o.value;
+        opt.text = o.text;
+        return opt;
+    }).forEach(opt => {
+        this.appendChild(opt);
+    });
+}
+
+HTMLSelectElement.prototype.clear = function (items) {
+    Array.from(this.childNodes).forEach(child => this.removeChild(child));
+}
+
+async function getJson(url) {
+    if (!url) { return {}; }
+    const response = await fetch(url);
+    if (!response.ok) { throw "Der Server lieferte keine Daten."; }
+    return await response.json();
+}
+
+// *************************************************************************************************
+
+const view = {
     stores: document.getElementById("stores"),
     offers: document.getElementById("offers"),
     error: document.getElementById("error"),
@@ -14,21 +39,10 @@ const vm = {
 
     async mounted() {
         try {
-            const response = await fetch(`${window.location.href}?handler=Stores`);
-            if (!response.ok) { throw "Der Server lieferte keine Daten."; }
-            const stores = await response.json();
+            const stores = await getJson(`${window.location.href}?handler=Stores`);
             if (!stores.length) { return; }
             this.stores = stores;
-            stores
-                .map(s => {
-                    const opt = document.createElement("option");
-                    opt.value = s.guid;
-                    opt.text = s.name;
-                    return opt;
-                })
-                .forEach(opt => {
-                    dom.stores.appendChild(opt);
-                });
+            view.stores.setOptions(stores.map(s => ({ value: s.guid, text: s.name })));
             this.storeChanged(stores[0].guid);
         }
         catch (e) {
@@ -38,21 +52,13 @@ const vm = {
 
     storeChanged(storeGuid) {
         try {
-            Array.from(dom.offers.childNodes).forEach(child => dom.offers.removeChild(child));
-            Array.from(dom.chart.childNodes).forEach(child => dom.chart.removeChild(child));
+            view.offers.clear();
+            Array.from(view.chart.childNodes).forEach(child => view.chart.removeChild(child));
             this.currentStore = {};
             if (!storeGuid) { return; }
             const store = this.stores.find(s => s.guid == storeGuid);
-            if (!store) { return; }
-            if (!store.offers.length) { return; }
-            store.offers.map(o => {
-                const opt = document.createElement("option");
-                opt.value = o.guid;
-                opt.text = o.productName;
-                return opt;
-            }).forEach(opt => {
-                dom.offers.appendChild(opt);
-            });
+            if (!store || !store.offers || !store.offers.length) { return; }
+            view.offers.setOptions(store.offers.map(o => ({ value: o.guid, text: o.productName })));
             this.currentStore = store;
             this.offerChanged(store.offers[0].guid);
         }
@@ -66,9 +72,7 @@ const vm = {
             if (!offerGuid) { return; }
             const offer = this.currentStore.offers.find(o => o.guid == offerGuid)
             if (!offer) { return; }
-            const response = await fetch(`${window.location.href}?offerGuid=${offer.guid}&handler=Trenddata`);
-            if (!response.ok) { throw "Der Server lieferte keine Daten."; }
-            this.trenddata = await response.json();
+            this.trenddata = await getJson(`${window.location.href}?offerGuid=${offer.guid}&handler=Trenddata`);
             Highcharts.chart(this.getChartOptions(offer.productName));
         }
         catch (e) {
@@ -80,7 +84,7 @@ const vm = {
         return {
             title: null,
             chart: {
-                renderTo: dom.chart
+                renderTo: view.chart
             },
             title: {
                 text: `Preisverlauf von ${product}`
@@ -101,5 +105,7 @@ const vm = {
         };
     }
 }
+
+// *************************************************************************************************
 
 window.addEventListener("load", () => vm.mounted());
