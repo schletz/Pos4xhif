@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,16 +9,14 @@ using StoreManager.Application.Model;
 using StoreManager.Application.Services;
 using StoreManager.Webapp.Dto;
 using StoreManager.Webapp.Services;
-using System;
 
 // Erstellen und seeden der Datenbank
-using var conn = new SqliteConnection("Data Source=:memory:");
-conn.Open();
 var opt = new DbContextOptionsBuilder()
-    .UseSqlite(conn)
+    .UseSqlite("Data Source=stores.db")
     .Options;
 using (var db = new StoreContext(opt))
 {
+    db.Database.EnsureDeleted();
     db.Database.EnsureCreated();
     db.Seed(new CryptService());
 }
@@ -30,14 +27,14 @@ var builder = WebApplication.CreateBuilder(args);
 // *************************************************************************************************
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
-    opt.UseSqlite(conn)
+    opt.UseSqlite("Data Source=stores.db")
         .EnableSensitiveDataLogging(true);
 });
 
 // * Repositories **********************************************************************************
 builder.Services.AddTransient<StoreRepository>();
-builder.Services.AddTransient<PriceTrendRepository>();
 builder.Services.AddTransient<OfferRepository>();
+builder.Services.AddTransient<PriceTrendRepository>();
 builder.Services.AddTransient<UserRepository>();
 builder.Services.AddTransient<ProductRepository>();
 builder.Services.AddTransient<ProductCategoryRepository>();

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using StoreManager.Application.Extensions;
 using StoreManager.Application.Infrastructure.Repositories;
 using System;
@@ -19,6 +18,10 @@ namespace StoreManager.Webapp.Pages.Stores
             _trends = trends;
         }
 
+        /// <summary>
+        /// GET /Stores/Trend?handler=Stores
+        /// </summary>
+        /// <returns></returns>
         public IActionResult OnGetStores()
         {
             var stores = _stores.Set
@@ -38,6 +41,9 @@ namespace StoreManager.Webapp.Pages.Stores
             return new JsonResult(stores);
         }
 
+        /// <summary>
+        /// GET /Stores/Trend?offerGuid=xxxx&handler=Trenddata
+        /// </summary>
         public IActionResult OnGetTrenddata([FromQuery] Guid offerGuid)
         {
             var trenddata = _trends.Set
