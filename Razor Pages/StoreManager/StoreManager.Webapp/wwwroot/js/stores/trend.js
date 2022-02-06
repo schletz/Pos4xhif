@@ -102,5 +102,4 @@ const vm = {
     }
 }
 
-vm.mounted();
-
+window.addEventListener("load", () => vm.mounted());
