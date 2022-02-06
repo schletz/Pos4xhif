@@ -1,13 +1,17 @@
 ﻿const vm = {
     stores: [],
-    currentStore: {},
+    currentStore: null,
 
     showOffers(storeGuid) {
+        const offersList = document.getElementById("offers");
+        while (offersList.firstChild) { offersList.removeChild(offersList.firstChild); }
+        const charts = document.getElementById("chart");
+        while (charts.firstChild) { charts.removeChild(charts.firstChild); }
+
         const store = this.stores.find(s => s.guid == storeGuid);
         this.currentStore = store;
-        const offersList = document.getElementById("offers");
 
-        while (offersList.firstChild) { offersList.removeChild(offersList.firstChild); }
+        if (!store) { return; }
         offersList.appendChild(document.createElement("option"));
         for (const offer of store.offers) {
             const option = document.createElement("option");
@@ -18,12 +22,14 @@
     },
 
     async drawDiagram(offerGuid) {
+        const charts = document.getElementById("chart");
+        while (charts.firstChild) { charts.removeChild(charts.firstChild); }
+        if (!this.currentStore) { return; }
         const offer = this.currentStore.offers.find(o => o.guid == offerGuid);
+        if (!offer) { return; }
 
         const response = await fetch(`${window.location.href}?offerGuid=${offerGuid}&handler=Trenddata`);
         const data = await response.json();
-        const charts = document.getElementById("chart");
-        while (charts.firstChild) { charts.removeChild(charts.firstChild); }
         Highcharts.chart(this.getHighchartsConfig(data, offer.productName));
     },
 
