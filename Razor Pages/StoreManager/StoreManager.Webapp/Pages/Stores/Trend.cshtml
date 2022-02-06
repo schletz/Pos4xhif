@@ -1,0 +1,41 @@
+﻿@page
+@model StoreManager.Webapp.Pages.Stores.TrendModel
+
+@section Head {
+<script src="~/lib/highcharts.js"></script>
+<style>
+    #error:empty {
+        display: none;
+    }
+
+    #offers {
+        min-width: 10em;
+    }
+</style>
+}
+
+@*Wird nach der Page ausgeführt*@
+@section Scripts {
+<script src="~/js/stores/trend.js"></script>
+}
+
+<h3>Preistrends</h3>
+<div class="d-md-table-row d-block">
+    <div class="d-lg-table-cell d-block">
+        <label for="stores" class="form-label">Wähle einen Store:</label>
+    </div>
+    <div class="d-lg-table-cell d-block ps-lg-3">
+        <select class="form-select" id="stores" onchange="vm.storeChanged(this.value)">
+        </select>
+    </div>
+    <div class="d-lg-table-cell d-block ps-lg-3">
+        <label for="offers" class="form-label">Wähle ein Produkt des Stores:</label>
+    </div>
+    <div class="d-lg-table-cell d-block ps-lg-3">
+        <select class="form-select" id="offers" onchange="vm.offerChanged(this.value)"></select>
+    </div>
+</div>
+
+<div class="mt-3" id="chart">
+</div>
+<div id="error" class="p-3 border border-danger border-3"></div>
