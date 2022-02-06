@@ -1,4 +1,4 @@
-# POS im IV. Jahrgang der HTL Spengergasse
+# POS im IV. Jahrgang / 6. Semester Kolleg der HTL Spengergasse
 
 ## Wichtiges zum Start
 
