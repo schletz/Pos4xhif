@@ -1,5 +1,9 @@
 # POS im IV. Jahrgang / 6. Semester Kolleg der HTL Spengergasse
 
+## Inhalt
+
+[Razor Pages in ASP.NET Core](Razor%20Pages/../README.md)
+
 ## Wichtiges zum Start
 
 ### Installation der IDE Visual Studio 2022
