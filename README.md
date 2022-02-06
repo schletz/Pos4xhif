@@ -1,66 +1,97 @@
 # POS im IV. Jahrgang der HTL Spengergasse
 
-# Lehrinhalte auf Basis von Microsoft ASP.NET Core und XAMARIN Forms
-Gem. Lehrplan BGBl. II Nr. 262/2015 für den 4. Jahrgang. Die kursiv gedruckten Teile in der Spalte Lehrplaninhalt 
-kennzeichnen die wesentlichen Punkte im Sinne der LBVO.
+## Wichtiges zum Start
 
-Die Punkte unter Umsetzung betreffen den zweistündigen Teil des POS Unterrichtes. Der Rest wird im dreistündigen
-Teil unterrichtet.
+### Installation der IDE Visual Studio 2022
 
-## Wintersemester im 4. Jahrgang
+Die verbreitetste IDE zur Entwicklung im .NET Bereich ist Visual Studio. Microsoft stellt unserer
+Schule eine Lizenz von Visual Studio Enterprise zur Verfügung.
 
-| Lehrplaninhalt                                                                                                                                                                                                         	| Umsetzung                                                                                              	| 
-| -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	| -------------------------------------------------------------------------------------------------------	| 
-| Plattformübergreifende Softwaresysteme erstellen:<br>Kommunikation zwischen heterogenen Systemen.                                                                                                                       	| REST Webservices in ASP.NET Core                                                                                                        	| 
-| Fortgeschrittene Programmiertechniken anwenden:<br>Parallele Programmierung, Reflection, *objektorientierter Zugriff auf Massendaten*.                                                                                  	| Verwendung von EF Core in ASP.NET Core, asynchrones Laden der Daten.                                                                    	| 
-| Software für unterschiedliche Plattformen erstellen:<br>*Entwicklungstechniken für unterschiedliche Plattformen*, Thread-Synchronisation, *Zugriff auf semi-strukturierte Daten*, *Build-Management*, Dokumentationsgenerierung.	| XAMARIN Forms: Views (Navigations, Liste, …), Persistenz                                                    	| 
-| Die Konzepte von Programmiersprachen darlegen:<br>Einteilung und Eigenschaften von Programmiersprachen, Typsysteme, Programmierparadigmen.                                                                             	|                                                                                                                                         	| 
-| Zusammenhänge von Problemstellungen erfassen und dafür einen umfassenden Entwurf der Struktur der Software erstellen:<br>Entwurfsrichtlinien, Strukturdiagramme, *Patterns*.                                             	|                                                                                                                                         	| 
-| Komplexe, plattformübergreifende Softwaresysteme für den Produktivbetrieb erstellen:<br>Erstellung von Frameworks.                                                                                                      	|                                                                                                                                         	| 
+- Lade die Testversion von Visual Studio **Enterprise** von https://visualstudio.microsoft.com/de/downloads/
+  herunter.
+- Installiere die nachfolgenden Workloads und achte bei den Sprachpaketen darauf, nur *Englisch* auszuwählen.
+- Der Key wird im Unterricht ausgegeben.
 
-### Leistungsbeurteilung
-1 praktische LF aus dem Bereich REST Webservices sowie die Erstellung einer eigenen Aufgabenstellung im Bereich XAMARIN Forms oder Android Studio.
+![](vs_workloads_2.png)
 
-## Sommersemester 4. Jahrgang
-| Lehrplaninhalt                                                                                                                                                                                                         	| Umsetzung                                                                                              	| 
-| -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	| -------------------------------------------------------------------------------------------------------	| 
-| Plattformübergreifende Softwaresysteme erstellen:<br>Kommunikation zwischen heterogenen Systemen                                                                                                                       	| REST Webservices in Clients aufrufen.                                                                                                   	| 
-| Fortgeschrittene Programmiertechniken anwenden:<br>Parallele Programmierung, Reflection, *objektorientierter Zugriff auf Massendaten*.                                                                                   	| XAMARIN Forms: Aufruf von REST Webservices, Persistenz (Synchronisation im Hintergrund)                                                  	| 
-| Software für unterschiedliche Plattformen erstellen:<br>*Entwicklungstechniken für unterschiedliche Plattformen*, Thread-Synchronisation, *Zugriff auf semi-strukturierte Daten*, *Build-Management*, Dokumentationsgenerierung.	| XAMARIN Forms: gerätespezifischer Code (Android), Einbinden von fremden Komponenten, Erstellung von Controls, Wiederverwendung von Code.	| 
-| Algorithmen nach Kriterien der Komplexität und Effizienz auswählen:<br>Komplexität von Algorithmen, Optimierung.                                                                                                       	|                                                                                                                                         	| 
-| Systeme unter Berücksichtigung ihrer Dynamik analysieren und dafür einen umfassenden Entwurf des Verhaltens der Software erstellen:<br>Verhaltensdiagramme, *Patterns*.                                                  	|                                                                                                                                         	| 
-| Software für den Produktivbetrieb erstellen:<br>Entwicklungstechniken für zuverlässige Systeme, Bug- und Issuetracking, Hilfesysteme, Integrationstests.                                                               	|                                                                                                                                         	| 
+### Alternativ: Verwenden von JetBrains Rider
 
-### Leistungsbeurteilung
-1 praktische LF aus dem Bereich XAMARIN Forms sowie die Erstellung einer eigenen Aufgabenstellung im Bereich XAMARIN Forms oder Android Studio.
+Eine andere weit verbreitete Entwicklungsumgebung - gerade unter macOS - ist Rider von JetBrains.
+Ab der Version 2021.3 unterstützt Rider auch .NET 6.
+Wer mit IntelliJ gut arbeiten konnte, kann auch mit der Schullizenz Rider beziehen. Logge dich dafür
+auf https://account.jetbrains.com/login ein. Wer noch keinen Zugang hat, kann mit der Schul Mailadresse
+eine Lizenz gratis beziehen. Nach dem Login steht Rider als Download zur Verfügung.
 
+![](resharper_download_4.png)
 
-## Wichtiges zum Start:
-1. [Installation von Visual Studio 2019](VisualStudioInstallation.md)
-1. [Markdown Editing mit VS Code](https://github.com/schletz/Pos3xhif/blob/master/markdown.md)
+### PlantUML und VS Code als Modellierungswerkzeug
+
+In der Konzeptionierungsphase ist ein grafisches Tool zum Erzeugen von Klassenmodellen sehr wichtig.
+In diesen Kurs werden immer wieder UML Klassendiagramme hergezeigt. Sie können mit VS Code und
+PlantUML erzeugt werden:
+
+1. Prüfe, ob Java installiert und im PATH eingetragen ist. Der Befehl *java -version* muss erkannt
+   werden. Falls nicht, lade von https://openjdk.java.net/ die neuste Version von OpenJDK und
+   füge den Pfad von java.exe im bin Verzeichnis der PATH Variable hinzu.
+1. Installiere [Visual Studio Code](https://code.visualstudio.com). Achtung: Aktiviere beim Setup
+   die Option "In den Explorer integrieren", damit Sie im Kontextmenü VS Code starten können.
+1. Installiere die folgenden Extensions:
+   - Markdown PDF
+   - Markdown Preview Enhanced
+   - PlantUML
+1. Öffne die VS Code Konfiguration (*F1* - "*settings*" eingeben - "*Preferences: Open Settings (JSON)*" wählen)
+   und füge folgende Zeilen hinzu:
+
+```javascript
+    "markdown-pdf.plantumlOpenMarker": "```plantuml",
+    "markdown-pdf.plantumlCloseMarker": "```"   
+```
+
+Nun steht durch die Extension *Markdown Preview Enhanced* ein Icon bereit, welches eine Vorschau
+mit dem gerenderten Diagramm bietet. Beachte: Dies ist nur bei Dokumenten mit der 
+Endung *.md* Verfügbar.
+
+![](preview_vscode.png)
+
+Zum Testen kann nun eine neue Datei *Modell.md* mit folgendem Inhalt erstellt werden:
+
+````
+# Ein Klassenmodell
+
+Das ist die Beschreibung.
+```plantuml
+@startuml
+
+class Schoolclass {
+   +Name : String
+}
+
+class Student {
+   +Firstname : String
+   +Schoolclass : Schoolclass
+}
+
+Student *--> Schoolclass
+@enduml
+```
+````
+## Weiterführende Unterlagen:
+
+- YouTube Channels: [dotNET](https://www.youtube.com/channel/UCvtT19MZW8dq5Wwfu6B0oxw),
+  [Nick Chapsas](https://www.youtube.com/channel/UCrkPsvLGln62OMZRO6K-llg),
+  [NDC Conferences](https://www.youtube.com/channel/UCTdw38Cw6jcm0atBPA39a0Q)
+- [C# 8.0 in a Nutshell: The Definitive Reference](https://www.amazon.de/C-8-0-Nutshell-Definitive-Reference-dp-1492051136/dp/1492051136/ref=dp_ob_title_bk)
+- [Functional Programming in C#: How to write better C# code](https://www.amazon.de/Functional-Programming-C-Enrico-Buonanno/dp/1617293954/ref=sr_1_1?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=18ZFWZ2G0KO0J&dchild=1&keywords=functional+programming+c%23&qid=1600494628&sprefix=Functional+programmin%2Caps%2C174&sr=8-1)
 
 ## Synchronisieren des Repositories in einen Ordner
-1. Lade von https://git-scm.com/downloads die Git Tools (Button *Download 2.xx for Windows*)
-    herunter. Es können alle Standardeinstellungen belassen werden, bei *Adjusting your PATH environment*
-    muss aber der mittlere Punkt (*Git from the command line [...]*) ausgewählt sein.
-2. Lege einen Ordner auf der Festplatte an, wo du die Daten speichern möchtest 
-    (z. B. *C:\Schule\POS\Examples*). Das
-    Repository ist nur die lokale Version des Repositories auf https://github.com/schletz/Pos4xhif.git.
-    Hier werden keine Commits gemacht und alle lokalen Änderungen dort werden bei der 
-    nächsten Synchronisation überschrieben.
-3. Initialisiere den Ordner mit folgenden Befehlen, die du in der Konsole in diesem Verzeichnis
-    (z. B. *C:\Schule\POS\Examples*) ausführst:
-```bash {.line-numbers}
-git init
-git remote add origin https://github.com/schletz/Pos4xhif.git
+
+Installiere die neueste Version von [git](https://git-scm.com/downloads) mit den Standardeinstellungen.
+Gehe danach in die Windows Eingabeaufforderung (cmd) und führe in einem geeigneten Ordner
+(z. B. *C:\POS*) den Befehl
+```
+git clone https://github.com/schletz/Pos4xhif.git
 ```
 
-4. Um neue Inhalte zu laden, starte die Datei *resetGit.cmd*. Achtung: Es werden dabei alle lokalen
-Änderungen zurückgesetzt. Diese Datei führt nämlich die folgenden Kommandos aus:
-
-```bash {.line-numbers}
-git fetch --all
-git reset --hard origin/master
-```
-
+Soll der neueste Stand vom Server geladen werden, führe die Datei *resetGit.cmd* aus. Achtung:
+alle lokalen Änderungen werden dabei zurückgesetzt.
 
