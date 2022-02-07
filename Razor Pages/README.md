@@ -12,6 +12,7 @@
 - [Razor Pages 8 - Import von Text- und Exceldateien](08%20Import/README.md)
 - [Razor Pages 9 - Login: Authentication und Authorization](09%20Authentication/README.md)
 - [Razor Pages 10 - Einbinden von Highcharts](10%20Highcharts/README.md)
+- [Razor Pages 11 - Depolyment](11%20Deployment/README.md)
 
 Zur [YouTube Playlist](https://www.youtube.com/playlist?list=PLXaz8R749y5ks72kDo5n3nDm5PkA8fUvJ)
 
