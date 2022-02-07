@@ -61,9 +61,9 @@ SET ASPNETCORE_ENVIRONMENT=Development
 dotnet watch run
 </div></code></code></pre>
 <p><strong>Program.cs 1: Datenbank initialisieren</strong></p>
-<p>Löschen &amp; Seed in Development, Erstellen der Tabellen ohne löschen in Production. Das Kennwort
-wird aus der Umgebungsvariable <em>STORE_ADMIN</em> gelesen. Die Methode <em>Initialize</em> legt Grunddaten
-in der neu erstellten Datenbank 1x an. In diesem Fall ist dies der Admin User.</p>
+<p>Löschen &amp; Seed in Development, Erstellen der Tabellen ohne Löschen der Datenbank in Production.
+Das Kennwort wird aus der Umgebungsvariable <em>STORE_ADMIN</em> gelesen. Die Methode
+<em>Initialize</em> legt Grunddaten in der neu erstellten Datenbank 1x an. In diesem Fall ist dies der Admin User.</p>
 <pre><code class="language-c#"><div><span class="hljs-keyword">var</span> builder = WebApplication.CreateBuilder(args);
 <span class="hljs-keyword">var</span> opt = builder.Environment.IsDevelopment()
     ? <span class="hljs-keyword">new</span> DbContextOptionsBuilder().UseSqlite(builder.Configuration.GetConnectionString(<span class="hljs-string">&quot;Sqlite&quot;</span>)).EnableSensitiveDataLogging().Options
