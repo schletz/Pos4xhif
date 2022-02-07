@@ -24,6 +24,7 @@ dotnet watch run
 ```
 
 **Program.cs 1: Datenbank initialisieren**
+
 Löschen & Seed in Development, Erstellen der Tabellen ohne löschen in Production. Das Kennwort
 wird aus der Umgebungsvariable *STORE_ADMIN* gelesen. Die Methode *Initialize* legt Grunddaten
 in der neu erstellten Datenbank 1x an. In diesem Fall ist dies der Admin User.
