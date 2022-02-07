@@ -20,14 +20,14 @@
 <h3>Preistrends</h3>
 <div class="d-md-flex align-items-center">
     <div class="me-3">
-        <label for="stores" class="form-label">Wähle einen Store:</label>
+        <label for="stores" class="form-label mb-0">Wähle einen Store:</label>
     </div>
     <div class="me-3 d-flex-grow-1">
         <select class="form-select" onchange="vm.showOffers(this.value)" id="stores">
         </select>
     </div>
     <div class="me-3">
-        <label for="offers" class="form-label">Wähle ein Produkt des Stores:</label>
+        <label for="offers" class="form-label mb-0">Wähle ein Produkt des Stores:</label>
     </div>
     <div class="d-flex-grow-1">
         <select class="form-select" id="offers" onchange="vm.drawDiagram(this.value)"></select>
