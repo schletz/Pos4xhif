@@ -49,6 +49,7 @@
 <li>Umgebungsvariablen für Initialkennwörter</li>
 <li>Erstellen einer Azure SQL Server Datenbank</li>
 <li>Veröffentlichen der App als Azure App Service</li>
+<li>Content Security Policy</li>
 </ul>
 <p>Das Video ist auf <a href="https://youtu.be/Bfu_poXuL_o">https://youtu.be/Bfu_poXuL_o</a> verfügbar (53min). Der Programmcode ist im
 Ordner <a href="StoreManager">StoreManager</a> zu finden.</p>
@@ -82,7 +83,7 @@ Das Kennwort wird aus der Umgebungsvariable <em>STORE_ADMIN</em> gelesen. Die Me
     <span class="hljs-keyword">if</span> (builder.Environment.IsDevelopment()) { db.Seed(<span class="hljs-keyword">new</span> CryptService()); }
 }
 </div></code></pre>
-<p><strong>Program.cs 2: Datenbankservice registrieren Header setzen</strong></p>
+<p><strong>Program.cs 2: Datenbankservice registrieren</strong></p>
 <pre><code class="language-c#"><div>builder.Services.AddDbContext&lt;StoreContext&gt;(opt =&gt;
 {
     <span class="hljs-keyword">if</span> (builder.Environment.IsDevelopment())

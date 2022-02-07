@@ -7,6 +7,7 @@
 - Umgebungsvariablen für Initialkennwörter
 - Erstellen einer Azure SQL Server Datenbank
 - Veröffentlichen der App als Azure App Service
+- Content Security Policy
 
 Das Video ist auf https://youtu.be/Bfu_poXuL_o verfügbar (53min). Der Programmcode ist im
 Ordner [StoreManager](StoreManager) zu finden.
@@ -49,7 +50,7 @@ using (var db = new StoreContext(opt))
 }
 ```
 
-**Program.cs 2: Datenbankservice registrieren Header setzen**
+**Program.cs 2: Datenbankservice registrieren**
 
 ```c#
 builder.Services.AddDbContext<StoreContext>(opt =>
