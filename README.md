@@ -2,9 +2,9 @@
 
 ## Inhalt
 
-[Wiederholung: EF Core](https://github.com/schletz/Pos3xhif/tree/master/03%20EF%20Core)
-[Razor Pages in ASP.NET Core](Razor%20Pages/../README.md)
-Vue.js Applikationen
+- [Wiederholung: EF Core](https://github.com/schletz/Pos3xhif/tree/master/03%20EF%20Core)
+- [Razor Pages in ASP.NET Core](Razor%20Pages/README.md)
+- Vue.js Applikationen
 
 ## Wichtiges zum Start
 
