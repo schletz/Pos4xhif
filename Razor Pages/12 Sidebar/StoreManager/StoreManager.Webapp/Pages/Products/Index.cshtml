@@ -1,0 +1,27 @@
+﻿@page
+@model StoreManager.Webapp.Pages.Products.IndexModel
+
+<h3>Produktliste</h3>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>EAN</th>
+            <th>Produkt</th>
+            <th>Kategorie</th>
+            <th>UVP</th>
+            <th>Lieferbar Ab</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Products)
+        {
+            <tr>
+                <td>@p.Ean</td>
+                <td>@p.Name</td>
+                <td>@p.ProductCategory.Name</td>
+                <td>@p.RecommendedPrice</td>
+                <td>@p.AvailableFrom?.ToString("dd.MM.yyyy")</td>
+            </tr>
+        }
+    </tbody>
+</table>
