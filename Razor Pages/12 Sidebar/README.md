@@ -29,7 +29,16 @@ Die reine Struktur ohne konkrete Inhalte sieht so aus:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Manager</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Font Awesome. Aus dem ZIP muss auch der Ordner webfonts in lib kopiert werden. -->
+    <link rel="stylesheet" href="~/lib/fontawesome5/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/StoreManager.Webapp.styles.css" asp-append-version="true" />
+    <script src="~/lib/fontawesome5/all.min.js"></script>
+    @RenderSection("head", false)
 </head>
 <body>
     <header>
