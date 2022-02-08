@@ -1,4 +1,4 @@
-# Razor Pages 12 - Navigation
+# Razor Pages 12 - Eine Sidebar mit CSS selbst erstellen
 
 ![](screenshot.png)
 
