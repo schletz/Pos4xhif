@@ -1,6 +1,21 @@
 # Razor Pages 12 - Eine Sidebar mit CSS selbst erstellen
 
+## Inhalt
+
+- CSS Flexbox
+- Button zum Ein- und Ausblenden der Sidebar
+- Media Queries für das Drucklayout
+
+Das Video ist auf https://youtu.be/BaeQ6k1l2kw verfügbar (52min). Der Programmcode ist im
+Ordner [StoreManager](StoreManager) zu finden.
+
 ![](screenshot.png)
+
+## Starten der Applikation
+
+Führen Sie die Datei *startServer.cmd* (Windows) bzw. *bash startServer.sh* (Linux) aus. Im
+Skript wird die Umgebungsvariable *STORE_ADMIN* für das Adminkennwort gesetzt. Ohne diese
+Umgebungsvariable kann der Server nicht starten.
 
 ## Flex Container als Grundlayout
 
@@ -194,6 +209,10 @@ Damit beim Ausdrucken die Sidebar und andere Elemente nicht mitgedruckt werden, 
 
 ```css
 @media print {
+    main {
+        overflow-y: inherit;
+    }
+
     .main-content {
         overflow-y: inherit;
     }

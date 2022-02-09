@@ -144,6 +144,10 @@ footer {
 
 
 @media print {
+    main {
+        overflow-y: inherit;
+    }
+
     .main-content {
         overflow-y: inherit;
     }
