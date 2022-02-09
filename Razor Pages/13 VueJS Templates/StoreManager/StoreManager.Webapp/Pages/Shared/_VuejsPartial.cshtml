@@ -1,0 +1,12 @@
+﻿@using Microsoft.Extensions.Hosting
+@inject IHostEnvironment Environment
+
+@if (Environment.IsDevelopment())
+{
+    <script src="~/lib/vuejs3/vue.global.js"></script>
+}
+else
+{
+    <script src="~/lib/vuejs3/vue.global.prod.js"></script>
+}
+<script src="~/js/vue_extensions.js"></script>
