@@ -255,11 +255,14 @@ function toggleSidebar() {
 
 Damit in der Sidebar die aktuelle Seite farblich hervorgehoben wird, werden alle Elemente mit der
 Klasse *sidebar-item* gelesen. Dann wird geprüft ob der Link, der in diesem Element
-definiert wurde, ein Substring der aktuellen Adresse ist.
+definiert wurde, gleich der aktuellen Adresse ist.
 
 ```javascript
-const items = Array.from(document.querySelectorAll(".sidebar-item"));
-const active = items.find(i => window.location.href.includes(i.querySelector("a").href));
-if (active) {
-    active.classList.add("sidebar-active-item");
+for (const item of document.querySelectorAll(".sidebar-item")) {
+    const link = item.querySelector("a");
+    if (!link instanceof HTMLAnchorElement) { continue; }
+    if (window.location.href == link.href) {
+        item.classList.add("sidebar-active-item");
+    }
 }
+```

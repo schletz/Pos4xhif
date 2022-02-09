@@ -69,6 +69,7 @@ header {
     padding-right: 1rem;
     flex: 0 0 200px;
     display: none;
+    overflow-y: auto;
 }
 
     .sidebar ul {
