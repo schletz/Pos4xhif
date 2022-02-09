@@ -3,6 +3,7 @@
 ## Inhalt
 
 - Einbinden von Vue.js
+- Partial Views zur Einbindung der Scripts.
 - JSON Daten mit Pagehandlern generieren.
 - JSON Daten mit Vue.js lesen.
 - Daten mit der Templatesyntax von Vue.js darstellen.
