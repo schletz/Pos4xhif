@@ -76,7 +76,7 @@ const modal = {
 }
 ```
 
-** Verwenden der Komponente **
+**Verwenden der Komponente**
 
 ```html
 @section Scripts {
