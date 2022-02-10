@@ -15,7 +15,7 @@ const app = {
     },
     async mounted() {
         try {
-            this.categories = await Vue.$get("Cate_gories");
+            this.categories = await Vue.$get("Categories");
         }
         catch (e) {
             this.errorMessage = e.message;
