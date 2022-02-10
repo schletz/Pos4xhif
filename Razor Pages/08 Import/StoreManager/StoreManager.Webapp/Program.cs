@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StoreManager.Application.Dto;
 using StoreManager.Application.Infrastructure;
 using StoreManager.Application.Infrastructure.Repositories;
 using StoreManager.Application.Services;
-using StoreManager.Webapp.Dto;
 
 // Erstellen und seeden der Datenbank
 var opt = new DbContextOptionsBuilder()

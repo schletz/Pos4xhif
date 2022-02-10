@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StoreManager.Application.Dto;
 using StoreManager.Application.Infrastructure;
 using StoreManager.Application.Infrastructure.Repositories;
 using StoreManager.Application.Model;
 using StoreManager.Application.Services;
-using StoreManager.Webapp.Dto;
 using StoreManager.Webapp.Services;
 
 // Erstellen und seeden der Datenbank

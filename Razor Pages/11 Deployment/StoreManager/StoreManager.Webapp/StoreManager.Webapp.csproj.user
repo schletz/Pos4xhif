@@ -4,5 +4,6 @@
     <RazorPage_SelectedScaffolderID>RazorPageScaffolder</RazorPage_SelectedScaffolderID>
     <RazorPage_SelectedScaffolderCategoryPath>root/Common/RazorPage</RazorPage_SelectedScaffolderCategoryPath>
     <NameOfLastUsedPublishProfile>C:\Github\Pos4xhif\Razor Pages\11 Publish\StoreManager\StoreManager.Webapp\Properties\PublishProfiles\storemanagerdemo - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

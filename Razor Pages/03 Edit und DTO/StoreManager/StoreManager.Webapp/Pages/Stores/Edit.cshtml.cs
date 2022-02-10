@@ -2,9 +2,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using StoreManager.Application.Dto;
 using StoreManager.Application.Infrastructure;
 using StoreManager.Application.Model;
-using StoreManager.Webapp.Dto;
 using System;
 using System.Linq;
 

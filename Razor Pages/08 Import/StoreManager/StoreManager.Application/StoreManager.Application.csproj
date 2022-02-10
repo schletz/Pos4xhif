@@ -14,6 +14,7 @@
 		<PackageReference Include="CsvHelper" Version="27.*" />
 		<PackageReference Include="ExcelDataReader" Version="3.*" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="6.*" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.*" />
 	</ItemGroup>
 
 </Project>
