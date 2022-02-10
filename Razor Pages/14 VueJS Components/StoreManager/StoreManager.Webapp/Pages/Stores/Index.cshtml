@@ -1,0 +1,51 @@
+﻿@page
+@model StoreManager.Webapp.Pages.Stores.IndexModel
+@section head
+{
+<style>
+    .closed {
+        background-color: lightgray;
+    }
+</style>
+}
+<h3>Stores in der Datenbank</h3>
+<p>@Model.Stores.Count Stores gefunden. Erstellt um @DateTime.Now.ToString("HH:mm").</p>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="border border-danger p-3 border-3">
+        <p class="mb-0">@Model.Message</p>
+    </div>
+}
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Offers</th>
+            <th>CloseDate</th>
+            <th>URL</th>
+            <th>Aktionen</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Stores)
+        {
+            var cssClass = s.CloseDate.HasValue ? "closed" : "";
+            <tr class="@cssClass">
+                <td>@s.Name</td>
+                <td>@s.OffersCount</td>
+                <td>@(s.CloseDate?.ToString("dd.MM.yyyy") ?? "---")</td>
+                <td>@s.Url</td>
+                <td>
+                    @if (Model.CanEditStore(s.Guid))
+                    {
+                        <a asp-page="/Stores/Details" asp-route-guid="@s.Guid"><i class="fas fa-info-circle"></i></a>
+                        <a class="ms-2" asp-page="/Stores/Edit" asp-route-guid="@s.Guid"><i class="fas fa-edit"></i></a>
+                        <a class="ms-2" asp-page="/Stores/Delete" asp-route-guid="@s.Guid"><i class="fas fa-trash-alt"></i></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

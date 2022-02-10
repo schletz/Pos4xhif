@@ -1,0 +1,51 @@
+﻿@page
+@model StoreManager.Webapp.Pages.Products.IndexModel
+
+@section Scripts {
+<partial name="_VuejsPartial" />
+<script src="~/js/products/index.js"></script>
+}
+
+<div id="app">
+    <h3>Produktliste</h3>
+    <div class="d-flex align-items-center" style="gap:1em">
+        <div>
+            <label class="form-label mb-0" for="category">Kategorie</label>
+        </div>
+        <div class="flex-grow-1">
+            <select v-model="categoryGuid"
+                    v-on:change="loadProducts()"
+                    id="category" class="form-select">
+                <option value="">Gib eine Kategorie ein.</option>
+                <option v-bind:value="c.guid" v-for="c in categories">{{ c.name }} </option>
+            </select>
+        </div>
+        <template v-if="products.length">
+            <div>
+                <label class="form-label mb-0" for="productsearch">Produktsuche</label>
+            </div>
+            <div class="flex-grow-1">
+                <input id="productsearch" class="form-control" v-model="searchProduct" />
+            </div>
+        </template>
+    </div>
+
+    <table v-if="filteredProducts.length" class="table table-sm">
+        <thead>
+            <tr>
+                <th>EAN</th>
+                <th>Name</th>
+                <th>UVP</th>
+                <th>Verfügbar ab</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="p in filteredProducts">
+                <td>{{ p.ean }}</td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.recommendedPrice }}</td>
+                <td>{{ p.availableFromDate }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

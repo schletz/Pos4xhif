@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "env": {
+        "browser": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
+  "rules": {
+    "no-unused-vars": "off"
+  },
+  "globals": {
+    "Vue": "readonly",
+    "Promise": "readonly"
+  }
+}

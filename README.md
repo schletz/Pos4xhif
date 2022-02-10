@@ -40,9 +40,9 @@ node -e console.log(require('eslint').Linter.version);
 Der 2. Befehl muss die Version 7 (z. B. 7.32.0) ausgeben. Mit Version 8 funktioniert das ESLint
 Plugin von Visual Studio nicht.
 
-Erstellen Sie danach in Ihrer Solution im Webapp Verzeichnis eine Datei *.eslintrc.json*.
-Den Inhalt können Sie von der vorhandenen Datei
-[.eslintrc.json](StoreManager/StoreManager.Webapp/.eslintrc.json) in diesem Projekt übernehmen.
+Erstelle danach in deinem Projektverzeichnis mit der Webapplikation eine Datei *.eslintrc.json*.
+Den Inhalt kannst du von der Musterdatei
+[.eslintrc.json](.eslintrc.json) übernehmen.
 
 Öffnen danach Visual Studio und aktiviere unter *Tools - Options* den Linter:
 
