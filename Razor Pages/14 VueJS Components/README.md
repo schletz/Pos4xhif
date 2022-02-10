@@ -14,7 +14,7 @@ Ordner [StoreManager](StoreManager) zu finden.
 > *Node.js development* und ESLint installiert werden. Die Anleitung hierzu befindet sich auf
 > der [Startseite des Kurses](../../README.md#installation-der-ide-visual-studio-2022)
 
-![](screenshot2.png)
+![](screenshot_2.png)
 
 ## Starten der Applikation
 
