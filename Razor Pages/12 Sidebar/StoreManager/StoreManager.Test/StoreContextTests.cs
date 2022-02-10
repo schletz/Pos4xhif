@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreManager.Application.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace StoreManager.Test
         public void SeedSuccessTest()
         {
             _db.Database.EnsureCreated();
-            _db.Seed();
+            _db.Seed(new CryptService());
 
             _db.ChangeTracker.Clear();
             Assert.True(_db.Stores.ToList().Count > 0);
