@@ -13,9 +13,9 @@ Ordner [StoreManager](StoreManager) zu finden.
 Voraussetzung ist der Inhalt des vorigen Kapitels [05 Bulk Edit](../05%20Bulk%20Edit/README.md)
 
 > **Hinweis:** Die DTO Klassen werden in diesem Beispiel im Webapp Projekt angelegt, da sie
-> auch Validierungen beinhalten. Sie können diese Klassen auch im Application Projekt anlegen,
-> dann kann z. B. die Insert Methode des Repositories die DTO Klasse als Parameter haben. Dann
-> ersparen Sie sich das Definieren der Properties als Funktionsargumente.
+> auch Validierungen beinhalten. Sie können diese Klassen samt Validierung auch im Application
+> Projekt anlegen, dann kann z. B. die Insert Methode des Repositories die DTO Klasse als Parameter
+> haben. Dann ersparen Sie sich das Definieren der Properties als Funktionsargumente.
 
 
 ![](https://codewithmukesh.com/wp-content/uploads/2020/06/custom-repo-versus-db-context-1024x579.png?ezimgfmt=ng:webp/ngcb32)

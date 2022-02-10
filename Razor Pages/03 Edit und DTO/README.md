@@ -15,8 +15,8 @@ Ordner [StoreManager](StoreManager) zu finden.
 Voraussetzung ist der Inhalt des vorigen Kapitels [02 Details](../02%20Details%20Page/README.md)
 
 > **Hinweis:** Die DTO Klassen werden in diesem Beispiel im Webapp Projekt angelegt, da sie
-> auch Validierungen beinhalten. Sie können diese Klassen auch im Application Projekt anlegen,
-> wenn andere Methoden in der Application sie verwenden sollen.
+> auch Validierungen beinhalten. Sie können diese Klassen samt Validierung auch im Application 
+> Projekt anlegen, wenn andere Methoden in der Application sie verwenden sollen.
 
 
 ![](screenshot.png)
