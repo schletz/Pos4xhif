@@ -3,7 +3,7 @@
 ## Inhalt
 
 - Konfiguration von ESLint in Visual Studio
-- Erstellen einer Komponente
+- Erstellen einer Komponente am Beispiel eines modalen Dialoges
 - Parameter und *emit()*
 - Slots
 
