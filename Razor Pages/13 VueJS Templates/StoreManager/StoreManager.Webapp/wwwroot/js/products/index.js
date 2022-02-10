@@ -19,7 +19,7 @@
         async loadProducts() {
             try {
                 this.products = await Vue.$get("Products", { categoryGuid: this.categoryGuid });
-                for (p of this.products) {
+                for (const p of this.products) {
                     p.availableFromDate = p.availableFrom
                         ? new Date(p.availableFrom).toLocaleDateString()
                         : "";

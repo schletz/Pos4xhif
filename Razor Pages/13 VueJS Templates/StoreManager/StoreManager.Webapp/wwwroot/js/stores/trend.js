@@ -1,4 +1,5 @@
-﻿const vm = {
+﻿/* global Highcharts */
+const vm = {
     stores: [],
     currentStore: null,
 
@@ -57,7 +58,6 @@
 
     getHighchartsConfig(data, product) {
         return {
-            title: null,
             chart: {
                 renderTo: "chart",
             },

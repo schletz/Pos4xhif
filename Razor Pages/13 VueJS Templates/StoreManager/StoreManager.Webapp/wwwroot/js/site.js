@@ -5,7 +5,7 @@
 
 for (const item of document.querySelectorAll(".sidebar-item")) {
     const link = item.querySelector("a");
-    if (!link instanceof HTMLAnchorElement) { continue; }
+    if (!(link instanceof HTMLAnchorElement)) { continue; }
     if (window.location.href == link.href) {
         item.classList.add("sidebar-active-item");
     }

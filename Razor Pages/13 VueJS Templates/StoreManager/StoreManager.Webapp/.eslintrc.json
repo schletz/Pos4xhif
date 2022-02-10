@@ -5,9 +5,13 @@
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": 8
     },
-    "rules": {
-        "no-unused-vars": "off"
-    }
+  "rules": {
+    "no-unused-vars": "off"
+  },
+  "globals": {
+    "Vue": "readonly",
+    "Promise": "readonly"
+  }
 }
