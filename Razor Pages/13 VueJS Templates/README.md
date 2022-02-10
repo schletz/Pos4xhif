@@ -10,10 +10,8 @@
 - State Management.
 
 Das Video ist auf https://youtu.be/Xow96bDWIGc verfügbar (68min). Der Programmcode ist im
-Ordner [StoreManager](StoreManager) zu finden.
-
-Aktivieren Sie vorher den Linter in Visual Studo wie im Punkt *Linter in Visual Studio nutzen*
-hier beschrieben.
+Ordner [StoreManager](StoreManager) zu finden. Aktivieren Sie vorher den Linter in Visual Studio
+wie im Punkt *Linter in Visual Studio nutzen* hier beschrieben.
 
 ![](screenshot.png)
 
