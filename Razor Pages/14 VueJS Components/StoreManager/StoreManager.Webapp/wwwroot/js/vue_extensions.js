@@ -49,7 +49,9 @@ Vue.$sendRequest = function (url, data = {}, method = "POST", asJson = false) {
     if (!document.getElementsByName('__RequestVerificationToken') ||
         !document.getElementsByName('__RequestVerificationToken')[0] ||
         !document.getElementsByName('__RequestVerificationToken')[0].value) {
-        throw "RequestVerificationToken nicht gefunden. Wurde er mit @Html.AntiForgeryToken() eingefügt?";
+        throw {
+            message: "RequestVerificationToken nicht gefunden. Wurde er mit @Html.AntiForgeryToken() eingefügt?"
+        }
     }
     const token = document.getElementsByName('__RequestVerificationToken')[0].value;
 
@@ -90,7 +92,7 @@ Vue.$sendRequest = function (url, data = {}, method = "POST", asJson = false) {
                                 });
                             }
                             // Server returns plaintext? Return as message.
-                            catch {
+                            catch (e) {
                                 reject({ status: 400, validation: {}, message: data });
                             }
                         })
@@ -121,7 +123,7 @@ Vue.$get = function (handler, data) {
                             const dataJson = JSON.parse(data);
                             resolve(dataJson);
                         }
-                        catch {
+                        catch (e) {
                             // Server lieferte Text (z. B. HTML) statt einem JSON.
                             reject({ status: response.status, message: "Der Server lieferte kein JSON Ergebnis." });
                         }

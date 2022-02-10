@@ -72,7 +72,7 @@ Stelle speichern.</li>
 <li><em>vue.global.prod.js</em>: Bei obigem Link <em>vue.global.js</em> durch <em>vue.global.prod.js</em> ersetzen und
 speichern.</li>
 </ul>
-<p><strong>Pages/Shares/_VuejsPartial.cshtml</strong></p>
+<p><strong>[Pages/Shares/_VuejsPartial.cshtml](StoreManager/StoreManager.Webapp/Pages/Shared/_VuejsPartial.cshtml</strong></p>
 <pre><code class="language-c#"><div>@using Microsoft.Extensions.Hosting
 @inject IHostEnvironment Environment
 
@@ -87,7 +87,7 @@ speichern.</li>
 &lt;script src=<span class="hljs-string">&quot;~/js/vue_extensions.js&quot;</span>&gt;&lt;/script&gt;
 
 </div></code></pre>
-<p><strong>wwwroot/js/vue_extensions.js</strong></p>
+<p><strong><a href="StoreManager/StoreManager.Webapp/wwwroot/js/vue_extensions.js">wwwroot/js/vue_extensions.js</a></strong></p>
 <pre><code class="language-c#"><div>Vue.$mount = function (viewmodel, container) {
     <span class="hljs-keyword">if</span> (!document.getElementById(container)) {
         <span class="hljs-keyword">throw</span> `Der Container mit der id ${container} wurde nicht gefunden. Fehlt ein div mit dieser id?`;
@@ -138,7 +138,9 @@ Vue.$sendRequest = function (url, data = {}, method = <span class="hljs-string">
     <span class="hljs-keyword">if</span> (!document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>) ||
         !document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>)[<span class="hljs-number">0</span>] ||
         !document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>)[<span class="hljs-number">0</span>].<span class="hljs-keyword">value</span>) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;RequestVerificationToken nicht gefunden. Wurde er mit @Html.AntiForgeryToken() eingefügt?&quot;</span>;
+        <span class="hljs-keyword">throw</span> {
+            message: <span class="hljs-string">&quot;RequestVerificationToken nicht gefunden. Wurde er mit @Html.AntiForgeryToken() eingefügt?&quot;</span>
+        }
     }
     <span class="hljs-keyword">const</span> token = document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>)[<span class="hljs-number">0</span>].<span class="hljs-keyword">value</span>;
 
@@ -179,7 +181,7 @@ Vue.$sendRequest = function (url, data = {}, method = <span class="hljs-string">
                                 });
                             }
                             <span class="hljs-comment">// Server returns plaintext? Return as message.</span>
-                            <span class="hljs-keyword">catch</span> {
+                            <span class="hljs-keyword">catch</span> (e) {
                                 reject({ status: <span class="hljs-number">400</span>, validation: {}, message: data });
                             }
                         })
@@ -210,7 +212,7 @@ Vue.$<span class="hljs-keyword">get</span> = function (handler, data) {
                             <span class="hljs-keyword">const</span> dataJson = JSON.parse(data);
                             resolve(dataJson);
                         }
-                        <span class="hljs-keyword">catch</span> {
+                        <span class="hljs-keyword">catch</span> (e) {
                             <span class="hljs-comment">// Server lieferte Text (z. B. HTML) statt einem JSON.</span>
                             reject({ status: response.status, message: <span class="hljs-string">&quot;Der Server lieferte kein JSON Ergebnis.&quot;</span> });
                         }
