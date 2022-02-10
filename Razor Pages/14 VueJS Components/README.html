@@ -2,7 +2,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>Razor Pages 13 - Vue&period;js Template Engine im Browser nutzen</title>
+        <title>Razor Pages 14 - Vue&period;js Components</title>
         <style>
 /* From extension vscode.github */
 .vscode-dark img[src$=\#gh-light-mode-only],
@@ -42,17 +42,15 @@
         
     </head>
     <body class="vscode-body vscode-light">
-        <h1 id="razor-pages-13---vuejs-template-engine-im-browser-nutzen">Razor Pages 13 - Vue.js Template Engine im Browser nutzen</h1>
+        <h1 id="razor-pages-14---vuejs-components">Razor Pages 14 - Vue.js Components</h1>
 <h2 id="inhalt">Inhalt</h2>
 <ul>
-<li>Einbinden von Vue.js</li>
-<li>Partial Views zur Einbindung der Scripts.</li>
-<li>JSON Daten mit Pagehandlern generieren.</li>
-<li>JSON Daten mit Vue.js lesen.</li>
-<li>Daten mit der Templatesyntax von Vue.js darstellen.</li>
-<li>State Management.</li>
+<li>Konfiguration von ESLint in Visual Studio</li>
+<li>Erstellen einer Komponente</li>
+<li>Parameter und <em>emit()</em></li>
+<li>Slots</li>
 </ul>
-<p>Das Video ist auf <a href="https://youtu.be/Xow96bDWIGc">https://youtu.be/Xow96bDWIGc</a> verfügbar (68min). Der Programmcode ist im
+<p>Das Video ist auf <a href="https://youtu.be/XXXVnmqP0ZM">https://youtu.be/XXXVnmqP0ZM</a> verfügbar (50min). Der Programmcode ist im
 Ordner <a href="StoreManager">StoreManager</a> zu finden.</p>
 <blockquote>
 <p><strong>Hinweis:</strong> Um in Visual Studio vernünftig mit JavaScript zu arbeiten, muss der Workload
@@ -65,178 +63,54 @@ der <a href="../../README.md#installation-der-ide-visual-studio-2022">Startseite
 Skript wird die Umgebungsvariable <em>STORE_ADMIN</em> für das Adminkennwort gesetzt. Ohne diese
 Umgebungsvariable kann der Server nicht starten.</p>
 <h2 id="zur-verfügung-gestellte-dateien">Zur Verfügung gestellte Dateien</h2>
-<p>Vue.js 3 muss in den Ordner <em>wwwroot/lib/vuejs3</em> kopiert werden.</p>
-<ul>
-<li><a href="https://unpkg.com/vue@3">vue.global.js</a> im Browser öffnen und mit STRG+S an die richtige
-Stelle speichern.</li>
-<li><em>vue.global.prod.js</em>: Bei obigem Link <em>vue.global.js</em> durch <em>vue.global.prod.js</em> ersetzen und
-speichern.</li>
-</ul>
-<p><strong>Pages/Shares/_VuejsPartial.cshtml</strong></p>
-<pre><code class="language-c#"><div>@using Microsoft.Extensions.Hosting
-@inject IHostEnvironment Environment
-
-@if (Environment.IsDevelopment())
-{
-    &lt;script src=<span class="hljs-string">&quot;~/lib/vuejs3/vue.global.js&quot;</span>&gt;&lt;/script&gt;
-}
-<span class="hljs-keyword">else</span>
-{
-    &lt;script src=<span class="hljs-string">&quot;~/lib/vuejs3/vue.global.prod.js&quot;</span>&gt;&lt;/script&gt;
-}
-&lt;script src=<span class="hljs-string">&quot;~/js/vue_extensions.js&quot;</span>&gt;&lt;/script&gt;
-
-</div></code></pre>
-<p><strong>wwwroot/js/vue_extensions.js</strong></p>
-<pre><code class="language-c#"><div>Vue.$mount = function (viewmodel, container) {
-    <span class="hljs-keyword">if</span> (!document.getElementById(container)) {
-        <span class="hljs-keyword">throw</span> `Der Container mit der id ${container} wurde nicht gefunden. Fehlt ein div mit dieser id?`;
-    }
-    Vue.createApp(viewmodel).mount(`<span class="hljs-meta">#${container}`);</span>
-}
-<span class="hljs-comment">/**
- * Ermittelt die URL eines Razor Page Handlers
- * 
- * Vue.$getHandlerUrl(&quot;AllStores&quot;, {guid = &quot;3c316e59-1f84-42c9-8f86-70747cfb837e&quot;}) 
- *   liefert /Stores/Index?handler=AllStores&amp;guid=3c316e59-1f84-42c9-8f86-70747cfb837e wenn die Funktion
- *   von /Stores/Index aus aufgerufen wurde.
- */</span>
-Vue.$getHandlerUrl = function (handler, <span class="hljs-keyword">params</span>) {
-    <span class="hljs-keyword">params</span> = <span class="hljs-keyword">params</span> || {};
-    <span class="hljs-keyword">const</span> path = window.location.href;
-    <span class="hljs-keyword">let</span> url = path.indexOf(<span class="hljs-string">&quot;?&quot;</span>) != <span class="hljs-number">-1</span>
-        ? path + <span class="hljs-string">&quot;&amp;handler=&quot;</span> + handler
-        : path + <span class="hljs-string">&quot;?handler=&quot;</span> + handler
-    url = Object.keys(<span class="hljs-keyword">params</span>).reduce((prev, param) =&gt;
-        prev + <span class="hljs-string">&quot;&amp;&quot;</span> + param + <span class="hljs-string">&quot;=&quot;</span> + <span class="hljs-keyword">params</span>[param]
-        , url);
-    <span class="hljs-keyword">return</span> url;
-};
-
-
-<span class="hljs-comment">/**
- * Sendet einen POST/PUT/DELETE Request an die Razor Page
- * Wichtig: In der Serverkonfiguration muss mit 
- *     builder.Services.AddAntiforgery(o =&gt; o.HeaderName = &quot;xsrf-token&quot;);
- * das Übermitteln des Anti Forgery Tokens im Header aktiviert werden.
- * 
- * data: Ein JSON Object mit dem Payload. Er wird als Formulardaten übertragen
- * method: POST/PUT/DELETE als String.
- * asJson: Wenn der Payload als JSON statt als Formular gesendet werden soll. 
- *         Erfordert [FromBody] in der RazorPage.
- */</span>
-Vue.$sendRequest = function (url, data = {}, method = <span class="hljs-string">&quot;POST&quot;</span>, asJson = <span class="hljs-literal">false</span>) {
-    <span class="hljs-comment">// Die Formulardaten zum Senden aufbereiten, damit sie wie aus einem HTML Formular gesendet aussehen.</span>
-    <span class="hljs-keyword">const</span> formData = asJson === <span class="hljs-literal">true</span> ? JSON.stringify(data) : Object.keys(data).reduce((formData, key) =&gt; {
-        formData.append(key, data[key]);
-        <span class="hljs-keyword">return</span> formData;
-    }, <span class="hljs-keyword">new</span> FormData());
-
-    <span class="hljs-comment">// Den RequestVerificationToken lesen. Er muss auf der RazorPage mit</span>
-    <span class="hljs-comment">// @Html.AntiForgeryToken()</span>
-    <span class="hljs-comment">// eingefügt werden.</span>
-    <span class="hljs-keyword">if</span> (!document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>) ||
-        !document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>)[<span class="hljs-number">0</span>] ||
-        !document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>)[<span class="hljs-number">0</span>].<span class="hljs-keyword">value</span>) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-string">&quot;RequestVerificationToken nicht gefunden. Wurde er mit @Html.AntiForgeryToken() eingefügt?&quot;</span>;
-    }
-    <span class="hljs-keyword">const</span> token = document.getElementsByName(<span class="hljs-string">&#x27;__RequestVerificationToken&#x27;</span>)[<span class="hljs-number">0</span>].<span class="hljs-keyword">value</span>;
-
-    <span class="hljs-keyword">const</span> fetchParams = { method: method };
-    fetchParams.headers = { <span class="hljs-string">&#x27;XSRF-TOKEN&#x27;</span>: token };
-    <span class="hljs-keyword">if</span> (asJson === <span class="hljs-literal">true</span>) fetchParams.headers[<span class="hljs-string">&#x27;content-type&#x27;</span>] = <span class="hljs-string">&#x27;application/json&#x27;</span>;
-    <span class="hljs-keyword">if</span> (method != <span class="hljs-string">&#x27;GET&#x27;</span>) { fetchParams.body = formData; }
-
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Promise((resolve, reject) =&gt; {
-        fetch(url, fetchParams)
-            .then(response =&gt; {
-                <span class="hljs-keyword">if</span> (response.ok) {
-                    response.json()
-                        .then(data =&gt; resolve(data))
-                        .<span class="hljs-keyword">catch</span>(() =&gt; resolve({}));    <span class="hljs-comment">// HTTP 201 no content</span>
-                    <span class="hljs-keyword">return</span>;
+<p><strong><a href="StoreManager/StoreManager.Webapp/wwwroot/js/components/modal.js">wwwroot/js/components/modal.js</a></strong></p>
+<pre><code class="language-javascript"><div><span class="hljs-keyword">const</span> modal = {
+    <span class="hljs-comment">// See https://vuejs.org/guide/components/props.html</span>
+    <span class="hljs-attr">props</span>: {
+        <span class="hljs-attr">title</span>: { <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span> },
+        <span class="hljs-attr">ok</span>: {},
+        <span class="hljs-attr">yes</span>: {},
+        <span class="hljs-attr">no</span>: {},
+        <span class="hljs-attr">icon</span>: { <span class="hljs-attr">default</span>: <span class="hljs-string">&#x27;info&#x27;</span> },
+        <span class="hljs-attr">timeout</span>: { <span class="hljs-attr">default</span>: <span class="hljs-number">0</span> }
+    },
+    mounted() {
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.timeout &amp;&amp; <span class="hljs-built_in">this</span>.ok) {
+            <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.ok) {
+                    <span class="hljs-built_in">this</span>.$emit(<span class="hljs-string">&#x27;ok&#x27;</span>);
                 }
-                <span class="hljs-keyword">if</span> (response.status == <span class="hljs-number">400</span>) {
-                    response.text()
-                        .then(data =&gt; {
-                            <span class="hljs-keyword">try</span> {
-                                <span class="hljs-comment">// Server returns JSON? Return error property as validation.</span>
-                                <span class="hljs-keyword">const</span> dataJson = JSON.parse(data);
-                                <span class="hljs-comment">// server returns an error property with validation messages?</span>
-                                <span class="hljs-keyword">if</span> (!dataJson.errors) {
-                                    reject({ status: <span class="hljs-number">400</span>, validation: {}, message: <span class="hljs-string">&quot;&quot;</span> });
-                                    <span class="hljs-keyword">return</span>;
-                                }
-                                <span class="hljs-comment">// convert keys to lowercase</span>
-                                <span class="hljs-keyword">const</span> validation = Object.keys(data.errors).reduce((prev, current) =&gt; {
-                                    prev[current.toLowerCase()] = data.errors[current];
-                                    <span class="hljs-keyword">return</span> prev;
-                                }, {});
-                                reject({
-                                    status: response.status,
-                                    validation: validation,
-                                    message: <span class="hljs-string">&quot;&quot;</span>
-                                });
-                            }
-                            <span class="hljs-comment">// Server returns plaintext? Return as message.</span>
-                            <span class="hljs-keyword">catch</span> {
-                                reject({ status: <span class="hljs-number">400</span>, validation: {}, message: data });
-                            }
-                        })
-                        .<span class="hljs-keyword">catch</span>(() =&gt; reject({ status: <span class="hljs-number">400</span>, validation: {}, message: <span class="hljs-string">&quot;Der Server akzeptierte die Anfrage nicht (Bad request).&quot;</span> }));
-                    <span class="hljs-keyword">return</span>;
-                }
-                reject({ status: response.status, validation: {}, message: `Der Server antwortete mit dem Fehlercode ${response.status}.` });
-            })
-            .<span class="hljs-keyword">catch</span>(() =&gt; reject({ status: <span class="hljs-number">0</span>, validation: {}, message: <span class="hljs-string">&quot;Der Server ist nicht erreichbar.&quot;</span> }));             <span class="hljs-comment">// Server nicht erreichbar</span>
-    });
-};
-
-<span class="hljs-comment">/**
- * Sendet einen GET Request an die Razor Page und liefert das JSON Ergebnis
- * zurück. Tritt ein Fehler auf, wird eine Exception mit den Feldern status und message
- * geworfen.
- * Wichtig: Die Antwort muss mit return new JsonResult im JSON Format
- *          zurückgegeben werden.
- * 
- */</span>
-Vue.$<span class="hljs-keyword">get</span> = function (handler, data) {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Promise((resolve, reject) =&gt; {
-        fetch(Vue.$getHandlerUrl(handler, data))
-            .then(response =&gt; {
-                response.text()
-                    .then(data =&gt; {
-                        <span class="hljs-keyword">try</span> {
-                            <span class="hljs-keyword">const</span> dataJson = JSON.parse(data);
-                            resolve(dataJson);
-                        }
-                        <span class="hljs-keyword">catch</span> {
-                            <span class="hljs-comment">// Server lieferte Text (z. B. HTML) statt einem JSON.</span>
-                            reject({ status: response.status, message: <span class="hljs-string">&quot;Der Server lieferte kein JSON Ergebnis.&quot;</span> });
-                        }
-                    })
-                    <span class="hljs-comment">// Server lieferte einen Fehlercode.</span>
-                    .<span class="hljs-keyword">catch</span>(() =&gt; reject({ status: response.status, message: `Der Server antwortete mit dem Fehlercode ${response.status}.` }));
-            })
-            <span class="hljs-comment">// Server ist nicht errichbar.</span>
-            .<span class="hljs-keyword">catch</span>(() =&gt; reject({ status: <span class="hljs-number">0</span>, message: <span class="hljs-string">&quot;Der Server ist nicht erreichbar.&quot;</span> }));
-    });
-};
-
-Vue.$post = function (handler, data, asJson = <span class="hljs-literal">false</span>) {
-    <span class="hljs-keyword">const</span> url = handler.indexOf(<span class="hljs-string">&quot;/&quot;</span>) != <span class="hljs-number">-1</span> ? handler : Vue.$getHandlerUrl(handler);
-    <span class="hljs-keyword">return</span> Vue.$sendRequest(url, data, <span class="hljs-string">&#x27;POST&#x27;</span>, asJson);
-};
-
-Vue.$put = function (handler, data, asJson = <span class="hljs-literal">false</span>) {
-    <span class="hljs-keyword">const</span> url = handler.indexOf(<span class="hljs-string">&quot;/&quot;</span>) != <span class="hljs-number">-1</span> ? handler : Vue.$getHandlerUrl(handler);
-    <span class="hljs-keyword">return</span> Vue.$sendRequest(url, data, <span class="hljs-string">&#x27;PUT&#x27;</span>, asJson);
-};
-
-Vue.$delete = function (handler, data, asJson = <span class="hljs-literal">false</span>) {
-    <span class="hljs-keyword">const</span> url = handler.indexOf(<span class="hljs-string">&quot;/&quot;</span>) != <span class="hljs-number">-1</span> ? handler : Vue.$getHandlerUrl(handler);
-    <span class="hljs-keyword">return</span> Vue.$sendRequest(url, data, <span class="hljs-string">&#x27;DELETE&#x27;</span>, asJson);
-};
+            }, <span class="hljs-built_in">this</span>.timeout);
+        }
+    },
+    <span class="hljs-attr">template</span>: <span class="hljs-string">`
+        &lt;div class=&quot;modal d-block&quot; tabindex=&quot;-1&quot;&gt;
+            &lt;div class=&quot;modal-dialog&quot;&gt;
+                &lt;div class=&quot;modal-content&quot;&gt;
+                    &lt;div class=&quot;d-flex flex-column&quot;&gt;
+                        &lt;div class=&quot;p-1&quot; style=&quot;color: white; background-color:var(--bs-primary)&quot;&gt;{{ title }}&lt;/div&gt;
+                        &lt;div class=&quot;d-flex align-items-end p-1&quot; style=&quot;flex: 1 0 3em&quot;&gt;
+                            &lt;div style=&quot;flex: 0 0 40px&quot;&gt;
+                                &lt;i v-if=&quot;icon == &#x27;info&#x27;&quot; class=&quot;fas fa-info-circle&quot; style=&quot;font-size:30px; color:var(--bs-info)&quot;&gt;&lt;/i&gt;
+                                &lt;i v-if=&quot;icon == &#x27;question&#x27;&quot; class=&quot;fas fa-question-circle&quot; style=&quot;font-size:30px; color:var(--bs-info)&quot;&gt;&lt;/i&gt;
+                                &lt;i v-if=&quot;icon == &#x27;warning&#x27;&quot; class=&quot;fas fa-exclamation-triangle&quot; style=&quot;font-size:30px; color:var(--bs-warning)&quot;&gt;&lt;/i&gt;
+                                &lt;i v-if=&quot;icon == &#x27;error&#x27;&quot; class=&quot;fas fa-exclamation-circle&quot; style=&quot;font-size:30px; color:var(--bs-danger)&quot;&gt;&lt;/i&gt;
+                            &lt;/div&gt;
+                            &lt;div&gt;
+                                &lt;slot&gt;&lt;/slot&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&quot;d-flex p-2 justify-content-end&quot; style=&quot;background-color:#f0f0f0; gap: 1em&quot;&gt;
+                            &lt;button v-if=&quot;ok&quot;  v-on:click=&quot;$emit(&#x27;ok&#x27;)&quot;  class=&quot;btn btn-primary&quot;   style=&quot;flex: 0 0 4em&quot;&gt;OK&lt;/button&gt;
+                            &lt;button v-if=&quot;yes&quot; v-on:click=&quot;$emit(&#x27;yes&#x27;)&quot; class=&quot;btn btn-primary&quot;   style=&quot;flex: 0 0 4em&quot;&gt;Ja&lt;/button&gt;
+                            &lt;button v-if=&quot;no&quot;  v-on:click=&quot;$emit(&#x27;no&#x27;)&quot;  class=&quot;btn btn-secondary&quot; style=&quot;flex: 0 0 4em&quot;&gt;Nein&lt;/button&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+`</span>
+}
 </div></code></pre>
 
     </body>

@@ -1,18 +1,24 @@
-﻿const app = {
+﻿/* global modal */
+
+const app = {
+    components: {
+        'modal': modal
+    },
     data() {
         return {
             categories: [],
             categoryGuid: "",
             products: [],
             searchProduct: "",
+            errorMessage: ""
         }
     },
     async mounted() {
         try {
-            this.categories = await Vue.$get("Categories");
+            this.categories = await Vue.$get("Cate_gories");
         }
         catch (e) {
-            alert(e.message);
+            this.errorMessage = e.message;
         }
     },
     methods: {
@@ -26,7 +32,7 @@
                 }
             }
             catch (e) {
-                alert(e.message);
+                this.errorMessage = e.message;
             }
         }
     },

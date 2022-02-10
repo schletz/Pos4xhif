@@ -1,33 +1,4 @@
-# Razor Pages 14 - Vue.js Components
-
-## Inhalt
-
-- Konfiguration von ESLint in Visual Studio
-- Erstellen einer Komponente
-- Parameter und *emit()*
-- Slots
-
-Das Video ist auf https://youtu.be/XXXVnmqP0ZM verfügbar (50min). Der Programmcode ist im
-Ordner [StoreManager](StoreManager) zu finden.
-
-> **Hinweis:** Um in Visual Studio vernünftig mit JavaScript zu arbeiten, muss der Workload
-> *Node.js development* und ESLint installiert werden. Die Anleitung hierzu befindet sich auf
-> der [Startseite des Kurses](../../README.md#installation-der-ide-visual-studio-2022)
-
-![](screenshot.png)
-
-## Starten der Applikation
-
-Führen Sie die Datei *startServer.cmd* (Windows) bzw. *bash startServer.sh* (Linux) aus. Im
-Skript wird die Umgebungsvariable *STORE_ADMIN* für das Adminkennwort gesetzt. Ohne diese
-Umgebungsvariable kann der Server nicht starten.
-
-## Zur Verfügung gestellte Dateien
-
-**[wwwroot/js/components/modal.js](StoreManager/StoreManager.Webapp/wwwroot/js/components/modal.js)**
-
-```javascript
-const modal = {
+﻿const modal = {
     // See https://vuejs.org/guide/components/props.html
     props: {
         title: { required: true },
@@ -74,4 +45,4 @@ const modal = {
         </div>
 `
 }
-```
+
