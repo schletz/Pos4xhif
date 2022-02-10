@@ -20,16 +20,6 @@ Schule eine Lizenz von Visual Studio Enterprise zur Verfügung.
 
 ![](vs_workloads_3.png)
 
-### Alternativ: Verwenden von JetBrains Rider
-
-Eine andere weit verbreitete Entwicklungsumgebung - gerade unter macOS - ist Rider von JetBrains.
-Ab der Version 2021.3 unterstützt Rider auch .NET 6.
-Wer mit IntelliJ gut arbeiten konnte, kann auch mit der Schullizenz Rider beziehen. Logge dich dafür
-auf https://account.jetbrains.com/login ein. Wer noch keinen Zugang hat, kann mit der Schul Mailadresse
-eine Lizenz gratis beziehen. Nach dem Login steht Rider als Download zur Verfügung.
-
-![](resharper_download_4.png)
-
 ### Node.js für den Linter in Visual Studio
 
 Damit das Schreiben von JavaScript Code in Visual Studio weniger fehleranfällig ist, können wir
@@ -57,6 +47,17 @@ Den Inhalt können Sie von der vorhandenen Datei
 Öffnen Sie danach Visual Studio und aktivieren Sie unter *Tools - Options* den Linter:
 
 ![](vs_litersettings.png)
+
+### Alternativ: Verwenden von JetBrains Rider
+
+Eine andere weit verbreitete Entwicklungsumgebung - gerade unter macOS - ist Rider von JetBrains.
+Ab der Version 2021.3 unterstützt Rider auch .NET 6.
+Wer mit IntelliJ gut arbeiten konnte, kann auch mit der Schullizenz Rider beziehen. Logge dich dafür
+auf https://account.jetbrains.com/login ein. Wer noch keinen Zugang hat, kann mit der Schul Mailadresse
+eine Lizenz gratis beziehen. Nach dem Login steht Rider als Download zur Verfügung.
+
+![](resharper_download_4.png)
+
 
 ### PlantUML und VS Code als Modellierungswerkzeug
 

@@ -10,8 +10,11 @@
 - State Management.
 
 Das Video ist auf https://youtu.be/Xow96bDWIGc verfügbar (68min). Der Programmcode ist im
-Ordner [StoreManager](StoreManager) zu finden. Aktivieren Sie vorher den Linter in Visual Studio
-wie im Punkt *Linter in Visual Studio nutzen* hier beschrieben.
+Ordner [StoreManager](StoreManager) zu finden.
+
+> **Hinweis:** Um in Visual Studio vernünftig mit JavaScript zu arbeiten, muss der Workload
+> *Node.js development* und ESLint installiert werden. Die Anleitung hierzu befindet sich auf
+> der [Startseite des Kurses](../../README.md#installation-der-ide-visual-studio-2022)
 
 ![](screenshot.png)
 
@@ -20,34 +23,6 @@ wie im Punkt *Linter in Visual Studio nutzen* hier beschrieben.
 Führen Sie die Datei *startServer.cmd* (Windows) bzw. *bash startServer.sh* (Linux) aus. Im
 Skript wird die Umgebungsvariable *STORE_ADMIN* für das Adminkennwort gesetzt. Ohne diese
 Umgebungsvariable kann der Server nicht starten.
-
-## Linter in Visual Studio nutzen
-
-Damit das Schreiben von JavaScript Code in Visual Studio weniger fehleranfällig ist, können wir
-*ESLint* nutzen. Installieren Sie dafür *Node.js* über den Installer auf https://nodejs.org/en/download/.
-
-Beim Setup geben Sie *C:\nodejs* als Pfad an und fügen dieses Verzeichnis auch zur PATH Variable
-hinzu.
-
-![](node_installation.png)
-
-Öffnen Sie nach dem Setup die Konsole und geben die folgenden Befehle ein:
-
-```text
-npm install eslint@7
-node -e console.log(require('eslint').Linter.version);
-```
-
-Der 2. Befehl muss die Version 7 (z. B. 7.32.0) ausgeben. Mit Version 8 funktioniert das ESLint
-Plugin von Visual Studio nicht.
-
-Erstellen Sie danach in Ihrer Solution im Webapp Verzeichnis eine Datei *.eslintrc.json*.
-Den Inhalt können Sie von der vorhandenen Datei
-[.eslintrc.json](StoreManager/StoreManager.Webapp/.eslintrc.json) in diesem Projekt übernehmen.
-
-Öffnen Sie danach Visual Studio und aktivieren Sie unter *Tools - Options* den Linter:
-
-![](vs_litersettings.png)
 
 ## Zur Verfügung gestellte Dateien
 
