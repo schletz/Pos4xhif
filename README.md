@@ -44,7 +44,7 @@ Erstellen Sie danach in Ihrer Solution im Webapp Verzeichnis eine Datei *.eslint
 Den Inhalt können Sie von der vorhandenen Datei
 [.eslintrc.json](StoreManager/StoreManager.Webapp/.eslintrc.json) in diesem Projekt übernehmen.
 
-Öffnen Sie danach Visual Studio und aktivieren Sie unter *Tools - Options* den Linter:
+Öffnen danach Visual Studio und aktiviere unter *Tools - Options* den Linter:
 
 ![](vs_litersettings.png)
 
