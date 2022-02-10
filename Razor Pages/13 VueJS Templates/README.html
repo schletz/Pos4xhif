@@ -237,17 +237,19 @@ Vue.$<span class="hljs-keyword">get</span> = function (handler, data) {
 };
 
 Vue.$post = function (handler, data, asJson = <span class="hljs-literal">false</span>) {
-    <span class="hljs-keyword">return</span> Vue.$sendRequest(Vue.$getHandlerUrl(handler), data, <span class="hljs-string">&#x27;POST&#x27;</span>, asJson);
+    <span class="hljs-keyword">const</span> url = handler.indexOf(<span class="hljs-string">&quot;/&quot;</span>) != <span class="hljs-number">-1</span> ? handler : Vue.$getHandlerUrl(handler);
+    <span class="hljs-keyword">return</span> Vue.$sendRequest(url, data, <span class="hljs-string">&#x27;POST&#x27;</span>, asJson);
 };
 
 Vue.$put = function (handler, data, asJson = <span class="hljs-literal">false</span>) {
-    <span class="hljs-keyword">return</span> Vue.$sendRequest(Vue.$getHandlerUrl(handler), data, <span class="hljs-string">&#x27;PUT&#x27;</span>, asJson);
+    <span class="hljs-keyword">const</span> url = handler.indexOf(<span class="hljs-string">&quot;/&quot;</span>) != <span class="hljs-number">-1</span> ? handler : Vue.$getHandlerUrl(handler);
+    <span class="hljs-keyword">return</span> Vue.$sendRequest(url, data, <span class="hljs-string">&#x27;PUT&#x27;</span>, asJson);
 };
 
 Vue.$delete = function (handler, data, asJson = <span class="hljs-literal">false</span>) {
-    <span class="hljs-keyword">return</span> Vue.$sendRequest(Vue.$getHandlerUrl(handler), data, <span class="hljs-string">&#x27;DELETE&#x27;</span>, asJson);
+    <span class="hljs-keyword">const</span> url = handler.indexOf(<span class="hljs-string">&quot;/&quot;</span>) != <span class="hljs-number">-1</span> ? handler : Vue.$getHandlerUrl(handler);
+    <span class="hljs-keyword">return</span> Vue.$sendRequest(url, data, <span class="hljs-string">&#x27;DELETE&#x27;</span>, asJson);
 };
-
 </div></code></pre>
 
     </body>

@@ -135,14 +135,17 @@ Vue.$get = function (handler, data) {
 };
 
 Vue.$post = function (handler, data, asJson = false) {
-    return Vue.$sendRequest(Vue.$getHandlerUrl(handler), data, 'POST', asJson);
+    const url = handler.indexOf("/") != -1 ? handler : Vue.$getHandlerUrl(handler);
+    return Vue.$sendRequest(url, data, 'POST', asJson);
 };
 
 Vue.$put = function (handler, data, asJson = false) {
-    return Vue.$sendRequest(Vue.$getHandlerUrl(handler), data, 'PUT', asJson);
+    const url = handler.indexOf("/") != -1 ? handler : Vue.$getHandlerUrl(handler);
+    return Vue.$sendRequest(url, data, 'PUT', asJson);
 };
 
 Vue.$delete = function (handler, data, asJson = false) {
-    return Vue.$sendRequest(Vue.$getHandlerUrl(handler), data, 'DELETE', asJson);
+    const url = handler.indexOf("/") != -1 ? handler : Vue.$getHandlerUrl(handler);
+    return Vue.$sendRequest(url, data, 'DELETE', asJson);
 };
 

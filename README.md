@@ -18,7 +18,7 @@ Schule eine Lizenz von Visual Studio Enterprise zur Verfügung.
 - Installiere die nachfolgenden Workloads und achte bei den Sprachpaketen darauf, nur *Englisch* auszuwählen.
 - Der Key wird im Unterricht ausgegeben.
 
-![](vs_workloads_2.png)
+![](vs_workloads_3.png)
 
 ### Alternativ: Verwenden von JetBrains Rider
 
@@ -29,6 +29,34 @@ auf https://account.jetbrains.com/login ein. Wer noch keinen Zugang hat, kann mi
 eine Lizenz gratis beziehen. Nach dem Login steht Rider als Download zur Verfügung.
 
 ![](resharper_download_4.png)
+
+### Node.js für den Linter in Visual Studio
+
+Damit das Schreiben von JavaScript Code in Visual Studio weniger fehleranfällig ist, können wir
+*ESLint* nutzen. Installiere dafür *Node.js* über den Installer auf https://nodejs.org/en/download/.
+
+Beim Setup gib *C:\nodejs* als Pfad an und fügen dieses Verzeichnis auch zur PATH Variable
+hinzu.
+
+![](node_installation.png)
+
+Öffnen Sie nach dem Setup die Konsole und geben die folgenden Befehle ein:
+
+```text
+npm install eslint@7
+node -e console.log(require('eslint').Linter.version);
+```
+
+Der 2. Befehl muss die Version 7 (z. B. 7.32.0) ausgeben. Mit Version 8 funktioniert das ESLint
+Plugin von Visual Studio nicht.
+
+Erstellen Sie danach in Ihrer Solution im Webapp Verzeichnis eine Datei *.eslintrc.json*.
+Den Inhalt können Sie von der vorhandenen Datei
+[.eslintrc.json](StoreManager/StoreManager.Webapp/.eslintrc.json) in diesem Projekt übernehmen.
+
+Öffnen Sie danach Visual Studio und aktivieren Sie unter *Tools - Options* den Linter:
+
+![](vs_litersettings.png)
 
 ### PlantUML und VS Code als Modellierungswerkzeug
 
