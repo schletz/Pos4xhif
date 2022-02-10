@@ -20,6 +20,34 @@ Führen Sie die Datei *startServer.cmd* (Windows) bzw. *bash startServer.sh* (Li
 Skript wird die Umgebungsvariable *STORE_ADMIN* für das Adminkennwort gesetzt. Ohne diese
 Umgebungsvariable kann der Server nicht starten.
 
+## Linter in Visual Studio nutzen
+
+Damit das Schreiben von JavaScript Code in Visual Studio weniger fehleranfällig ist, können wir
+*ESLint* nutzen. Installieren Sie dafür *Node.js* über den Installer auf https://nodejs.org/en/download/.
+
+Beim Setup geben Sie *C:\nodejs* als Pfad an und fügen dieses Verzeichnis auch zur PATH Variable
+hinzu.
+
+![](node_installation.png)
+
+Öffnen Sie nach dem Setup die Konsole und geben die folgenden Befehle ein:
+
+```text
+npm install eslint@7
+node -e console.log(require('eslint').Linter.version);
+```
+
+Der 2. Befehl muss die Version 7 (z. B. 7.32.0) ausgeben. Mit Version 8 funktioniert das ESLint
+Plugin von Visual Studio nicht.
+
+Erstellen Sie danach in Ihrer Solution im Webapp Verzeichnis eine Datei *.eslintrc.json*.
+Den Inhalt können Sie von der vorhandenen Datei
+[.eslintrc.json](StoreManager/StoreManager.Webapp/.eslintrc.json) in diesem Projekt übernehmen.
+
+Öffnen Sie danach Visual Studio und aktivieren Sie unter *Tools - Options* den Linter:
+
+![](vs_litersettings.png)
+
 ## Zur Verfügung gestellte Dateien
 
 Vue.js 3 muss in den Ordner *wwwroot/lib/vuejs3* kopiert werden.
