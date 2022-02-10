@@ -112,6 +112,22 @@ Umgebungsvariable kann der Server nicht starten.</p>
 `</span>
 }
 </div></code></pre>
+<p>** Verwenden der Komponente **</p>
+<pre><code class="language-html"><div>@section Scripts {
+<span class="hljs-tag">&lt;<span class="hljs-name">partial</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;_VuejsPartial&quot;</span> /&gt;</span>
+<span class="hljs-comment">&lt;!-- Includes our modal component --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;~/js/components/modal.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;~/js/products/index.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+}
+
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- !! Register this component in your app viewmodel !! --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">modal</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;errorMessage&quot;</span> <span class="hljs-attr">v-on:ok</span>=<span class="hljs-string">&quot;errorMessage = &#x27;&#x27;&quot;</span>
+           <span class="hljs-attr">timeout</span>=<span class="hljs-string">&quot;4000&quot;</span> <span class="hljs-attr">ok</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;Fehler&quot;</span> <span class="hljs-attr">icon</span>=<span class="hljs-string">&quot;error&quot;</span>&gt;</span>
+        Eine Fehlermeldung.
+    <span class="hljs-tag">&lt;/<span class="hljs-name">modal</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
 
     </body>
     </html>

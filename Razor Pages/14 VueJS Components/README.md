@@ -75,3 +75,22 @@ const modal = {
 `
 }
 ```
+
+** Verwenden der Komponente **
+
+```html
+@section Scripts {
+<partial name="_VuejsPartial" />
+<!-- Includes our modal component -->
+<script src="~/js/components/modal.js"></script>
+<script src="~/js/products/index.js"></script>
+}
+
+<div id="app">
+    <!-- !! Register this component in your app viewmodel !! -->
+    <modal v-if="errorMessage" v-on:ok="errorMessage = ''"
+           timeout="4000" ok="true" title="Fehler" icon="error">
+        Eine Fehlermeldung.
+    </modal>
+</div>
+```
