@@ -1,4 +1,4 @@
-# Serverseitiges HTML mit ASP.NET Core Razor Pages
+# Servergerendertes HTML mit ASP.NET Core Razor Pages
 
 ## Inhalt
 
