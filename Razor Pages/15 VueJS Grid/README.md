@@ -37,8 +37,9 @@ builder.Services.AddAntiforgery(o => o.HeaderName = "xsrf-token");
 ```
 
 Damit der Server auch auf einer deutschen Windows Installation in der *InvariantCulture* läuft,
-muss im app Bereich folgende Middleware konfiguriert werden. Dies ist sehr zu empfehlen, da. z. B.
-das App Service in Azure in dieser Locale Einstellung läuft.
+muss im app Bereich folgende Middleware konfiguriert werden. Da Zahlen im JSON Format immer mit
+Punkt gesendet werden, führt das bei einer deutschen Einstellung (, als Komma) zu einem
+Fehler.
 
 ```c#
 app.UseRequestLocalization(System.Globalization.CultureInfo.InvariantCulture.Name);
