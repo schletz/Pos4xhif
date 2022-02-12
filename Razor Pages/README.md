@@ -16,6 +16,7 @@
 - [Razor Pages 12 - Eine Sidebar mit CSS selbst erstellen](12%20Sidebar/README.md)
 - [Razor Pages 13 - Vue.js Template Engine im Browser nutzen](13%20VueJS%20Templates/README.md)
 - [Razor Pages 14 - Vue.js Components](14%20VueJS%20Components/README.md)
+- [Razor Pages 15 - Vue.js Data Grid](15%20VueJS%20Grid/README.md)
   
 Zur [YouTube Playlist](https://www.youtube.com/playlist?list=PLXaz8R749y5ks72kDo5n3nDm5PkA8fUvJ)
 

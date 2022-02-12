@@ -1,0 +1,11 @@
+﻿@page "{guid}"
+@model StoreManager.Webapp.Pages.Stores.DeleteModel
+<h3>Store löschen</h3>
+
+<div class="border border-danger p-3">
+<p>Soll der Store @Model.Store.Name gelöscht werden?</p>
+<form method="post">
+    <button asp-page-handler="Delete" type="submit" class="btn btn-danger">Ja</button>
+    <button asp-page-handler="Cancel" type="submit" class="btn btn-secondary">Nein</button>
+</form>
+</div>

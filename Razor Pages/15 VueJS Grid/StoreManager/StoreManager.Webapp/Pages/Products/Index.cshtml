@@ -1,0 +1,139 @@
+﻿@page
+@model StoreManager.Webapp.Pages.Products.IndexModel
+
+@section head {
+<style>
+    .changed {
+        background-color: hsl(300, 25%, 90%) !important;
+        transition: background-color 500ms ease-in-out;
+    }
+
+    .active {
+        border: 2px solid hsl(300, 25%, 70%);
+        font-weight: bold;
+    }
+
+    .validation {
+        color: red;
+        font-size: 80%;
+    }
+
+    .datatable {
+        min-width: 50rem;
+    }
+
+        .datatable thead {
+            position: sticky;
+            top: 0;
+            background-color: var(--bs-light);
+        }
+</style>
+}
+@section Scripts {
+<partial name="_VuejsPartial" />
+<!-- Includes our modal component -->
+<script src="~/js/components/modal.js"></script>
+<script src="~/js/products/index.js"></script>
+}
+
+<div id="app">
+    <div class="spinner" v-if="loading"></div>
+    <!-- !! Register this component in your app viewmodel !! -->
+    <!-- !! DO NOT write <modal ... /> without inner content. -->
+    <modal ref="errorDialog"
+           timeout="10000" ok="true" title="Fehler" icon="error"></modal>
+    <modal ref="discardDialog"
+           yes="true" no="true" title="Änderungen verwerfen" icon="warning"></modal>
+    <modal ref="deleteConfirmDialog"
+           yes="true" no="true" title="Produkt löschen?" icon="warning"></modal>
+    <h3>Produktliste</h3>
+    <div class="d-flex flex-wrap align-items-center mb-3" style="gap:1em">
+        <div>
+            <label class="form-label mb-0" for="category">Kategorie</label>
+        </div>
+        <div class="flex-grow-1">
+            <select v-model="categoryGuid"
+                    v-on:change="loadProducts()"
+                    id="category" class="form-select">
+                <option value="">Gib eine Kategorie ein.</option>
+                <option v-bind:value="c.guid" v-for="c in categories">{{ c.name }} </option>
+            </select>
+        </div>
+        <template v-if="products.length">
+            <div>
+                <label class="form-label mb-0" for="productsearch">Produktsuche</label>
+            </div>
+            <div class="flex-grow-1">
+                <input id="productsearch" class="form-control" v-model="searchProduct" />
+            </div>
+        </template>
+    </div>
+
+    <div v-if="filteredProducts.length" class="d-flex flex-column" style="gap:1rem">
+        <div class="d-flex" style="gap:1rem">
+            <button class="btn btn-outline-dark" style="flex: 0 0 5em" v-on:click="addProduct()">Neu</button>
+            <button style="flex: 0 1 5em"
+                    v-bind:class="{btn: true, 'btn-outline-dark': true, disabled: !hasChangedProducts}"
+                    v-on:click="upsertProducts()">
+                Speichern
+            </button>
+            <button style="flex: 0 1 5em"
+                    v-bind:class="{btn: true, 'btn-outline-dark': true, disabled: !activeProduct}"
+                    v-on:click="deleteActiveProduct()">
+                Löschen
+            </button>
+        </div>
+        <table class="table table-sm datatable">
+            <colgroup>
+                <col style="width:7rem;" />
+                <col />
+                <col />
+                <col style="width:7rem;" />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>EAN</th>
+                    <th>Kategorie</th>
+                    <th>Name</th>
+                    <th>UVP</th>
+                    <th>Verfügbar ab</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="p in filteredProducts" v-bind:key="p.guid"
+                    v-bind:class="{active: p == activeProduct}"
+                    v-on:click="activeProduct = p"
+                    v-on:input="p.changed = true">
+                    <td v-bind:class="{changed: p.changed}">
+                        <input v-if="!p.guid" class="form-control" v-model="p.ean" type="number" />
+                        <template v-else> {{ p.ean }}</template>
+                        <span class="validation"
+                              v-if="p.validation && p.validation.ean">{{ p.validation.ean }} </span>
+                    </td>
+                    <td>
+                        <select class="form-select" v-model="p.productCategoryGuid">
+                            <option v-for="c in categories" v-bind:value="c.guid">{{ c.name }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" v-model="p.name" />
+                        <span class="validation"
+                              v-if="p.validation && p.validation.name">{{ p.validation.name }} </span>
+                    </td>
+                    <td>
+                        <input class="form-control" v-model="p.recommendedPrice" />
+                        <span class="validation"
+                              v-if="p.validation && p.validation.recommendedPrice">{{ p.validation.recommendedPrice }} </span>
+                    </td>
+                    <td>
+                        <input class="form-control" v-model="p.availableFrom" type="date" />
+                        <span class="validation"
+                              v-if="p.validation && p.validation.availableFrom">{{ p.validation.availableFrom }} </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@Html.AntiForgeryToken()

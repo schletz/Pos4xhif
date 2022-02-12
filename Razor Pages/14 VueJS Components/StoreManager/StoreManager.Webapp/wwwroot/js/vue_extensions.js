@@ -37,6 +37,22 @@ Vue.$getHandlerUrl = function (handler, params) {
  *         Erfordert [FromBody] in der RazorPage.
  */
 Vue.$sendRequest = function (url, data = {}, method = "POST", asJson = false) {
+    for (const key of Object.keys(data)) {
+        let value = data[key];
+        // NULL Werte oder leerstrings löschen. Sonst kann ASP.NET kein Binding
+        // zu einen int? Typ, ... machen, da NULL zum String wird.
+        if (typeof value === "undefined" || value === null || value === '') {
+            delete data[key];
+        }
+        if (typeof value == "string") {
+            value = value.trim();
+            // Deutsche Dezimalzahlen (v.vvv,nn) mit , als Komma in Zahlen mit . als Komma umsetzen.
+            if (value.match(/^[+-]?[0-9.]*,\d*$/)) {
+                value = Number(value.replace(".", "").replace(",", "."));
+            }
+            data[key] = value;
+        }
+    }
     // Die Formulardaten zum Senden aufbereiten, damit sie wie aus einem HTML Formular gesendet aussehen.
     const formData = asJson === true ? JSON.stringify(data) : Object.keys(data).reduce((formData, key) => {
         formData.append(key, data[key]);
@@ -75,14 +91,10 @@ Vue.$sendRequest = function (url, data = {}, method = "POST", asJson = false) {
                             try {
                                 // Server returns JSON? Return error property as validation.
                                 const dataJson = JSON.parse(data);
-                                // server returns an error property with validation messages?
-                                if (!dataJson.errors) {
-                                    reject({ status: 400, validation: {}, message: "" });
-                                    return;
-                                }
                                 // convert keys to lowercase
-                                const validation = Object.keys(data.errors).reduce((prev, current) => {
-                                    prev[current.toLowerCase()] = data.errors[current];
+                                const validation = Object.keys(dataJson).reduce((prev, current) => {
+                                    const newKey = current.charAt(0).toLowerCase() + current.slice(1);
+                                    prev[newKey] = dataJson[current][0];
                                     return prev;
                                 }, {});
                                 reject({
@@ -150,4 +162,3 @@ Vue.$delete = function (handler, data, asJson = false) {
     const url = handler.indexOf("/") != -1 ? handler : Vue.$getHandlerUrl(handler);
     return Vue.$sendRequest(url, data, 'DELETE', asJson);
 };
-

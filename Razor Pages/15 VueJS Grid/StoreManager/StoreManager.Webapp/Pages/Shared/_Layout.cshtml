@@ -1,0 +1,112 @@
+﻿@inject StoreManager.Webapp.Services.AuthService AuthService
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Manager</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Font Awesome. Aus dem ZIP muss auch der Ordner webfonts in lib kopiert werden. -->
+    <link rel="stylesheet" href="~/lib/fontawesome5/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/StoreManager.Webapp.styles.css" asp-append-version="true" />
+    <script src="~/lib/fontawesome5/all.min.js"></script>
+    @RenderSection("head", false)
+</head>
+<body>
+    <header>
+        <div class="header-toggler"  onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="header-logo">
+            <a href="/">
+                <img src="~/schullogoMitText.png" style="height: 50px" />
+            </a>
+        </div>
+        <div class="header-content">
+            Store Manager
+        </div>
+        <div class="header-info">
+            @if (AuthService.IsAuthenticated)
+            {
+                <text>Angemeldet als </text>
+
+                @AuthService.Username
+                <small class="ms-2"><a asp-page="/User/Logout">Logout</a></small>
+            }
+            else
+            {
+                <strong class="not-authenticated">
+                    Nicht angemeldet
+                    <a class="ms-2" asp-page="/User/Login">Login</a>
+                </strong>
+            }
+
+        </div>
+    </header>
+    <main>
+        <nav class="sidebar">
+            <ul data-nav-group="Stores verwalten">
+                <li class="sidebar-item">
+                    <a asp-page="/Stores/Index">
+                        <div class="sidebar-item-container">
+                            <div class="sidebar-item-icon"><i class="fas fa-search"></i></div>
+                            <div class="sidebar-item-text">Storeliste</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a asp-page="/Stores/Trend">
+                        <div class="sidebar-item-container">
+                            <div class="sidebar-item-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="sidebar-item-text">Preistrend</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <ul data-nav-group="Produkte verwalten">
+                <li class="sidebar-item">
+                    <a asp-page="/Products/Index">
+                        <div class="sidebar-item-container">
+                            <div class="sidebar-item-icon"><i class="far fa-file-alt"></i></div>
+                            <div class="sidebar-item-text">Produktliste</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <ul data-nav-group="Administration">
+                <li class="sidebar-item">
+                    <a asp-page="/Import/Index">
+                        <div class="sidebar-item-container">
+                            <div class="sidebar-item-icon"><i class="fas fa-upload"></i></div>
+                            <div class="sidebar-item-text">Produkte importieren</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a asp-page="/User/Index">
+                        <div class="sidebar-item-container">
+                            <div class="sidebar-item-icon"><i class="fas fa-users"></i></div>
+                            <div class="sidebar-item-text">Benutzerliste</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </main>
+    <footer>
+        <img src="~/schullogo.png" style="height:32px;" class="me-3" />
+        <strong class="pe-3">
+            HTL Spengergasse - Abteilung Informatik
+        </strong>
+        &copy; Michael Schletz, 2022
+    </footer>
+
+    <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
