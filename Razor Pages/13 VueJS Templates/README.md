@@ -34,7 +34,7 @@ Vue.js 3 muss in den Ordner *wwwroot/lib/vuejs3* kopiert werden.
   speichern.
 
 
-**[Pages/Shares/_VuejsPartial.cshtml](StoreManager/StoreManager.Webapp/Pages/Shared/_VuejsPartial.cshtml**
+**[Pages/Shares/_VuejsPartial.cshtml](StoreManager/StoreManager.Webapp/Pages/Shared/_VuejsPartial.cshtml)**
 
 ```c#
 @using Microsoft.Extensions.Hosting
