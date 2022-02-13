@@ -56,10 +56,10 @@ Webapp
 
 ### Gegenüberstellung der Konzepte
 
-| Razor Pages                                                   | MVC                                                                                               |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| PageModel Klasse                                              | Die Properties kommen in ein ViewModel, die Methoden in den Controller bzw. in eine Filterklasse. |
-| Page Handler wie *OnGet()*, *OnPost()*, *OnPostNewStore()*, … | Controller Actions mit Routing Parameter (HttpGet, HttpPost(...)), ...                            |
-| *BindProperty* Annotation                                     | Modelbinding über den Parameter der POST Actionmethode                                            |
-| Page Filter (*OnPageHandlerExecuting()*, …)                   | *OnActionExecuting* bzw. *OnActionExecuted* Methode im Controller.                                |
-| return Page()                                                 | return View(viewmodel)                                                                            |
+| Razor Pages                                                   | MVC                                                                     |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| PageModel Klasse                                              | Die Properties kommen in ein ViewModel, die Methoden in den Controller. |
+| Page Handler wie *OnGet()*, *OnPost()*, *OnPostNewStore()*, … | Controller Actions mit Routing Parameter (HttpGet, HttpPost(...)), ...  |
+| *BindProperty* Annotation                                     | Modelbinding über den Parameter der POST Actionmethode                  |
+| Page Filter (*OnPageHandlerExecuting()*, …)                   | *OnActionExecuting* bzw. *OnActionExecuted* Methode im Controller.      |
+| return Page()                                                 | return View(viewmodel)                                                  |
