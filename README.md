@@ -30,7 +30,7 @@ hinzu.
 
 ![](node_installation.png)
 
-Öffnen Sie nach dem Setup die Konsole und geben die folgenden Befehle ein:
+Öffne nach dem Setup die Konsole und gib die folgenden Befehle ein:
 
 ```text
 npm install eslint@7
@@ -44,7 +44,7 @@ Erstelle danach in deinem Projektverzeichnis mit der Webapplikation eine Datei *
 Den Inhalt kannst du von der Musterdatei
 [.eslintrc.json](.eslintrc.json) übernehmen.
 
-Öffnen danach Visual Studio und aktiviere unter *Tools - Options* den Linter:
+Öffne danach Visual Studio und aktiviere unter *Tools - Options* den Linter:
 
 ![](vs_litersettings.png)
 
@@ -62,19 +62,19 @@ eine Lizenz gratis beziehen. Nach dem Login steht Rider als Download zur Verfüg
 ### PlantUML und VS Code als Modellierungswerkzeug
 
 In der Konzeptionierungsphase ist ein grafisches Tool zum Erzeugen von Klassenmodellen sehr wichtig.
-In diesen Kurs werden immer wieder UML Klassendiagramme hergezeigt. Sie können mit VS Code und
-PlantUML erzeugt werden:
+In diesen Kurs werden immer wieder UML Klassendiagramme hergezeigt. Du kannst sie mit VS Code und
+PlantUML erzeugen:
 
 1. Prüfe, ob Java installiert und im PATH eingetragen ist. Der Befehl *java -version* muss erkannt
    werden. Falls nicht, lade von https://openjdk.java.net/ die neuste Version von OpenJDK und
    füge den Pfad von java.exe im bin Verzeichnis der PATH Variable hinzu.
-1. Installiere [Visual Studio Code](https://code.visualstudio.com). Achtung: Aktiviere beim Setup
-   die Option "In den Explorer integrieren", damit Sie im Kontextmenü VS Code starten können.
-1. Installiere die folgenden Extensions:
+2. Installiere [Visual Studio Code](https://code.visualstudio.com). Achtung: Aktiviere beim Setup
+   die Option "In den Explorer integrieren", damit du im Kontextmenü VS Code starten kannst.
+3. Installiere die folgenden Extensions:
    - Markdown PDF
    - Markdown Preview Enhanced
    - PlantUML
-1. Öffne die VS Code Konfiguration (*F1* - "*settings*" eingeben - "*Preferences: Open Settings (JSON)*" wählen)
+4. Öffne die VS Code Konfiguration (*F1* - "*settings*" eingeben - "*Preferences: Open Settings (JSON)*" wählen)
    und füge folgende Zeilen hinzu:
 
 ```javascript
