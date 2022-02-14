@@ -29,7 +29,7 @@
                 <td>@s.SchoolClass.Room</td>
                 <td>@s.Lastname</td>
                 <td>@s.Firstname</td>
-                <td>@s.DateOfBirth</td>
+                <td>@s.DateOfBirth.ToString("dd.MM.yyyy")</td>
                 <td>
                     <a asp-page="/Exams/StudentExams" asp-route-studentGuid="@s.Guid">Exams</a>
                     <a asp-page="/Students/Edit" asp-route-guid="@s.Guid">Edit</a>

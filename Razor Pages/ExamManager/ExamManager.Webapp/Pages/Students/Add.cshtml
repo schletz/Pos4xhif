@@ -7,10 +7,22 @@
             color: red;
             font-size: 80%;
         }
+
+        .input_fields {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: start;
+            gap:1rem;
+        }
+        ..input_fields label {
+            flex: 0 1 20rem;
+        }
     </style>
 }
 <h3>Add a student</h3>
 <form method="post">
+    <div class="input_fields">
     <label>
         Account:
         <input class="form-control" asp-for="Student.Account" />
@@ -38,8 +50,7 @@
     </label>
     <label>
         School class:
-        <select asp-for="Student.SchoolClassName" asp-items="Model.Classes">
-
+        <select class="form-select" asp-for="Student.SchoolClassName" asp-items="Model.Classes">
         </select>
         <span class="error" asp-validation-for="Student.SchoolClassName"></span>
     </label>
@@ -57,8 +68,9 @@
         City:
         <input class="form-control" asp-for="Student.Home.City" />
     </label>
-    <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+    <button class="mt-3 btn btn-primary" type="submit">Submit</button>
 </form>
 
 
-<div class="text-danger" asp-validation-summary="All"></div>
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>

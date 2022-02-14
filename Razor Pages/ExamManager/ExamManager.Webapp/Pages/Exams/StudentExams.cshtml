@@ -3,14 +3,15 @@
 
 @section Head
 {
-    <style>
-        .examTable {
-            border-spacing: 5px;
-        }
-        .header {
-            font-weight: bold;
-        }
-    </style>
+<style>
+    .examTable {
+        border-spacing: 5px;
+    }
+
+    .header {
+        font-weight: bold;
+    }
+</style>
 }
 
 @if (!string.IsNullOrEmpty(Model.Message))
@@ -21,34 +22,37 @@
 }
 else
 {
-    <div class="d-sm-table examTable">
-        <div class="d-sm-table-row">
-            <div class="d-sm-table-cell header">
-                Teacher
-            </div>
-            <div class="d-sm-table-cell header">
-                Subject
-            </div>
-            <div class="d-sm-table-cell header">
-                Date
-            </div>
-        </div>
-        @foreach (var e in Model.Exams)
-        {
-            <div class="d-sm-table-row">
-                <div class="d-sm-table-cell">
-                    @e.TeacherShortname
-                    @e.Teacher.Lastname
-                    @e.Teacher.Firstname
-                </div>
-                <div class="d-sm-table-cell">
-                    @e.SubjectShortname
-                </div>
-                <div class="d-sm-table-cell">
-                    @e.Date.ToString("dd.MM.yyyy")
-                </div>
-            </div>
-        }
-    </div>
+    <table class="table table-sm">
+        <colgroup>
+            <col syle="width: 20em" />
+            <col syle="width: 10em" />
+            <col syle="width: 10em" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Subject</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Exams)
+            {
+                <tr>
+                    <td>
+                        @e.TeacherShortname
+                        @e.Teacher.Lastname
+                        @e.Teacher.Firstname
+                    </td>
+                    <td>
+                        @e.SubjectShortname
+                    </td>
+                    <td>
+                        @e.Date.ToString("dd.MM.yyyy")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
