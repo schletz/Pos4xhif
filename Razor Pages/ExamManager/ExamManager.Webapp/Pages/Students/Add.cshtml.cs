@@ -45,7 +45,7 @@ namespace ExamManager.Webapp.Pages.Students
             }
             var student = _mapper.Map<Student>(Student);
 
-            _db.Students.Add(student);
+            _db.Students.Add(student);  // INSERT INTO
             _db.SaveChanges();
 
             // REDIRECT AFTER POST

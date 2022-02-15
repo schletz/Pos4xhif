@@ -37,7 +37,19 @@ namespace ExamManager.App.Entities
             modelBuilder.Entity<Student>().OwnsOne(s => s.Home);
             modelBuilder.Entity<Student>().OwnsOne(s => s.Parents);
             modelBuilder.Entity<Student>().HasIndex(s => s.Guid).IsUnique();
-            modelBuilder.Entity<Exam>().HasIndex(e => e.Guid).IsUnique();
+            modelBuilder.Entity<Teacher>().HasIndex(t => t.Shortname).IsUnique();
+            modelBuilder.Entity<SchoolClass>().HasIndex(s => s.Name).IsUnique();
+            modelBuilder.Entity<Subject>().HasIndex(s => s.Name).IsUnique();
+
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                var type = entity.ClrType;
+                if (type.GetProperty("Guid") is not null)
+                {
+                    modelBuilder.Entity(type).HasAlternateKey("Guid");
+                    modelBuilder.Entity(type).Property("Guid").ValueGeneratedOnAdd();
+                }
+            }
 
         }
 

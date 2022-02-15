@@ -15,6 +15,11 @@ namespace ExamManager.App.Mappings
         {
             CreateMap<StudentDto, Student>();  // StudentDto --> Student
             CreateMap<Student, StudentDto>();  // Student --> StudentDto
+            // !! NOTICE: Use AfterMap to assign Teacher, Subject, Class
+            CreateMap<ExamDto, Exam>();
+            // TecherGuid will be initialized (flattening), because AutoMapper
+            // reads TeacherGuid as Teacher + Guid.
+            CreateMap<Exam, ExamDto>();
         }
 
     }

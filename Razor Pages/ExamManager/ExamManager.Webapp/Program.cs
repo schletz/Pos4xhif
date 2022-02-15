@@ -1,5 +1,6 @@
 using ExamManager.App.Entities;
 using ExamManager.App.Mappings;
+using ExamManager.App.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,7 @@ public static class Program
 
         // Add services to the container.
         builder.Services.AddRazorPages();
+        builder.Services.AddTransient<ExamRepository>();
         builder.Services.AddDbContext<ExamContext>();
         builder.Services.AddAutoMapper(typeof(DtoMappings));
         var app = builder.Build();

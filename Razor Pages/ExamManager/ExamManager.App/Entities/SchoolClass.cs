@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExamManager.App.Entities
 {
-    public class SchoolClass
+    public class SchoolClass : IEntity<int>
     {
         public SchoolClass(string name)
         {
@@ -16,8 +16,10 @@ namespace ExamManager.App.Entities
 
         protected SchoolClass() { }
 
-        [Key]      // ID -> PK by convention. Otherwise you have to declare your PK explicit.
-        public string Name { get; private set; } = default!;  // 4EHIF, ..
+
+        public int Id { get; private set; }
+        public Guid Guid { get; private set; }
+        public string Name { get; set; } = default!;  // 4EHIF, ..
         public string? Room { get; set; }
         public virtual ICollection<Student> Students { get; } = new List<Student>(0);
         public virtual ICollection<Exam> Exams { get; } = new List<Exam>(0);

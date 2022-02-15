@@ -10,7 +10,7 @@ namespace ExamManager.App.Entities
 {
     // POCO class (= plain old clr class)
     // POJO class (= plain old java class)
-    public class Student
+    public class Student : IEntity<int>
     {
         public Student(
             string account, string lastname,
