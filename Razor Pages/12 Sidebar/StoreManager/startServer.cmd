@@ -11,4 +11,4 @@ FOR /D /R %%d IN (*) DO (
 cd StoreManager.Webapp
 SET STORE_ADMIN=EinAdminPasswort
 SET ASPNETCORE_ENVIRONMENT=Development
-dotnet watch run
+dotnet watch run --no-launch-profile
