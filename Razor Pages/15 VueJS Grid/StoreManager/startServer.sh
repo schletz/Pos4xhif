@@ -9,4 +9,4 @@ echo "Starte Server"
 cd StoreManager.Webapp
 export STORE_ADMIN=EinAdminPasswort
 export ASPNETCORE_ENVIRONMENT=Development
-dotnet watch run
+dotnet watch run --no-launch-profile
