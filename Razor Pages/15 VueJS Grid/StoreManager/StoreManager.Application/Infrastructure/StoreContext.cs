@@ -22,10 +22,12 @@ namespace StoreManager.Application.Infrastructure
         {
             modelBuilder.Entity<Offer>().Property(o => o.Price).HasPrecision(9, 4);
             modelBuilder.Entity<Offer>().HasIndex(o => new { o.StoreId, o.ProductEan }).IsUnique();
+            // Exclude inherited properties
+            var searchFlag = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly;
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 var type = entity.ClrType;
-                if (type.GetProperty("Guid") is not null)
+                if (type.GetProperty("Guid", searchFlag) is not null)
                 {
                     modelBuilder.Entity(type).HasAlternateKey("Guid");
                     modelBuilder.Entity(type).Property("Guid").ValueGeneratedOnAdd();

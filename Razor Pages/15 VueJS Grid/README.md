@@ -51,17 +51,15 @@ Wir konfigurieren in *OnModelCreating* alle Properties mit dem Namen *Guid* so, 
 ein neuer GUID Wert automatisch generiert wird. Somit müssen wir uns nicht händisch darum kümmern.
 
 ```c#
-protected override void OnModelCreating(ModelBuilder modelBuilder)
+// Exclude inherited properties
+var searchFlag = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly;
+foreach (var entity in modelBuilder.Model.GetEntityTypes())
 {
-    /* ... */
-    foreach (var entity in modelBuilder.Model.GetEntityTypes())
+    var type = entity.ClrType;
+    if (type.GetProperty("Guid", searchFlag) is not null)
     {
-        var type = entity.ClrType;
-        if (type.GetProperty("Guid") is not null)
-        {
-            modelBuilder.Entity(type).HasAlternateKey("Guid");
-            modelBuilder.Entity(type).Property("Guid").ValueGeneratedOnAdd();
-        }
+        modelBuilder.Entity(type).HasAlternateKey("Guid");
+        modelBuilder.Entity(type).Property("Guid").ValueGeneratedOnAdd();
     }
 }
 ```
