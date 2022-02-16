@@ -41,10 +41,12 @@ namespace ExamManager.App.Entities
             modelBuilder.Entity<SchoolClass>().HasIndex(s => s.Name).IsUnique();
             modelBuilder.Entity<Subject>().HasIndex(s => s.Name).IsUnique();
 
+            // Exclude inherited properties
+            var searchFlag = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.DeclaredOnly;
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 var type = entity.ClrType;
-                if (type.GetProperty("Guid") is not null)
+                if (type.GetProperty("Guid", searchFlag) is not null)
                 {
                     modelBuilder.Entity(type).HasAlternateKey("Guid");
                     modelBuilder.Entity(type).Property("Guid").ValueGeneratedOnAdd();
@@ -157,12 +159,12 @@ namespace ExamManager.App.Entities
                 .CustomInstantiator(f =>
                 {
                     return new Exam(
-                        teacherShortname: f.Random.ListItem(teachers).Shortname,
-                        subjectShortname: f.Random.ListItem(subjects).Shortname,
+                        teacher: f.Random.ListItem(teachers),
+                        subject: f.Random.ListItem(subjects),
                         date: new DateTime(2021, 10, 1)
                             .AddDays(f.Random.Int(0, 30 * 9))
                             .AddHours(f.Random.Int(8, 16)),
-                        schoolClassName: f.Random.ListItem(classes).Name);
+                        schoolClass: f.Random.ListItem(classes));
                 })
                 .Generate(200)
                 .ToList();

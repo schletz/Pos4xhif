@@ -13,7 +13,6 @@ namespace ExamManager.App.Entities
         protected Subject() { }  // For EF Core proxies
         public int Id { get; private set; }
         public Guid Guid { get; private set; }
-        [Key]
         public string Shortname { get; set; } = default!;
         public string Name { get; set; } = default!;
     }

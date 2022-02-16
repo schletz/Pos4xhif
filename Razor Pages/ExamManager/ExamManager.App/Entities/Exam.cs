@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,28 +10,31 @@ namespace ExamManager.App.Entities
     public class Exam : IEntity<int>
     {
         public Exam(
-            string teacherShortname,
-            string subjectShortname,
+            Teacher teacher,
+            Subject subject,
             DateTime date,
-            string schoolClassName)
+            SchoolClass schoolClass)
         {
-            TeacherShortname = teacherShortname;
-            SubjectShortname = subjectShortname;
+            Teacher = teacher;
+            TeacherId = teacher.Id;
+            Subject = subject;
+            SubjectId = subject.Id;
+            SchoolClass = schoolClass;
+            SchoolClassId = SchoolClass.Id;
             Date = date;
-            SchoolClassName = schoolClassName;
             Guid = Guid.NewGuid();
         }
         protected Exam() { }
-        public int Id { get; private set; }
-        public Guid Guid { get; private set; }
+        public int Id { get; protected set; }
+        public Guid Guid { get; protected set; }
         // Name of the navigation property + name of the PK
         public int TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; } = default!; 
-        public string SubjectShortname { get; set; } = default!;
+        public int SubjectId { get; set; } = default!;
         // Virtual for EF Core Proxies (requires NuGet Microsoft.EntityFrameworkCore.Proxies)
         public virtual Subject Subject { get; set; } = default!;
 
-        public string SchoolClassName { get; set; } = default!;
+        public int SchoolClassId { get; set; } = default!;
         // Virtual for EF Core Proxies (requires NuGet Microsoft.EntityFrameworkCore.Proxies)
         public virtual SchoolClass SchoolClass { get; set; } = default!;
         public DateTime Date { get; set; }

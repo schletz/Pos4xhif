@@ -25,48 +25,48 @@
     <div class="input_fields">
     <label>
         Account:
-        <input class="form-control" asp-for="Student.Account" />
-        <span class="error" asp-validation-for="Student.Account"></span>
+        <input class="form-control" asp-for="StudentDto.Account" />
+        <span class="error" asp-validation-for="StudentDto.Account"></span>
     </label>
     <label>
         Lastname:
-        <input class="form-control" asp-for="Student.Lastname" />
-        <span class="error" asp-validation-for="Student.Lastname"></span>
+        <input class="form-control" asp-for="StudentDto.Lastname" />
+        <span class="error" asp-validation-for="StudentDto.Lastname"></span>
     </label>
     <label>
         Firstname:
-        <input class="form-control" asp-for="Student.Firstname" />
-        <span class="error" asp-validation-for="Student.Firstname"></span>
+        <input class="form-control" asp-for="StudentDto.Firstname" />
+        <span class="error" asp-validation-for="StudentDto.Firstname"></span>
     </label>
     <label>
         Date of birth:
-        <input type="date" class="form-control" asp-for="Student.DateOfBirth" />
-        <span class="error" asp-validation-for="Student.DateOfBirth"></span>
+        <input type="date" class="form-control" asp-for="StudentDto.DateOfBirth" />
+        <span class="error" asp-validation-for="StudentDto.DateOfBirth"></span>
     </label>
     <label>
         Email (optional):
-        <input class="form-control" asp-for="Student.Email" />
-        <span class="error" asp-validation-for="Student.Email"></span>
+        <input class="form-control" asp-for="StudentDto.Email" />
+        <span class="error" asp-validation-for="StudentDto.Email"></span>
     </label>
     <label>
         School class:
-        <select class="form-select" asp-for="Student.SchoolClassName" asp-items="Model.Classes">
+        <select class="form-select" asp-for="StudentDto.SchoolClassGuid" asp-items="Model.Classes">
         </select>
-        <span class="error" asp-validation-for="Student.SchoolClassName"></span>
+        <span class="error" asp-validation-for="StudentDto.SchoolClassGuid"></span>
     </label>
     <label>
         Street:
-        <input class="form-control" asp-for="Student.Home.Street" />
-        <span class="error" asp-validation-for="Student.Home.Street"></span>
+        <input class="form-control" asp-for="StudentDto.Home.Street" />
+        <span class="error" asp-validation-for="StudentDto.Home.Street"></span>
     </label>
     <label>
         ZIP:
-        <input class="form-control" asp-for="Student.Home.Zip" />
-        <span class="error" asp-validation-for="Student.Home.Zip"></span>
+        <input class="form-control" asp-for="StudentDto.Home.Zip" />
+        <span class="error" asp-validation-for="StudentDto.Home.Zip"></span>
     </label>
     <label>
         City:
-        <input class="form-control" asp-for="Student.Home.City" />
+        <input class="form-control" asp-for="StudentDto.Home.City" />
     </label>
     </div>
     <button class="mt-3 btn btn-primary" type="submit">Submit</button>

@@ -12,8 +12,8 @@ namespace ExamManager.Webapp.Pages.Exams
     {
         private readonly ExamContext _db;
 
-        public IReadOnlyList<Exam> Exams { get; private set; } 
-            = new List<Exam> ();
+        public IReadOnlyList<Exam> Exams { get; private set; }
+            = new List<Exam>();
 
         public string? Message { get; private set; }
 
@@ -25,15 +25,16 @@ namespace ExamManager.Webapp.Pages.Exams
         public IActionResult OnGet(Guid studentGuid)
         {
             var student = _db.Students.FirstOrDefault(s => s.Guid == studentGuid);
-            if (student is null) 
+            if (student is null)
             {
                 Message = "Student not found :(";
                 return Page();
             }
             Exams = _db
                 .Exam
-                .Include(e=>e.Teacher)
-                .Where(e => e.SchoolClassName == student.SchoolClassName)
+                .Include(e => e.Teacher)
+                .Include(e => e.Subject)
+                .Where(e => e.SchoolClassId == student.SchoolClassId)
                 .ToList();
             return Page();
         }

@@ -21,6 +21,6 @@ namespace ExamManager.App.Dtos
         string? Email,
         Address Home,
         Address? Parents,
-        string SchoolClassName);
+        Guid SchoolClassGuid);
 
 }

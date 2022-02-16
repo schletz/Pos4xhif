@@ -4,6 +4,7 @@ using ExamManager.App.Entities;
 using ExamManager.App.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,11 +13,22 @@ namespace ExamManager.Webapp.Pages.Exams
     public class AddModel : PageModel
     {
         public ExamRepository _exams;
+        public TeacherRepository _teachers;
+        public SchoolClassRepository _schoolClasses;
+        public SubjectRepository _subjects;
         public IMapper _mapper;
 
-        public AddModel(ExamRepository exams, IMapper mapper)
+        public AddModel(
+            ExamRepository exams,
+            TeacherRepository teachers,
+            SchoolClassRepository schoolClasses,
+            SubjectRepository subjects,
+            IMapper mapper)
         {
             _exams = exams;
+            _teachers = teachers;
+            _schoolClasses = schoolClasses;
+            _subjects = subjects;
             _mapper = mapper;
         }
 
@@ -27,7 +39,7 @@ namespace ExamManager.Webapp.Pages.Exams
         public void OnGet()
         {
             Exams = _exams.Set
-                .OrderBy(e => e.SchoolClassName)
+                .OrderBy(e => e.SchoolClassId)
                 .ToList();
         }
 
@@ -37,20 +49,34 @@ namespace ExamManager.Webapp.Pages.Exams
             {
                 return Page();
             }
-            var exam = _mapper.Map<ExamDto, Exam>(ExamDto, opt =>
+            try
             {
-                opt.AfterMap((dto, exam) =>
+                var teacher = _teachers.Set.FirstOrDefault(t => t.Guid == ExamDto.TeacherGuid) ?? throw new ApplicationException("Teacher does not exist.");
+                var schoolClass = _schoolClasses.Set.FirstOrDefault(c => c.Guid == ExamDto.SchoolClassGuid) ?? throw new ApplicationException("Class does not exist.");
+                var subject = _subjects.Set.FirstOrDefault(t => t.Guid == ExamDto.SubjectGuid) ?? throw new ApplicationException("Subject does not exist.");
+
+                var exam = _mapper.Map<ExamDto, Exam>(ExamDto, opt =>
                 {
-                    exam.Teacher = _teachers.Set.FirstOrDefault(t => t.Guid == dto.TeacherGuid);
-                    exam.SchoolClass = _classes.Set.FirstOrDefault(c => c.Guid == dto.SchoolClassGuid);
-                    exam.SubjectGuid = _subjects.Set.FirstOrDefault(t => t.Guid == dto.SubjectGuid);
+                    opt.AfterMap((dto, exam) =>
+                    {
+                        exam.Teacher = teacher;
+                        exam.SchoolClass = schoolClass;
+                        exam.Subject = subject;
+                    });
                 });
-            });
-            var (success, message) = _exams.Insert(exam);
-            if (!success)
-            {
-                Message = message;
+                var (success, message) = _exams.Insert(exam);
+                if (!success)
+                {
+                    throw new ApplicationException(message);
+                }
             }
+            catch (ApplicationException e)
+            {
+                Message = e.Message;
+                return Page();
+            }
+            return RedirectToPage();
+
         }
     }
 }

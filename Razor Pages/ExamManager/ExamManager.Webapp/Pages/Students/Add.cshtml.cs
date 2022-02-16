@@ -21,7 +21,7 @@ namespace ExamManager.Webapp.Pages.Students
         }
 
         [BindProperty]
-        public StudentDto Student { get; set; } = default!;
+        public StudentDto StudentDto { get; set; } = default!;
 
         public IEnumerable<SelectListItem> Classes { get; private set; } = Enumerable.Empty<SelectListItem>();
 
@@ -37,13 +37,17 @@ namespace ExamManager.Webapp.Pages.Students
                 return Page();
             }
 
-            var schoolClass = _db.SchoolClasses.FirstOrDefault(s => s.Name == Student.SchoolClassName);
+            var schoolClass = _db.SchoolClasses.FirstOrDefault(s => s.Guid == StudentDto.SchoolClassGuid);
             if (schoolClass is null)
             {
-                ModelState.AddModelError(nameof(StudentDto.SchoolClassName), "Class not knwon.");
+                ModelState.AddModelError(nameof(App.Dtos.StudentDto.SchoolClassGuid), "Class not knwon.");
                 return Page();
             }
-            var student = _mapper.Map<Student>(Student);
+            var student = _mapper.Map<StudentDto, Student>(StudentDto, opt => opt.AfterMap((src, dst) =>
+             {
+                 dst.SchoolClass = schoolClass;
+             }));
+
 
             _db.Students.Add(student);  // INSERT INTO
             _db.SaveChanges();
@@ -58,7 +62,7 @@ namespace ExamManager.Webapp.Pages.Students
             Classes = _db.SchoolClasses
                 .Select(c => new SelectListItem
                 {
-                    Value = c.Name,
+                    Value = c.Guid.ToString(),
                     Text = c.Name
                 })
                 .OrderBy(o => o.Text);

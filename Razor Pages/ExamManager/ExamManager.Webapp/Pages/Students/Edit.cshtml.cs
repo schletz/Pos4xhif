@@ -18,7 +18,7 @@ namespace ExamManager.Webapp.Pages.Students
 
         public string? Message { get; set; }
         [BindProperty]
-        public StudentDto Student { get; set; } = default!;
+        public StudentDto StudentDto { get; set; } = default!;
         public IEnumerable<SelectListItem> Classes { get; private set; } = Enumerable.Empty<SelectListItem>();
 
         public EditModel(ExamContext db, IMapper mapper)
@@ -35,7 +35,7 @@ namespace ExamManager.Webapp.Pages.Students
                 Message = "Student not found.";
                 return Page();
             }
-            Student = _mapper.Map<StudentDto>(student);
+            StudentDto = _mapper.Map<StudentDto>(student);
             return Page();
         }
 
@@ -46,10 +46,10 @@ namespace ExamManager.Webapp.Pages.Students
                 return Page();
             }
 
-            var schoolClass = _db.SchoolClasses.FirstOrDefault(s => s.Name == Student.SchoolClassName);
+            var schoolClass = _db.SchoolClasses.FirstOrDefault(s => s.Guid == StudentDto.SchoolClassGuid);
             if (schoolClass is null)
             {
-                ModelState.AddModelError(nameof(StudentDto.SchoolClassName), "Class not knwon.");
+                ModelState.AddModelError(nameof(App.Dtos.StudentDto.SchoolClassGuid), "Class not knwon.");
                 return Page();
             }
             var studentDb = _db.Students.FirstOrDefault(s => s.Guid == guid);
@@ -58,14 +58,10 @@ namespace ExamManager.Webapp.Pages.Students
                 Message = "Student not found";
                 return Page();
             }
-            studentDb.Account = Student.Account;
-            studentDb.DateOfBirth = Student.DateOfBirth;
-            studentDb.Email = Student.Email;
-            studentDb.Lastname = studentDb.Lastname;
-            studentDb.Firstname = studentDb.Firstname;
-            studentDb.Home = studentDb.Home;
-            studentDb.Parents = studentDb.Parents;
-            studentDb.SchoolClass = schoolClass;
+            _mapper.Map(StudentDto, studentDb, opt => opt.AfterMap((src, dst) =>
+            {
+                dst.SchoolClass = schoolClass;
+            }));
             _db.SaveChanges();
 
             // REDIRECT AFTER POST
@@ -78,7 +74,7 @@ namespace ExamManager.Webapp.Pages.Students
             Classes = _db.SchoolClasses
                 .Select(c => new SelectListItem
                 {
-                    Value = c.Name,
+                    Value = c.Guid.ToString(),
                     Text = c.Name
                 })
                 .OrderBy(o => o.Text);

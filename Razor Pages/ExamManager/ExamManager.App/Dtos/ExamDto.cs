@@ -12,7 +12,7 @@ namespace ExamManager.App.Dtos
         Guid TeacherGuid,  // GUID for Foreign keys!!
         Guid SubjectGuid,
         Guid SchoolClassGuid,
-        [Range(typeof(DateTime), "2000-01-01", "2100-01-01", ErrorMessage = "Invalid date"]
+        [Range(typeof(DateTime), "2000-01-01", "2100-01-01", ErrorMessage = "Invalid date")]
         DateTime Date
         )
     {

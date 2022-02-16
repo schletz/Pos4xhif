@@ -23,6 +23,7 @@ namespace ExamManager.App.Entities
             DateOfBirth = dateOfBirth;
             Guid = Guid.NewGuid();
             SchoolClass = schoolClass;
+            SchoolClassId = schoolClass.Id;
         }
         protected Student() { }
         // Id -> primary key, int Id -> autoincrement
@@ -41,7 +42,7 @@ namespace ExamManager.App.Entities
         public Address Home { get; set; } = default!;
         public Address? Parents { get; set; }
 
-        public string SchoolClassName { get; set; } = default!;  // FK Value (4EHIF, ...)
+        public int SchoolClassId { get; set; } = default!;  // FK Value (4EHIF, ...)
         public virtual SchoolClass SchoolClass { get; set; } = default!; // Navigation to class
 
         private int MailLength => string.IsNullOrEmpty(Email) ? 0 : Email.Length;

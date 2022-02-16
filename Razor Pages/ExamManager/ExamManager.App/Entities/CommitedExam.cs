@@ -6,15 +6,12 @@
     /// </summary>
     public class CommitedExam : Exam
     {
-        protected CommitedExam()
-        {
-
-        }
+        protected CommitedExam() { }
         public CommitedExam(Exam e, string room) : base(
-            teacherShortname: e.TeacherShortname,
-            subjectShortname: e.SubjectShortname,
+            teacher: e.Teacher,
+            subject: e.Subject,
             date: e.Date,
-            schoolClassName: e.SchoolClassName)
+            schoolClass: e.SchoolClass)
         {
             Room = room;
         }
