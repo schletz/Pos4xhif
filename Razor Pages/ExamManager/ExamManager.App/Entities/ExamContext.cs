@@ -103,7 +103,7 @@ namespace ExamManager.App.Entities
                 .CustomInstantiator(f =>
                 {
                     var name = $"{f.Random.Int(1, 5)}{f.Random.String2(1, "ABCDE")}{f.Random.ListItem(departments)}";
-                    return new SchoolClass(name);
+                    return new SchoolClass(name, f.Random.ListItem(teachers));
                 })
                 .Rules((f, sc) =>
             {

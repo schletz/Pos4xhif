@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,6 +22,7 @@ namespace ExamManager.App.Entities
         public string Firstname { get; set; } = default!;
         public string Lastname { get; set; } = default!;
         public string Email { get; set; } = default!;
+        public virtual ICollection<SchoolClass> SchoolClasses { get; } = new List<SchoolClass>();
     }
 
 }
