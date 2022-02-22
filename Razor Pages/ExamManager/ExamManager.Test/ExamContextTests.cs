@@ -1,4 +1,5 @@
 ﻿using ExamManager.App.Entities;
+using StoreManager.Application.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ExamManager.Test
             var context = new ExamContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.Seed();
+            context.Seed(new CryptService());
             return context;
         }
         [Fact]
@@ -25,7 +26,7 @@ namespace ExamManager.Test
             using var context = new ExamContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.Seed();
+            context.Seed(new CryptService());
         }
 
         [Fact]
@@ -35,7 +36,7 @@ namespace ExamManager.Test
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                context.Seed();
+                context.Seed(new CryptService());
             }
             using (var context = new ExamContext())
             {

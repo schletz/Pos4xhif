@@ -1,4 +1,5 @@
 using ExamManager.App.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System.Linq;
 
 namespace ExamManager.Webapp.Pages.Students
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ExamContext _db;

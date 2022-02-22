@@ -1,0 +1,9 @@
+﻿@page
+@model ExamManager.Webapp.Pages.User.AccessDeniedModel
+@inject ExamManager.Webapp.Services.AuthService AuthService
+
+<h3>Kein Zugriff</h3>
+
+<p>Der Benutzer @AuthService.Username hat keinen Zugriff auf die angeforderte Seite.</p>
+<p><a href="/">Zurück zum Index</a></p>
+

@@ -2,6 +2,7 @@
 using Bogus.Extensions;
 using ExamManager.App.Extensions;
 using Microsoft.EntityFrameworkCore;
+using StoreManager.Application.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace ExamManager.App.Entities
         // SELECT * FROM Exam WHERE Discriminator = 'CommitedExam'
         public DbSet<CommitedExam> CommitedExams => Set<CommitedExam>();
         public DbSet<Student> Students => Set<Student>();
+        public DbSet<User> Users => Set<User>();
         public DbSet<Teacher> Teachers => Set<Teacher>();
         public DbSet<Subject> Subjects => Set<Subject>();
 
@@ -55,7 +57,7 @@ namespace ExamManager.App.Entities
 
         }
 
-        public void Seed()
+        public void Seed(ICryptService crypt)
         {
             Randomizer.Seed = new Random(1035);
             var faker = new Faker("de");
@@ -78,6 +80,24 @@ namespace ExamManager.App.Entities
                 .Take(30)
                 .ToList();
             Teachers.AddRange(teachers);
+            SaveChanges();
+
+            var users = new Faker<User>("de")
+                .CustomInstantiator(f =>
+                {
+                    var teacher = f.Random.ListItem(teachers);
+                    var salt = crypt.GenerateSecret(256);
+
+                    return new User(
+                        username: teacher.Email,
+                        salt: salt,
+                        passwordHash: crypt.GenerateHash(salt, "1234"),
+                        teacher: teacher);
+                })
+                .Generate(20)
+                .GroupBy(u => u.TeacherId).Select(g => g.First())
+                .ToList();
+            Users.AddRange(users);
             SaveChanges();
 
             var subjects = new Faker<Subject>("de")

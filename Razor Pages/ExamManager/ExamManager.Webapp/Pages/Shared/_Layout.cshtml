@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject ExamManager.Webapp.Services.AuthService AuthService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,6 +32,16 @@
                             <a class="nav-link text-dark" asp-page="/Students/Index">Student list</a>
                         </li>
                     </ul>
+                </div>
+                <div>
+                    @if (AuthService.IsAuthenticated)
+                    {
+                        <p>User @AuthService.Username is authenticated.
+                            <a asp-page="/User/Logout">Logout</a>
+
+                        </p>
+                        
+                    }
                 </div>
             </div>
         </nav>
