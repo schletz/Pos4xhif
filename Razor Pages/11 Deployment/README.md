@@ -15,6 +15,27 @@ Ordner [StoreManager](StoreManager) zu finden.
 Informationen über Docker Images von Datenbanksystemen finden Sie im Kapitel EF Core des Kurses
 Pos3xhif: https://github.com/schletz/Pos3xhif/blob/master/03%20EF%20Core/07_DatabaseFirst/Docker.md
 
+### Port im Programmcode festlegen
+
+Soll der Server Anfragen von jedem Interface entgegennehmen, kann kann dies auf verschiedene
+Arten erfolgten. Auf https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-6.0
+ist die Dokumentation zu finden.
+
+Soll direkt in der Datei *Program.cs* der Port 80 (HTTP) und 443 (HTTPS) gesetzt und jedes Interface
+abgehört werden, kann folgender Code verwendet werden:
+
+```c#
+var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(80);
+    serverOptions.ListenAnyIP(443, opt => opt.UseHttps());
+});
+builder.Services.AddHttpsRedirection(opt => opt.HttpsPort = 443);
+```
+
+### Erzeugte Dateien
+
 **startServer.cmd**
 
 ```
