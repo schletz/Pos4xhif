@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProcessDemo.Model;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -123,7 +120,7 @@ namespace ProcessDemo.Services
                 using var stdoutReader = process.StandardOutput;
                 using var stderrReader = process.StandardError;
 
-                // Das Timeput ist ein Delay, welches wir - wenn der Prozess zuerst fertig wird - abbrechen.
+                // Das Timeout ist ein Delay, welches wir - wenn der Prozess zuerst fertig wird - abbrechen.
                 var timeoutToken = new CancellationTokenSource();
                 // Damit keine TaskCancelException geworfen wird, setzen wir mit einem leeren Task fort.
                 var timeoutTask = Task.Delay(_timeout, timeoutToken.Token).ContinueWith(task => { });
@@ -162,7 +159,6 @@ namespace ProcessDemo.Services
         /// </summary>
         private void ProcessJobResult(Jobinfo jobinfo, DateTime startTime, string output)
         {
-            // Parse output
             var job = new Job(username:
                 jobinfo.Username,
                 server: jobinfo.Server,
