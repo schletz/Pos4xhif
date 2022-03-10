@@ -182,7 +182,7 @@ namespace ProcessDemo.Services
             try
             {
                 using var serviceScope = _serviceScopeFactory.CreateScope();
-                var db = serviceScope.ServiceProvider.GetRequiredService<PingContext>();
+                using var db = serviceScope.ServiceProvider.GetRequiredService<PingContext>();
                 db.Jobs.Add(job);
                 db.PingResults.AddRange(pingResults);
                 db.SaveChanges();
@@ -203,7 +203,7 @@ namespace ProcessDemo.Services
             try
             {
                 using var serviceScope = _serviceScopeFactory.CreateScope();
-                var db = serviceScope.ServiceProvider.GetRequiredService<PingContext>();
+                using var db = serviceScope.ServiceProvider.GetRequiredService<PingContext>();
                 var job = new Job(username:
                     jobinfo.Username,
                     server: jobinfo.Server,
