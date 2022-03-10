@@ -38,7 +38,7 @@ namespace ProcessDemo.Services
         private readonly int _maxProcesses;
         // Nach dieser Zeitspanne in ms wird dem Prozess ein Kill gesendet.
         private readonly int _timeout;
-        private ConcurrentQueue<Jobinfo> _searchJobs = new();
+        private int _queueLength = 0;
         private SemaphoreSlim _semaphore;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<QueuedWorker> _logger;
@@ -58,12 +58,12 @@ namespace ProcessDemo.Services
 
         public (bool success, string message) TryAddJob(Jobinfo jobinfo)
         {
-            if (_searchJobs.Count > _maxQueueLength) { return (false, "Queue is full"); }
-            _searchJobs.Enqueue(jobinfo);
+            if (_queueLength > _maxQueueLength) { return (false, "Queue is full"); }
             // Wir warten nicht auf den Prozess, sonst würde der Controller auch auf
             // die Beendigung warten. Deswegen verwenden wir den Discard Operator _
             // anstatt await.
-            _ = ProcessQueue();
+            _ = EnqueueJob(jobinfo);
+
             return (true, string.Empty);
         }
 
@@ -71,10 +71,10 @@ namespace ProcessDemo.Services
         /// Holt sich einen Job von der Warteschlange. Dabei wird darauf geachtet,
         /// dass nicht mehr Jobs als in _maxProcesses gleichtzeitig verarbeitet werden.
         /// </summary>
-        private async Task ProcessQueue()
+        private async Task EnqueueJob(Jobinfo jobinfo)
         {
+            Interlocked.Increment(ref _queueLength);
             await _semaphore.WaitAsync();
-            if (!_searchJobs.TryDequeue(out var jobinfo)) { return; }
             try
             {
                 await StartJob(jobinfo);
@@ -83,7 +83,11 @@ namespace ProcessDemo.Services
             {
                 WriteJobFailedInfo(jobinfo, DateTime.UtcNow, null, e.InnerException?.Message ?? e.Message);
             }
-            _semaphore.Release();
+            finally
+            {
+                Interlocked.Decrement(ref _queueLength);
+                _semaphore.Release();
+            }
         }
 
         /// <summary>

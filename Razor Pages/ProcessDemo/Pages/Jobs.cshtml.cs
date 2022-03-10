@@ -18,7 +18,7 @@ namespace ProcessDemo.Pages
 
         public void OnGet()
         {
-            Jobs = _db.Jobs.Include(d => d.PingResults).ToList();
+            Jobs = _db.Jobs.OrderByDescending(j => j.StartTime).Include(d => d.PingResults).ToList();
         }
     }
 }
