@@ -26,7 +26,7 @@ public class IndexModel : PageModel
         var username = Guid.NewGuid().ToString().Substring(0, 8);
         for (int i = 0; i < Count; i++)
         {
-            var (success, message) = _directoryReader.TryAddJob(new Jobinfo(username, Server));
+            var (success, message) = _directoryReader.TryAddJob(new QueuedWorker.Jobinfo(username, Server));
             if (!success) { Message = message; break; }
         }
         return RedirectToPage();

@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 
 namespace ProcessDemo.Services
 {
-    public record Jobinfo(string Username, string Server);
-
     /// <summary>
     /// Service für eine Jobwarteschlange. Es muss in der Datei Program.cs 
     /// mit den notwendigen Argumenten registriert werden:
@@ -30,6 +28,10 @@ namespace ProcessDemo.Services
     /// </summary>
     public class QueuedWorker
     {
+        // Record als DTO Klasse für die Parameter eines Jobs. Dies ist natürlich für
+        // andere Problemstellungen anzupassen.
+        public record Jobinfo(string Username, string Server);
+
         // Maximale Länge der Warteschlange. Wird diese überschritten, kann der User keinen
         // neuen Job buchen.
         private readonly int _maxQueueLength;
