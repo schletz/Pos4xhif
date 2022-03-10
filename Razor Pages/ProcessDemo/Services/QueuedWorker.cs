@@ -38,6 +38,7 @@ namespace ProcessDemo.Services
         private readonly int _maxProcesses;
         // Nach dieser Zeitspanne in ms wird dem Prozess ein Kill gesendet.
         private readonly int _timeout;
+        // Aktuelle Länge der Warteschlange.
         private int _queueLength = 0;
         private SemaphoreSlim _semaphore;
         private readonly IServiceScopeFactory _serviceScopeFactory;
@@ -58,12 +59,21 @@ namespace ProcessDemo.Services
 
         public (bool success, string message) TryAddJob(Jobinfo jobinfo)
         {
-            if (_queueLength > _maxQueueLength) { return (false, "Queue is full"); }
+            // Wir müssen thread safe arbeiten, die Methode wird mehrmals aufgerufen.
+            // Wenn z. B. in kurzer Zeit die Methode 1000 mal aufgerufen wird, dürfen
+            // wird nicht erst später prüfen, ob die Queue zu lange ist. Dann wären
+            // schon tausende Jobs eingetragen.
+            Interlocked.Increment(ref _queueLength);
+            if (_queueLength > _maxQueueLength)
+            {
+                Interlocked.Decrement(ref _queueLength);
+                return (false, "Queue is full");
+            }
             // Wir warten nicht auf den Prozess, sonst würde der Controller auch auf
             // die Beendigung warten. Deswegen verwenden wir den Discard Operator _
             // anstatt await.
-            _ = EnqueueJob(jobinfo);
-
+            _ = EnqueueJob(jobinfo)
+                .ContinueWith(task => Interlocked.Decrement(ref _queueLength));
             return (true, string.Empty);
         }
 
@@ -73,7 +83,6 @@ namespace ProcessDemo.Services
         /// </summary>
         private async Task EnqueueJob(Jobinfo jobinfo)
         {
-            Interlocked.Increment(ref _queueLength);
             await _semaphore.WaitAsync();
             try
             {
@@ -85,7 +94,6 @@ namespace ProcessDemo.Services
             }
             finally
             {
-                Interlocked.Decrement(ref _queueLength);
                 _semaphore.Release();
             }
         }

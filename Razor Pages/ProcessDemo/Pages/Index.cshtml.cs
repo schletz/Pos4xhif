@@ -23,9 +23,10 @@ public class IndexModel : PageModel
 
     public IActionResult OnPost()
     {
-        for(int i = 0; i < Count; i++)
+        var username = Guid.NewGuid().ToString().Substring(0, 8);
+        for (int i = 0; i < Count; i++)
         {
-            var (success, message) = _directoryReader.TryAddJob(new Jobinfo(Guid.NewGuid().ToString().Substring(0, 8), Server));
+            var (success, message) = _directoryReader.TryAddJob(new Jobinfo(username, Server));
             if (!success) { Message = message; break; }
         }
         return RedirectToPage();
