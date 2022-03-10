@@ -1,0 +1,46 @@
+﻿@page
+@model ProcessDemo.Pages.JobsModel
+@section Head {
+<style>
+    .jobtable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .jobtable td, .jobtable th {
+            border: 1px solid #999;
+        }
+</style>
+}
+<h3>Jobliste</h3>
+@if (Model.Jobs.Any())
+{
+    <table class="jobtable">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Server</th>
+                <th>Gestartet um</th>
+                <th>Fehler</th>
+                <th>Pingzeiten (ms)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model.Jobs)
+            {
+                <tr>
+                    <td>@d.Username</td>
+                    <td>@d.Server</td>
+                    <td>@d.StartTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@(d.ExitCode == 0 ? "OK. Exit Code 0" : d.ErrorMessage)</td>
+                    <td>@string.Join(", ", d.PingResults.Select(u=>u.Time.ToString()))</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else 
+{
+    <p>Es wurden noch keine Jobs gestartet.</p>
+}

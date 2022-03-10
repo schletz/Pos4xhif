@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo für Prozesse in ASP.NET</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #EEE;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        #container {
+            display: flex;
+            margin: auto;
+            max-width: 70rem;
+            flex-direction: column;
+            border: 10px solid #FFF;
+            border-radius: 10px;
+        }
+
+        header {
+            flex: 0 0 2rem;
+            display: flex;
+            background-color: linen;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0rem 1rem;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 0rem 1rem 1rem 1rem;
+        }
+    </style>
+    @RenderSection("Head", required: false)
+</head>
+<body>
+    <div id="container">
+        <header>
+            <div><a asp-page="/Index">Neuer Job</a></div>
+            <div><a asp-page="/Jobs">Jobs</a></div>
+        </header>
+        <main>
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>

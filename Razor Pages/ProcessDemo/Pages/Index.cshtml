@@ -1,0 +1,53 @@
+﻿@page
+@model IndexModel
+<h3>Neuen Job erstellen</h3>
+@section Head {
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    .form-row {
+        display: flex;
+    }
+        .form-label {
+        flex: 0 0 5rem;
+    }
+    .form-input {
+        flex-grow: 1;
+    }
+    .form-input input {
+        width: 100%;
+    }
+    </style>
+}
+<div>
+    <p>
+        Gib eine Serveradresse (z. B. www.orf.at) und eine Anzahl ein, wie oft der Pingprozess für diesen
+        Server gestartet werden soll. Es wird <em>ping -n 10 (Servername)</em> aufgerufen. Dies dauert
+        ca. 10 Sekunden. Nach Beendigung des Jobs ist das Ergebnis unter <a asp-page="/Jobs">Jobs</a>
+        aufrufbar.
+    </p>
+    <p>Mit <em>tasklist | find /I "PING.EXE"</em> kann in der Windows Konsole geprüft werden, wie viele
+        Ping Prozesse gleichzeitig laufen.</p>
+    <form method="post">
+        <div class="form-row">
+            <div class="form-label"><label asp-for="Server">Server:</label></div>
+            <div class="form-input"><input asp-for="Server" required="required" pattern="^[a-z][a-z\.\-0-9]+$" /></div>
+        </div>
+        <div class="form-row">
+            <div class="form-label"><label asp-for="Count">Anzahl:</label></div>
+            <div class="form-input"><input asp-for="Count" required="required" min=1 max=99 /></div>
+        </div>
+        <div class="form-row">
+            <button type="submit">Senden</button>
+        </div>
+    </form>
+</div>
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div>
+        @Model.Message
+    </div>
+}
