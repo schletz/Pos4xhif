@@ -2,25 +2,37 @@
 @model IndexModel
 <h3>Neuen Job erstellen</h3>
 @section Head {
-    <style>
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+        form input {
+            width: 100%;
+            padding: 0.4rem;
         }
+
+        form button {
+            padding: 0.4rem;
+
+        }
+
     .form-row {
         display: flex;
+        align-items: center;
     }
-        .form-label {
+
+    .form-label {
         flex: 0 0 5rem;
     }
+
     .form-input {
         flex-grow: 1;
     }
-    .form-input input {
-        width: 100%;
-    }
-    </style>
+
+</style>
 }
 <div>
     <p>
@@ -29,8 +41,11 @@
         ca. 10 Sekunden. Nach Beendigung des Jobs ist das Ergebnis unter <a asp-page="/Jobs">Jobs</a>
         aufrufbar.
     </p>
-    <p>Mit <em>tasklist | find /I "PING.EXE"</em> kann in der Windows Konsole geprüft werden, wie viele
-        Ping Prozesse gleichzeitig laufen.</p>
+    <p>
+        Mit <em>tasklist | find /I "PING.EXE"</em> kann in der Windows Konsole geprüft werden, wie viele
+        Ping Prozesse gleichzeitig laufen.
+    </p>
+    <p>Es sind <strong>@Model.QueueLength Jobs</strong> in der Warteschlange.</p>
     <form method="post">
         <div class="form-row">
             <div class="form-label"><label asp-for="Server">Server:</label></div>
@@ -38,7 +53,7 @@
         </div>
         <div class="form-row">
             <div class="form-label"><label asp-for="Count">Anzahl:</label></div>
-            <div class="form-input"><input asp-for="Count" required="required" min=1 max=99 /></div>
+            <div class="form-input" style="flex: 0 0 4em"><input asp-for="Count" required="required" min=1 max=99 /></div>
         </div>
         <div class="form-row">
             <button type="submit">Senden</button>

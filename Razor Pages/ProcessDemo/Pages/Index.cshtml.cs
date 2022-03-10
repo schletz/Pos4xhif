@@ -13,12 +13,13 @@ public class IndexModel : PageModel
     public string Server { get; set; } = "www.google.com";
     [BindProperty]
     public int Count { get; set; } = 1;
-    private readonly QueuedWorker _directoryReader;
+    private readonly QueuedWorker _worker;
     [TempData]
     public string? Message { get; set; }
-    public IndexModel(QueuedWorker directoryReader)
+    public int QueueLength => _worker.QueueLength;
+    public IndexModel(QueuedWorker worker)
     {
-        _directoryReader = directoryReader;
+        _worker = worker;
     }
 
     public IActionResult OnPost()
@@ -26,7 +27,7 @@ public class IndexModel : PageModel
         var username = Guid.NewGuid().ToString().Substring(0, 8);
         for (int i = 0; i < Count; i++)
         {
-            var (success, message) = _directoryReader.TryAddJob(new QueuedWorker.Jobinfo(username, Server));
+            var (success, message) = _worker.TryAddJob(new QueuedWorker.Jobinfo(username, Server));
             if (!success) { Message = message; break; }
         }
         return RedirectToPage();

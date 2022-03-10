@@ -9,6 +9,7 @@
 
         .jobtable td, .jobtable th {
             border: 1px solid #999;
+            text-align: left;
         }
 </style>
 }
@@ -33,14 +34,14 @@
                     <td>@d.Server</td>
                     <td>@d.StartTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
                     <td>@(d.ExitCode == 0 ? "OK. Exit Code 0" : d.ErrorMessage)</td>
-                    <td>@string.Join(", ", d.PingResults.Select(u=>u.Time.ToString()))</td>
+                    <td>@string.Join(", ", d.PingResults.OrderBy(p=>p.Time).Select(u=>u.Time.ToString()))</td>
                 </tr>
             }
         </tbody>
 
     </table>
 }
-else 
+else
 {
     <p>Es wurden noch keine Jobs fertiggestellt.</p>
 }

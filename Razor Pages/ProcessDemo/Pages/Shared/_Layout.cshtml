@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #EEE;
+            background-color: #222;
         }
 
         * {
@@ -25,16 +25,31 @@
             flex-direction: column;
             border: 10px solid #FFF;
             border-radius: 10px;
+            background-color: #DDD;
         }
 
         header {
-            flex: 0 0 2rem;
+            flex: 0 0 3rem;
             display: flex;
             background-color: linen;
             align-items: center;
             gap: 0.5rem;
             padding: 0rem 1rem;
         }
+
+            header a {
+                display: block;
+                flex: 0 1 8rem;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 0.4rem;
+                text-decoration: inherit;
+                font-weight: bold;
+            }
+
+                header a:hover {
+                    border: 3px solid black;
+                }
 
         main {
             flex-grow: 1;
@@ -46,8 +61,8 @@
 <body>
     <div id="container">
         <header>
-            <div><a asp-page="/Index">Neuer Job</a></div>
-            <div><a asp-page="/Jobs">Jobs</a></div>
+            <a asp-page="/Index">Neuer Job</a>
+            <a asp-page="/Jobs">Jobs</a>
         </header>
         <main>
             @RenderBody()

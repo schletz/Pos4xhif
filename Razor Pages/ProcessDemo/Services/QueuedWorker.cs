@@ -42,7 +42,9 @@ namespace ProcessDemo.Services
         private SemaphoreSlim _semaphore;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<QueuedWorker> _logger;
-
+        // Zum Anzeigen in der Razor Page stellen wir die Länge der Warteschlange
+        // auch zur Verfügung.
+        public int QueueLength => _queueLength;
         public QueuedWorker(
             IServiceScopeFactory serviceScopeFactory,
             ILogger<QueuedWorker> logger,
