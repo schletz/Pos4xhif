@@ -1,5 +1,7 @@
 # Starten von Prozessen in ASP.NET Core
 
+![](screenshot.png)
+
 Es soll über den Windows Ping Befehl herausgefunden werden, wie viele ms das Pingpaket zu einem
 Server benötigt. Dafür wird mit der Klasse *Process* der Prozess *ping.exe* mit den
 entsprechenden Argumenten gestartet. Die Ausgabe in der Konsole sieht so aus (englische
