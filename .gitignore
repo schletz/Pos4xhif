@@ -3,3 +3,5 @@
 **/bin
 **/obj
 *.db*
+**/node_modules
+**/dist
