@@ -18,11 +18,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ExamContext>();
 builder.Services.AddAutoMapper(typeof(DtoMappings));
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(
+            builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            });
+    });
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors();
 }
 app.UseHttpsRedirection();
 app.MapControllers();

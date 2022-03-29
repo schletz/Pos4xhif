@@ -8,5 +8,5 @@ FOR /D /R %%d IN (*) DO (
   rd /S /Q "%%d\.vscode"
 )
 
-cd ExamManager.Webapp
+cd ExamManager.Api
 dotnet watch run
