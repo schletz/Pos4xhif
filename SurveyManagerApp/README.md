@@ -29,7 +29,7 @@ dotnet sln add SurveyManagerApp.Test
 start SurveyManagerApp.sln
 ```
 
-After scaffolding change your properties of your csproj Files to .net 6:
+After scaffolding change the properties in your csproj files to .net 6:
 
 ```xml
 <PropertyGroup>
