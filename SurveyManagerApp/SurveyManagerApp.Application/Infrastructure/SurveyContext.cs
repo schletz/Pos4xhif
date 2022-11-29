@@ -28,9 +28,12 @@ namespace SurveyManagerApp.Application.Infrastructure
         { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Unique constraint. Useful for lookup tables to prevent duplicates.
             modelBuilder.Entity<Schoolclass>().HasIndex(s => s.Name).IsUnique();
-            // Write OwnsMany() for a list of value objects (e. g. addresses)
+            // Configures a value object. Write OwnsMany() for a list of value objects (e. g. addresses)
             modelBuilder.Entity<Student>().OwnsOne(s => s.Name);
+            // To write the string repesentation of the enum instead of writing the int value.
+            // If you write the number, and you change your enum, the meaning of the data will be changed!
             modelBuilder.Entity<Student>().Property(s => s.Role).HasConversion<string>();
         }
     }

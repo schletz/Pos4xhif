@@ -18,6 +18,7 @@ namespace SurveyManagerApp.Application.Model
             Name = name;
             Email = email;
             Role = role;
+            SchoolclassId = schoolclass.Id;
             Schoolclass = schoolclass;
         }
 #pragma warning disable CS8618 
