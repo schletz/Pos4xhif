@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,6 +9,8 @@ using System.Xml.Linq;
 
 namespace SurveyManagerApp.Application.Model
 {
+
+
     public class Student : IEntity<int>
     {
         public Student(int number, Name name, string email, Role role, Schoolclass schoolclass)
