@@ -1,0 +1,23 @@
+@startuml
+entity Questionnaire {
+    + schoolclass : Schoolclass
+    + subject : Subject
+    + teacher : Teacher
+    + owner : Student
+    + state : QuestionnaireState    
+    + questions : List<Question>
+}
+
+entity ActiveQuestionnaire {
+    + activeTo : DateTime
+}
+
+entity ClosedQuestionnaire {
+    + closingDate : DateTime
+    + closedFrom : Student
+}
+
+Questionnaire --|> ActiveQuestionnaire
+Questionnaire --|> ClosedQuestionnaire
+
+@enduml
