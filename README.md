@@ -4,7 +4,7 @@
 
 - [Wiederholung: EF Core](https://github.com/schletz/Pos3xhif/tree/master/03%20EF%20Core)
 - **[Razor Pages in ASP.NET Core (Videoreihe)](Razor%20Pages/README.md)**
-- Vue.js Applikationen
+- **[Single Page Apps with Vue.js (im Kurs WMC)](https://github.com/schletz/wmc#3-eine-vuejs-applikation-erstellen-projekt-spengernews)**
 
 ## Wichtiges zum Start
 
