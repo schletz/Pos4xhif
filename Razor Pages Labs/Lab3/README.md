@@ -22,18 +22,20 @@ Trennen Sie vorher das Command *TaskCmd* in *NewTaskCmd* und *EditTaskCmd*.
 - **void EditTask(EditTaskCmd taskCmd):** Bearbeitet einen Task.
   Dabei sollen folgende Regeln beachtet werden:
     - Ist das *ExpirationDate* schon abgelaufen, darf nichts mehr bearbeitet werden.
+      Dies wird mit einer entsprechenden *ServiceException* signalisiert.
     - Gibt es schon Handins, darf auch nichts mehr bearbeitet werden.
+      Dies wird mit einer entsprechenden *ServiceException* signalisiert.
     - Es dürfen nur die Werte von *MaxPoints*, *Title* und *Subject* bearbeitet werden.
 
-- **(bool found, string errorMessage) DeleteTask(Guid guid, bool force):** Löscht einen Task.
+- **void DeleteTask(Guid guid, bool force):** Löscht einen Task.
   Ein Task darf nur gelöscht werden, wenn
     - keine Handins zugeordnet sind **oder** 
     - der Parameter force auf true gesetzt wurde.
   
-  Wenn alles in Ordnung ist, wird *string.Empty* als *errorMessage* gesetzt.
-  Das können Sie im Controller prüfen.
+  Bei einem Fehler wird eine entsprechende *ServiceException* geworfen.
+  Das können Sie im Controller abfangen.
 
-Vergessen Sie nicht, das Service in der Datei *Program.cs* mit *AddTransient* zu registrieren.
+Vergessen Sie nicht, das Service in der Datei *Program.cs* mit *AddScoped* zu registrieren.
 Rufen Sie nun in der Klasse *TasksController* die Servicemethoden auf.
 Überlegen Sie sich, wie der Parameter *force* aus dem Delete Request übergeben werden kann (Query Parameter, Command Klasse, ...) und implementieren Sie diese Idee.
 
